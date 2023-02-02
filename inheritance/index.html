@@ -12,20 +12,20 @@
         <meta name="author" content="OpenStack Team">
       
       
-        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplanenode/">
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/inheritance/">
       
       
-        <link rel="prev" href="../openstack_dataplane/">
+        <link rel="prev" href="../openstack_dataplanerole/">
       
       
-        <link rel="next" href="../openstack_dataplanerole/">
+        <link rel="next" href="../contributing/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.10">
     
     
       
-        <title>OpenStackDataPlaneNode - OpenStack Data Plane Operator</title>
+        <title>Inheritance - OpenStack Data Plane Operator</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#custom-resources" class="md-skip">
+        <a href="#inheritance" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              OpenStackDataPlaneNode
+              Inheritance
             
           </span>
         </div>
@@ -304,103 +304,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          OpenStackDataPlaneNode
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../openstack_dataplanenode/" class="md-nav__link">
         OpenStackDataPlaneNode
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#custom-resources" class="md-nav__link">
-    Custom Resources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sub-resources" class="md-nav__link">
-    Sub Resources
-  </a>
-  
-    <nav class="md-nav" aria-label="Sub Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#networkconfigsection" class="md-nav__link">
-    NetworkConfigSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#networkssection" class="md-nav__link">
-    NetworksSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nodesection" class="md-nav__link">
-    NodeSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenode" class="md-nav__link">
-    OpenStackDataPlaneNode
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodelist" class="md-nav__link">
-    OpenStackDataPlaneNodeList
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodespec" class="md-nav__link">
-    OpenStackDataPlaneNodeSpec
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,11 +332,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../inheritance/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Inheritance
       </a>
+      
     </li>
   
 
@@ -472,76 +390,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#custom-resources" class="md-nav__link">
-    Custom Resources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sub-resources" class="md-nav__link">
-    Sub Resources
-  </a>
-  
-    <nav class="md-nav" aria-label="Sub Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#networkconfigsection" class="md-nav__link">
-    NetworkConfigSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#networkssection" class="md-nav__link">
-    NetworksSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nodesection" class="md-nav__link">
-    NodeSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenode" class="md-nav__link">
-    OpenStackDataPlaneNode
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodelist" class="md-nav__link">
-    OpenStackDataPlaneNodeList
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodespec" class="md-nav__link">
-    OpenStackDataPlaneNodeSpec
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -560,231 +410,104 @@
 
 
 
-  <h1>OpenStackDataPlaneNode</h1>
-
-<h3 id="custom-resources">Custom Resources<a class="headerlink" href="#custom-resources" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="#openstackdataplanenode">OpenStackDataPlaneNode</a></li>
-</ul>
-<h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="#networkconfigsection">NetworkConfigSection</a></li>
-<li><a href="#networkssection">NetworksSection</a></li>
-<li><a href="#nodesection">NodeSection</a></li>
-<li><a href="#openstackdataplanenodelist">OpenStackDataPlaneNodeList</a></li>
-<li><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></li>
-</ul>
-<h4 id="networkconfigsection">NetworkConfigSection<a class="headerlink" href="#networkconfigsection" title="Permanent link">#</a></h4>
-<p>NetworkConfigSection is a specification of the Network configuration details</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>template</td>
-<td>Template - ansible j2 nic config template to use when applying node network configuration</td>
-<td>string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="networkssection">NetworksSection<a class="headerlink" href="#networkssection" title="Permanent link">#</a></h4>
-<p>NetworksSection is a specification of the network attributes</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>template</td>
-<td>Network - Network name to configure</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>fixedIP</td>
-<td>FixedIP - Specific IP address to use for this network</td>
-<td>string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="nodesection">NodeSection<a class="headerlink" href="#nodesection" title="Permanent link">#</a></h4>
-<p>NodeSection is a specification of the node attributes</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hostName</td>
-<td>HostName - node name</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>networkConfig</td>
-<td>NetworkConfig - Network configuration details. Contains os-net-config related properties.</td>
-<td><a href="#networkconfigsection">NetworkConfigSection</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>networks</td>
-<td>Networks - Instance networks</td>
-<td>[]<a href="#networkssection">NetworksSection</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>managed</td>
-<td>Managed - Whether the node is actually provisioned (True) or should be treated as preprovisioned (False)</td>
-<td>bool</td>
-<td>false</td>
-</tr>
-<tr>
-<td>managementNetwork</td>
-<td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>ansibleUser</td>
-<td>AnsibleUser SSH user for Ansible connection</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>ansibleHost</td>
-<td>AnsibleHost SSH host for Ansible connection</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>ansiblePort</td>
-<td>AnsiblePort SSH port for Ansible connection</td>
-<td>int</td>
-<td>false</td>
-</tr>
-<tr>
-<td>ansibleVars</td>
-<td>AnsibleVars for configuring ansible</td>
-<td>map[string]string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanenode">OpenStackDataPlaneNode<a class="headerlink" href="#openstackdataplanenode" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneNode is the Schema for the openstackdataplanenodes API</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>metadata</td>
-<td></td>
-<td>metav1.ObjectMeta</td>
-<td>false</td>
-</tr>
-<tr>
-<td>spec</td>
-<td></td>
-<td><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>status</td>
-<td></td>
-<td><a href="#openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus</a></td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanenodelist">OpenStackDataPlaneNodeList<a class="headerlink" href="#openstackdataplanenodelist" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneNodeList contains a list of OpenStackDataPlaneNode</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>metadata</td>
-<td></td>
-<td>metav1.ListMeta</td>
-<td>false</td>
-</tr>
-<tr>
-<td>items</td>
-<td></td>
-<td>[]<a href="#openstackdataplanenode">OpenStackDataPlaneNode</a></td>
-<td>true</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanenodespec">OpenStackDataPlaneNodeSpec<a class="headerlink" href="#openstackdataplanenodespec" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneNodeSpec defines the desired state of OpenStackDataPlaneNode</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>node</td>
-<td>Node - node attributes specific to this node</td>
-<td><a href="#nodesection">NodeSection</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>templateRef</td>
-<td>Role - role name for this node</td>
-<td>string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h1 id="inheritance">Inheritance<a class="headerlink" href="#inheritance" title="Permanent link">#</a></h1>
+<p>An <code>OpenStackDataPlaneNode</code> inherits any attribute of an
+<code>OpenStackDataPlaneRole</code> but those attributes may also be overridden
+on the node level.</p>
+<p>Suppose the following CR is created with <code>oc create -f
+openstackdataplanerole-sample.yaml</code>:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dataplane.openstack.org/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenStackDataPlaneRole</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dataPlaneNodes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1</span>
+<span class="w">    </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">      </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
+<span class="w">      </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">        </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2</span>
+<span class="w">    </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">      </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
+<span class="w">      </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">        </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">  </span><span class="nt">nodeTemplate</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ansiblePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">22</span>
+<span class="w">    </span><span class="nt">ansibleUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">    </span><span class="nt">managed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">managementNetwork</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">    </span><span class="nt">networkConfig</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">templates/net_config_bridge.j2</span>
+</code></pre></div>
+Then two CRs like the following, representing two nodes, will be
+created automatically by the dataplane-operator and there is no
+need to <code>oc create</code> separate files containing the following.</p>
+<p>Node 1
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dataplane.openstack.org/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenStackDataPlaneNode</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
+</code></pre></div>
+Node 2
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dataplane.openstack.org/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenStackDataPlaneNode</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
+</code></pre></div>
+Because of inheritance, redundant information did not need to be
+provided to both nodes. Only the information which differed per node,
+e.g. <code>ansibleHost</code>, had to be specified. Furthermore, the redundant
+information is not seen in the two nodes' CRs. I.e. we do not see the
+following from the <code>nodeTemplate</code> in node 1 and 2 above.
+<div class="highlight"><pre><span></span><code>    ansiblePort: 22
+    ansibleUser: root
+    managed: false
+    managementNetwork: ctlplane
+    networkConfig:
+      template: templates/net_config_bridge.j2
+</code></pre></div>
+However, it's unambiguous that each node has <code>ansiblePort</code> 22
+because they have <code>role: openstackdataplanerole-sample</code>. If the
+node is inspected however, port 22 will be set.</p>
+<p>The node controller resolves this dynamically by looking at
+<code>role.nodeSpec</code> and we can assume that the value was inherited.
+If we need to override a setting for any single node so that it
+doesn't use it's <code>nodeTemplate</code>, then we may do so by directly
+updating only that node (e.g. with <code>oc edit</code>). In that case we'd see
+an <code>ansiblePort</code> set directly in that node's CR. This allows the user
+to change the <code>nodeTemplate</code> after creation and once reconciliation is
+completed all existing nodes will inherit the new value.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-01-27
+      2023-02-01
     
   </small>
 </div>
