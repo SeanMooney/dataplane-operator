@@ -635,12 +635,6 @@
 </thead>
 <tbody>
 <tr>
-<td>hostName</td>
-<td>HostName - node name</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
 <td>networkConfig</td>
 <td>NetworkConfig - Network configuration details. Contains os-net-config related properties.</td>
 <td><a href="#networkconfigsection">NetworkConfigSection</a></td>
@@ -671,12 +665,6 @@
 <td>false</td>
 </tr>
 <tr>
-<td>ansibleHost</td>
-<td>AnsibleHost SSH host for Ansible connection</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
 <td>ansiblePort</td>
 <td>AnsiblePort SSH port for Ansible connection</td>
 <td>int</td>
@@ -685,7 +673,7 @@
 <tr>
 <td>ansibleVars</td>
 <td>AnsibleVars for configuring ansible</td>
-<td>map[string]string</td>
+<td>string</td>
 <td>false</td>
 </tr>
 </tbody>
@@ -764,6 +752,12 @@
 </thead>
 <tbody>
 <tr>
+<td>hostName</td>
+<td>HostName - node name</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
 <td>node</td>
 <td>Node - node attributes specific to this node</td>
 <td><a href="#nodesection">NodeSection</a></td>
@@ -772,6 +766,12 @@
 <tr>
 <td>role</td>
 <td>Role - role name for this node</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleHost</td>
+<td>AnsibleHost SSH host for Ansible connection</td>
 <td>string</td>
 <td>false</td>
 </tr>
