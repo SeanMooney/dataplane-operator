@@ -392,6 +392,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#openstackdataplanenodestatus" class="md-nav__link">
+    OpenStackDataPlaneNodeStatus
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -536,6 +543,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#openstackdataplanenodestatus" class="md-nav__link">
+    OpenStackDataPlaneNodeStatus
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -572,6 +586,7 @@
 <li><a href="#nodesection">NodeSection</a></li>
 <li><a href="#openstackdataplanenodelist">OpenStackDataPlaneNodeList</a></li>
 <li><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></li>
+<li><a href="#openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus</a></li>
 </ul>
 <h4 id="networkconfigsection">NetworkConfigSection<a class="headerlink" href="#networkconfigsection" title="Permanent link">#</a></h4>
 <p>NetworkConfigSection is a specification of the Network configuration details</p>
@@ -774,6 +789,39 @@
 <td>string</td>
 <td>false</td>
 </tr>
+<tr>
+<td>deploy</td>
+<td>Deploy boolean to trigger ansible execution</td>
+<td>bool</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus<a class="headerlink" href="#openstackdataplanenodestatus" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneNodeStatus defines the observed state of OpenStackDataPlaneNode</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conditions</td>
+<td>Conditions</td>
+<td>condition.Conditions</td>
+<td>false</td>
+</tr>
+<tr>
+<td>deployed</td>
+<td>Deployed</td>
+<td>bool</td>
+<td>false</td>
+</tr>
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
@@ -783,7 +831,7 @@
   <small>
     
       Last update:
-      2023-02-10
+      2023-02-15
     
   </small>
 </div>
