@@ -423,16 +423,16 @@ openstackdataplanerole-sample.yaml</code>:</p>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">dataPlaneNodes</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1</span>
+<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
 <span class="w">    </span><span class="nt">node</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
-<span class="w">      </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
 <span class="w">      </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
 <span class="w">        </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2</span>
+<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
 <span class="w">    </span><span class="nt">node</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
-<span class="w">      </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
 <span class="w">      </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
 <span class="w">        </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
@@ -454,9 +454,9 @@ need to <code>oc create</code> separate files containing the following.</p>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1</span>
 <span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
+<span class="w">  </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
 <span class="w">  </span><span class="nt">node</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
-<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-1.localdomain</span>
 <span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.18</span>
 <span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
@@ -469,10 +469,10 @@ Node 2
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2</span>
 <span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
+<span class="w">  </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">node</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
-<span class="w">    </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
-<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
 <span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
 <span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
@@ -506,7 +506,7 @@ completed all existing nodes will inherit the new value.</p>
   <small>
     
       Last update:
-      2023-02-01
+      2023-02-17
     
   </small>
 </div>
