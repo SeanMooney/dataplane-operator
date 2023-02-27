@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://openstack-k8s-operators.github.io/dataplane-operator/architecture/</loc>
+         <lastmod>2023-02-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/contributing/</loc>
          <lastmod>2023-02-27</lastmod>
          <changefreq>daily</changefreq>

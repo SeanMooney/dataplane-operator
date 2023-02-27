@@ -12,20 +12,20 @@
         <meta name="author" content="OpenStack Team">
       
       
-        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplanerole/">
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/architecture/">
       
       
-        <link rel="prev" href="../openstack_dataplanenode/">
+        <link rel="prev" href="../inheritance/">
       
       
-        <link rel="next" href="../inheritance/">
+        <link rel="next" href="../contributing/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
     
     
       
-        <title>OpenStackDataPlaneRole - OpenStack Data Plane Operator</title>
+        <title>Architecture - OpenStack Data Plane Operator</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#custom-resources" class="md-skip">
+        <a href="#architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              OpenStackDataPlaneRole
+              Architecture
             
           </span>
         </div>
@@ -261,16 +261,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
       
@@ -279,7 +277,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Custom Resources
@@ -318,89 +316,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          OpenStackDataPlaneRole
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../openstack_dataplanerole/" class="md-nav__link">
         OpenStackDataPlaneRole
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#custom-resources" class="md-nav__link">
-    Custom Resources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sub-resources" class="md-nav__link">
-    Sub Resources
-  </a>
-  
-    <nav class="md-nav" aria-label="Sub Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dataplanenodesection" class="md-nav__link">
-    DataPlaneNodeSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerole" class="md-nav__link">
-    OpenStackDataPlaneRole
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerolelist" class="md-nav__link">
-    OpenStackDataPlaneRoleList
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerolespec" class="md-nav__link">
-    OpenStackDataPlaneRoleSpec
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -432,11 +352,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Architecture
       </a>
+      
     </li>
   
 
@@ -473,62 +403,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#custom-resources" class="md-nav__link">
-    Custom Resources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sub-resources" class="md-nav__link">
-    Sub Resources
-  </a>
-  
-    <nav class="md-nav" aria-label="Sub Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dataplanenodesection" class="md-nav__link">
-    DataPlaneNodeSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerole" class="md-nav__link">
-    OpenStackDataPlaneRole
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerolelist" class="md-nav__link">
-    OpenStackDataPlaneRoleList
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#openstackdataplanerolespec" class="md-nav__link">
-    OpenStackDataPlaneRoleSpec
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -546,139 +422,16 @@
   
 
 
-  <h1>OpenStackDataPlaneRole</h1>
-
-<h3 id="custom-resources">Custom Resources<a class="headerlink" href="#custom-resources" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="#openstackdataplanerole">OpenStackDataPlaneRole</a></li>
-</ul>
-<h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
-<ul>
-<li><a href="#dataplanenodesection">DataPlaneNodeSection</a></li>
-<li><a href="#openstackdataplanerolelist">OpenStackDataPlaneRoleList</a></li>
-<li><a href="#openstackdataplanerolespec">OpenStackDataPlaneRoleSpec</a></li>
-</ul>
-<h4 id="dataplanenodesection">DataPlaneNodeSection<a class="headerlink" href="#dataplanenodesection" title="Permanent link">#</a></h4>
-<p>DataPlaneNodeSection is a specification of the data plane node attributes</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>node</td>
-<td>Node - node attributes specific to this node</td>
-<td>NodeSection</td>
-<td>false</td>
-</tr>
-<tr>
-<td>nodeFrom</td>
-<td>NodeFrom - Existing node name to reference. Can only be used if Node is empty.</td>
-<td>string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanerole">OpenStackDataPlaneRole<a class="headerlink" href="#openstackdataplanerole" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneRole is the Schema for the openstackdataplaneroles API</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>metadata</td>
-<td></td>
-<td>metav1.ObjectMeta</td>
-<td>false</td>
-</tr>
-<tr>
-<td>spec</td>
-<td></td>
-<td><a href="#openstackdataplanerolespec">OpenStackDataPlaneRoleSpec</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>status</td>
-<td></td>
-<td><a href="#openstackdataplanerolestatus">OpenStackDataPlaneRoleStatus</a></td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanerolelist">OpenStackDataPlaneRoleList<a class="headerlink" href="#openstackdataplanerolelist" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneRoleList contains a list of OpenStackDataPlaneRole</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>metadata</td>
-<td></td>
-<td>metav1.ListMeta</td>
-<td>false</td>
-</tr>
-<tr>
-<td>items</td>
-<td></td>
-<td>[]<a href="#openstackdataplanerole">OpenStackDataPlaneRole</a></td>
-<td>true</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanerolespec">OpenStackDataPlaneRoleSpec<a class="headerlink" href="#openstackdataplanerolespec" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneRoleSpec defines the desired state of OpenStackDataPlaneRole</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>dataPlaneNodes</td>
-<td>DataPlaneNodes - List of nodes</td>
-<td>[]OpenStackDataPlaneNodeSpec</td>
-<td>false</td>
-</tr>
-<tr>
-<td>nodeTemplate</td>
-<td>NodeTemplate - node attributes specific to this roles</td>
-<td>NodeSection</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">#</a></h1>
+<p>Here is a diagram with the EDPM components:</p>
+<p><img alt="EDPM Architecture" src="../diagrams/out/edpm.svg" title="EDPM Architecture" /></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-02-17
+      2023-02-27
     
   </small>
 </div>
