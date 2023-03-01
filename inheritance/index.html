@@ -484,10 +484,10 @@ Node 2
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2</span>
 <span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
 <span class="w">  </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-2.localdomain</span>
-<span class="w">  </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">node</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.19</span>
 <span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
 <span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
@@ -497,12 +497,12 @@ provided to both nodes. Only the information which differed per node,
 e.g. <code>ansibleHost</code>, had to be specified. Furthermore, the redundant
 information is not seen in the two nodes' CRs. I.e. we do not see the
 following from the <code>nodeTemplate</code> in node 1 and 2 above.
-<div class="highlight"><pre><span></span><code>    ansiblePort: 22
-    ansibleUser: root
-    managed: false
-    managementNetwork: ctlplane
-    networkConfig:
-      template: templates/net_config_bridge.j2
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">ansiblePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">22</span>
+<span class="w">    </span><span class="nt">ansibleUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">    </span><span class="nt">managed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">managementNetwork</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">    </span><span class="nt">networkConfig</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">templates/net_config_bridge.j2</span>
 </code></pre></div>
 However, it's unambiguous that each node has <code>ansiblePort</code> 22
 because they have <code>role: openstackdataplanerole-sample</code>. If the
@@ -515,13 +515,50 @@ updating only that node (e.g. with <code>oc edit</code>). In that case we'd see
 an <code>ansiblePort</code> set directly in that node's CR. This allows the user
 to change the <code>nodeTemplate</code> after creation and once reconciliation is
 completed all existing nodes will inherit the new value.</p>
+<p>Any top level property in the node overrides the whole property in the
+role so that there is no merging of any sub-properties. E.g. if the
+role <code>nodeTemplate</code> had a list like the following:
+<div class="highlight"><pre><span></span><code>    foo:
+      - bar: baz
+</code></pre></div>
+and a node had a list like the following:
+<div class="highlight"><pre><span></span><code>    foo:
+      - qux: quux
+</code></pre></div>
+Then the node will only have <code>{"qux": "quux"}</code> in its list. I.e. there
+would not be any merging and the node would not have also have
+<code>{"bar": "baz"}</code> in its list. This is the same way that Ansible merges
+variables and was done by design for simplicity.</p>
+<p>It's also possible to create a node directly outside of a role CR
+and define its role. If the following CR is created:
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dataplane.openstack.org/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenStackDataPlaneNode</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-3-from</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanerole-sample</span>
+<span class="w">  </span><span class="nt">hostName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstackdataplanenode-sample-3.localdomain</span>
+<span class="w">  </span><span class="nt">ansibleHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.20</span>
+<span class="w">  </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ctlplane</span>
+<span class="w">        </span><span class="nt">fixedIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.122.20</span>
+</code></pre></div>
+After the above CR is created, the node
+openstackdataplanenode-sample-3-from may then be inspected further
+using a command like
+<code>oc get OpenStackDataPlaneNode openstackdataplanenode-sample-3-from -o
+yaml</code> which should show that it inherited values from the role
+<code>nodeTemplate</code>. In cases like these, the <code>dataPlaneNodes</code> list will
+not reflect all of the nodes within the role.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-02-17
+      2023-02-02
     
   </small>
 </div>
