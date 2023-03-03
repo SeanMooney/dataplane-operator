@@ -353,6 +353,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#networkconfigsection" class="md-nav__link">
     NetworkConfigSection
   </a>
@@ -519,6 +526,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#networkconfigsection" class="md-nav__link">
     NetworkConfigSection
   </a>
@@ -598,6 +612,7 @@
 </ul>
 <h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
 <ul>
+<li><a href="#deploystrategysection">DeployStrategySection</a></li>
 <li><a href="#networkconfigsection">NetworkConfigSection</a></li>
 <li><a href="#networkssection">NetworksSection</a></li>
 <li><a href="#nodesection">NodeSection</a></li>
@@ -605,6 +620,33 @@
 <li><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></li>
 <li><a href="#openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus</a></li>
 </ul>
+<h4 id="deploystrategysection">DeployStrategySection<a class="headerlink" href="#deploystrategysection" title="Permanent link">#</a></h4>
+<p>DeployStrategySection for fields controlling the deployment</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deploy</td>
+<td>Deploy boolean to trigger ansible execution</td>
+<td>bool</td>
+<td>true</td>
+</tr>
+<tr>
+<td>ansibleTags</td>
+<td>AnsibleTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
 <h4 id="networkconfigsection">NetworkConfigSection<a class="headerlink" href="#networkconfigsection" title="Permanent link">#</a></h4>
 <p>NetworkConfigSection is a specification of the Network configuration details</p>
 <table>
@@ -813,10 +855,10 @@
 <td>false</td>
 </tr>
 <tr>
-<td>deploy</td>
-<td>Deploy boolean to trigger ansible execution</td>
-<td>bool</td>
-<td>true</td>
+<td>deployStrategy</td>
+<td>DeployStrategy section to control how the node is deployed</td>
+<td><a href="#deploystrategysection">DeployStrategySection</a></td>
+<td>false</td>
 </tr>
 <tr>
 <td>nodeFrom</td>
@@ -872,7 +914,7 @@
   <small>
     
       Last update:
-      2023-03-01
+      2023-03-02
     
   </small>
 </div>
