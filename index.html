@@ -19,7 +19,7 @@
         <link rel="next" href="openstack_dataplane/">
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.1">
     
     
       
@@ -282,8 +282,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#dataplane-roles-and-nodes" class="md-nav__link">
+    DataPlane, Roles, and Nodes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
   </a>
   
 </li>
@@ -519,8 +526,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
+  <a href="#dataplane-roles-and-nodes" class="md-nav__link">
+    DataPlane, Roles, and Nodes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
   </a>
   
 </li>
@@ -622,38 +636,52 @@
 <p>The dataplane-operator automates the deployment of an OpenStack dataplane.</p>
 <hr />
 <p><strong>NOTE</strong></p>
-<p>The OpenStackDataPlane CRD/controller will eventually be moved to
+<p>The OpenStackDataPlane CRD/controller may eventually be moved to
 <a href="https://github.com/openstack-k8s-operator/openstack-operator">openstack-operator</a>.
 The move is so that openstack-operator, as the umbrella operator, remains the
 single managing operator and UX for a complete OpenStack deployment
 (control plane and data plane).</p>
 <hr />
+<h2 id="dataplane-roles-and-nodes">DataPlane, Roles, and Nodes<a class="headerlink" href="#dataplane-roles-and-nodes" title="Permanent link">#</a></h2>
 <p>The dataplane-operator exposes the concepts of data plane role and nodes. These
 are represented as CRD's within the operator:</p>
 <ul>
+<li><a href="https://github.com/openstack-k8s-operators/dataplane-operator/blob/main/config/crd/bases/dataplane.openstack.org_openstackdataplane.yaml">OpenStackDataPlane</a></li>
 <li><a href="https://github.com/openstack-k8s-operators/dataplane-operator/blob/main/config/crd/bases/dataplane.openstack.org_openstackdataplaneroles.yaml">OpenStackDataPlaneRole</a></li>
 <li><a href="https://github.com/openstack-k8s-operators/dataplane-operator/blob/main/config/crd/bases/dataplane.openstack.org_openstackdataplanenodes.yaml">OpenStackDataPlaneNode</a></li>
 </ul>
+<p>The OpenStackDataPlane CRD provides for a logical grouping of roles, that
+altogether make up an OpenStack dataplane.</p>
+<p>Roles are grouped into the dataplane with the <code>DataPlane</code> field set on the
+role. Roles are also labeled with the dataplane they belong to:</p>
+<p><code>openstackdataplane=&lt;dataplane-name&gt;</code></p>
+<p>The dataplane does not maintain a list of roles. The source of dataplane and
+role grouping is stored in the <code>DataPlane</code> field of the role.</p>
 <p>The OpenStackDataPlaneRole CRD provides for a logical grouping of nodes of a
-similar type within a role.  Similarities within a role are defined by the
+similar type within a role. Similarities within a role are defined by the
 user, and could be of a small scope (ansible port), or a large scope (same
-network config, nova config, provisioning config, etc).</p>
-<p>A role also provides for an inheritance model of node attributes. Attributes on
-the role will automatically be inherited by the nodes on that role. Nodes can
-also set their own attributes, which will override the inherited values from
-the role.</p>
-<p>The OpenStackDataPlaneRole controller creates and updates a node CR for each
-node in that role. It also provides synchronization points as its nodes are
-deployed.</p>
-<p>The OpenStackDataPlaneNode CRD and controller encapsulates all the provisioning
-and deployment logic for a single node. The OpenStackDataPlaneNode controller
-operates on a single node CR, and manages that node in isolation, performing
-all the necessary baremetal provisioning and software deployment/configuration
-on that node.</p>
-<p>The OpenStackDataPlane CRD and controller orchestrates deploying roles, and
-provides synchronization points between role deployment.</p>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>// TODO(user): An in-depth paragraph about your project and overview of use</p>
+network config, nova config, provisioning config, etc). The properties that all
+nodes in a role share is set in the NodeTemplate field of the role's Spec.</p>
+<p>A role also provides for an inheritance model of node attributes. Properties
+from the <code>NodeTemplate</code> on the role will automatically be inherited by the
+nodes on that role. Nodes can also set their own properties within their <code>Node</code>
+field, which will override the inherited values from the role.</p>
+<p>Similarly to the dataplane and role grouping, the grouping of nodes within a
+role is done with the <code>Role</code> field on the node.  Node's in a given role will
+have the <code>Role</code> field set to their role name.  Nodes do not have to be in a
+role, in which case their <code>Role</code> field will be empty. Roles do not maintain the
+list of nodes in that role. This ensures that the single source of node and
+role association is stored only in the <code>Role</code> field on the node. Nodes are also
+labeled with their role using <code>openstackdataplanerole=&lt;role-name&gt;</code> to allow for
+easy querying and filtering on nodes in a role.</p>
+<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">#</a></h2>
+<p>The deployment handling in <code>dataplane-operator</code> is implemented within the
+deployment package at <code>pkg/deployment</code>. This allows for both a node and role to
+be deployed in the same way. A node uses an ansible inventory containing just
+that single node when it triggers a deployment. A role uses an ansible
+inventory containing all the nodes in that role when it triggers a deployment.
+This allows for deploying just a single node at a time, or an entire role for
+bulk deployment.</p>
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
 <p>You’ll need a Kubernetes cluster to run against. You can use <a href="https://sigs.k8s.io/kind">KIND</a> to get a local cluster for testing, or run against a remote cluster.
 <strong>Note:</strong> Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster <code>kubectl cluster-info</code> shows).</p>
@@ -767,7 +795,7 @@ limitations under the License.</p>
     <script id="__config" type="application/json">{"base": ".", "features": ["search.suggest", "search.highlight", "search.share"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.ce72ebac.min.js"></script>
+      <script src="assets/javascripts/bundle.b78d2936.min.js"></script>
       
     
   </body>
