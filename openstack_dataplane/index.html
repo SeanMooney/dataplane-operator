@@ -353,8 +353,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#openstackdataplanespec" class="md-nav__link">
-    OpenStackDataPlaneSpec
+  <a href="#openstackdataplanestatus" class="md-nav__link">
+    OpenStackDataPlaneStatus
   </a>
   
 </li>
@@ -505,8 +505,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#openstackdataplanespec" class="md-nav__link">
-    OpenStackDataPlaneSpec
+  <a href="#openstackdataplanestatus" class="md-nav__link">
+    OpenStackDataPlaneStatus
   </a>
   
 </li>
@@ -543,7 +543,7 @@
 <h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
 <ul>
 <li><a href="#openstackdataplanelist">OpenStackDataPlaneList</a></li>
-<li><a href="#openstackdataplanespec">OpenStackDataPlaneSpec</a></li>
+<li><a href="#openstackdataplanestatus">OpenStackDataPlaneStatus</a></li>
 </ul>
 <h4 id="openstackdataplane">OpenStackDataPlane<a class="headerlink" href="#openstackdataplane" title="Permanent link">#</a></h4>
 <p>OpenStackDataPlane is the Schema for the openstackdataplanes API</p>
@@ -605,8 +605,8 @@
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanespec">OpenStackDataPlaneSpec<a class="headerlink" href="#openstackdataplanespec" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneSpec defines the desired state of OpenStackDataPlane</p>
+<h4 id="openstackdataplanestatus">OpenStackDataPlaneStatus<a class="headerlink" href="#openstackdataplanestatus" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneStatus defines the observed state of OpenStackDataPlaneNode</p>
 <table>
 <thead>
 <tr>
@@ -618,9 +618,15 @@
 </thead>
 <tbody>
 <tr>
-<td>dataPlaneRoles</td>
-<td>DataPlaneRoles - List of roles</td>
-<td>[]OpenStackDataPlaneRoleSpec</td>
+<td>conditions</td>
+<td>Conditions</td>
+<td>condition.Conditions</td>
+<td>false</td>
+</tr>
+<tr>
+<td>deployed</td>
+<td>Deployed</td>
+<td>bool</td>
 <td>false</td>
 </tr>
 </tbody>
@@ -632,7 +638,7 @@
   <small>
     
       Last update:
-      2023-01-26
+      2023-03-08
     
   </small>
 </div>

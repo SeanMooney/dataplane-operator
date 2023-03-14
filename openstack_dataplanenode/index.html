@@ -401,13 +401,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodestatus" class="md-nav__link">
-    OpenStackDataPlaneNodeStatus
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -574,13 +567,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#openstackdataplanenodestatus" class="md-nav__link">
-    OpenStackDataPlaneNodeStatus
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -618,7 +604,6 @@
 <li><a href="#nodesection">NodeSection</a></li>
 <li><a href="#openstackdataplanenodelist">OpenStackDataPlaneNodeList</a></li>
 <li><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></li>
-<li><a href="#openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus</a></li>
 </ul>
 <h4 id="deploystrategysection">DeployStrategySection<a class="headerlink" href="#deploystrategysection" title="Permanent link">#</a></h4>
 <p>DeployStrategySection for fields controlling the deployment</p>
@@ -791,7 +776,7 @@
 <tr>
 <td>status</td>
 <td></td>
-<td><a href="#openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus</a></td>
+<td>OpenStackDataPlaneStatus</td>
 <td>false</td>
 </tr>
 </tbody>
@@ -881,40 +866,13 @@
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="openstackdataplanenodestatus">OpenStackDataPlaneNodeStatus<a class="headerlink" href="#openstackdataplanenodestatus" title="Permanent link">#</a></h4>
-<p>OpenStackDataPlaneNodeStatus defines the observed state of OpenStackDataPlaneNode</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>conditions</td>
-<td>Conditions</td>
-<td>condition.Conditions</td>
-<td>false</td>
-</tr>
-<tr>
-<td>deployed</td>
-<td>Deployed</td>
-<td>bool</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-03-14
+      2023-03-08
     
   </small>
 </div>
