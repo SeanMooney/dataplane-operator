@@ -367,6 +367,34 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkconfigsection" class="md-nav__link">
+    NetworkConfigSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkssection" class="md-nav__link">
+    NetworksSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodesection" class="md-nav__link">
+    NodeSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanerole" class="md-nav__link">
     OpenStackDataPlaneRole
   </a>
@@ -491,6 +519,34 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkconfigsection" class="md-nav__link">
+    NetworkConfigSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkssection" class="md-nav__link">
+    NetworksSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodesection" class="md-nav__link">
+    NodeSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanerole" class="md-nav__link">
     OpenStackDataPlaneRole
   </a>
@@ -542,9 +598,157 @@
 </ul>
 <h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
 <ul>
+<li><a href="#deploystrategysection">DeployStrategySection</a></li>
+<li><a href="#networkconfigsection">NetworkConfigSection</a></li>
+<li><a href="#networkssection">NetworksSection</a></li>
+<li><a href="#nodesection">NodeSection</a></li>
 <li><a href="#openstackdataplanerolelist">OpenStackDataPlaneRoleList</a></li>
 <li><a href="#openstackdataplanerolespec">OpenStackDataPlaneRoleSpec</a></li>
 </ul>
+<h4 id="deploystrategysection">DeployStrategySection<a class="headerlink" href="#deploystrategysection" title="Permanent link">#</a></h4>
+<p>DeployStrategySection for fields controlling the deployment</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deploy</td>
+<td>Deploy boolean to trigger ansible execution</td>
+<td>bool</td>
+<td>true</td>
+</tr>
+<tr>
+<td>ansibleTags</td>
+<td>AnsibleTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="networkconfigsection">NetworkConfigSection<a class="headerlink" href="#networkconfigsection" title="Permanent link">#</a></h4>
+<p>NetworkConfigSection is a specification of the Network configuration details</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td>Template - ansible j2 nic config template to use when applying node network configuration</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="networkssection">NetworksSection<a class="headerlink" href="#networkssection" title="Permanent link">#</a></h4>
+<p>NetworksSection is a specification of the network attributes</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>network</td>
+<td>Network - Network name to configure</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>fixedIP</td>
+<td>FixedIP - Specific IP address to use for this network</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="nodesection">NodeSection<a class="headerlink" href="#nodesection" title="Permanent link">#</a></h4>
+<p>NodeSection is a specification of the node attributes</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>networkConfig</td>
+<td>NetworkConfig - Network configuration details. Contains os-net-config related properties.</td>
+<td><a href="#networkconfigsection">NetworkConfigSection</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>networks</td>
+<td>Networks - Instance networks</td>
+<td>[]<a href="#networkssection">NetworksSection</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>managed</td>
+<td>Managed - Whether the node is actually provisioned (True) or should be treated as preprovisioned (False)</td>
+<td>bool</td>
+<td>false</td>
+</tr>
+<tr>
+<td>managementNetwork</td>
+<td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleUser</td>
+<td>AnsibleUser SSH user for Ansible connection</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansiblePort</td>
+<td>AnsiblePort SSH port for Ansible connection</td>
+<td>int</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleVars</td>
+<td>AnsibleVars for configuring ansible</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleSSHPrivateKeySecret</td>
+<td>AnsibleSSHPrivateKeySecret Private SSH Key secret containing private SSH key for connecting to node. Must be of the form: Secret.data.ssh-privatekey: <base64 encoded private key contents> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>extraMounts</td>
+<td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
+<td>[]storage.VolMounts</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
 <h4 id="openstackdataplanerole">OpenStackDataPlaneRole<a class="headerlink" href="#openstackdataplanerole" title="Permanent link">#</a></h4>
 <p>OpenStackDataPlaneRole is the Schema for the openstackdataplaneroles API</p>
 <table>
@@ -626,13 +830,13 @@
 <tr>
 <td>nodeTemplate</td>
 <td>NodeTemplate - node attributes specific to this roles</td>
-<td>NodeSection</td>
+<td><a href="#nodesection">NodeSection</a></td>
 <td>false</td>
 </tr>
 <tr>
 <td>deployStrategy</td>
 <td>DeployStrategy section to control how the node is deployed</td>
-<td>DeployStrategySection</td>
+<td><a href="#deploystrategysection">DeployStrategySection</a></td>
 <td>false</td>
 </tr>
 <tr>
@@ -656,7 +860,7 @@
   <small>
     
       Last update:
-      2023-03-08
+      2023-03-15
     
   </small>
 </div>
