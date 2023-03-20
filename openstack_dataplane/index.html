@@ -353,6 +353,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#openstackdataplanespec" class="md-nav__link">
+    OpenStackDataPlaneSpec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanestatus" class="md-nav__link">
     OpenStackDataPlaneStatus
   </a>
@@ -505,6 +512,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#openstackdataplanespec" class="md-nav__link">
+    OpenStackDataPlaneSpec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanestatus" class="md-nav__link">
     OpenStackDataPlaneStatus
   </a>
@@ -543,6 +557,7 @@
 <h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
 <ul>
 <li><a href="#openstackdataplanelist">OpenStackDataPlaneList</a></li>
+<li><a href="#openstackdataplanespec">OpenStackDataPlaneSpec</a></li>
 <li><a href="#openstackdataplanestatus">OpenStackDataPlaneStatus</a></li>
 </ul>
 <h4 id="openstackdataplane">OpenStackDataPlane<a class="headerlink" href="#openstackdataplane" title="Permanent link">#</a></h4>
@@ -605,6 +620,39 @@
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplanespec">OpenStackDataPlaneSpec<a class="headerlink" href="#openstackdataplanespec" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneSpec defines the desired state of OpenStackDataPlane</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodes</td>
+<td>Nodes - Map of nodes</td>
+<td>map[string]OpenStackDataPlaneNodeSpec</td>
+<td>false</td>
+</tr>
+<tr>
+<td>roles</td>
+<td>Roles - Map of roles</td>
+<td>map[string]OpenStackDataPlaneRoleSpec</td>
+<td>false</td>
+</tr>
+<tr>
+<td>deployStrategy</td>
+<td>DeployStrategy section to control how the node is deployed</td>
+<td>DeployStrategySection</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
 <h4 id="openstackdataplanestatus">OpenStackDataPlaneStatus<a class="headerlink" href="#openstackdataplanestatus" title="Permanent link">#</a></h4>
 <p>OpenStackDataPlaneStatus defines the observed state of OpenStackDataPlaneNode</p>
 <table>
@@ -638,7 +686,7 @@
   <small>
     
       Last update:
-      2023-03-08
+      2023-03-20
     
   </small>
 </div>
