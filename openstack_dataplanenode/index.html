@@ -795,12 +795,6 @@
 <td>false</td>
 </tr>
 <tr>
-<td>managed</td>
-<td>Managed - Whether the node is actually provisioned (True) or should be treated as preprovisioned (False)</td>
-<td>bool</td>
-<td>false</td>
-</tr>
-<tr>
 <td>managementNetwork</td>
 <td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
 <td>string</td>
@@ -835,6 +829,18 @@
 <td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
 <td>[]storage.VolMounts</td>
 <td>true</td>
+</tr>
+<tr>
+<td>userData</td>
+<td>UserData  node specific user-data</td>
+<td>*corev1.SecretReference</td>
+<td>false</td>
+</tr>
+<tr>
+<td>networkData</td>
+<td>NetworkData  node specific network-data</td>
+<td>*corev1.SecretReference</td>
+<td>false</td>
 </tr>
 </tbody>
 </table>
@@ -968,7 +974,7 @@
   <small>
     
       Last update:
-      2023-04-24
+      2023-05-10
     
   </small>
 </div>
