@@ -394,6 +394,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#novatemplate" class="md-nav__link">
+    NovaTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanenode" class="md-nav__link">
     OpenStackDataPlaneNode
   </a>
@@ -567,6 +574,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#novatemplate" class="md-nav__link">
+    NovaTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplanenode" class="md-nav__link">
     OpenStackDataPlaneNode
   </a>
@@ -623,6 +637,7 @@
 <li><a href="#networkconfigsection">NetworkConfigSection</a></li>
 <li><a href="#networkssection">NetworksSection</a></li>
 <li><a href="#nodesection">NodeSection</a></li>
+<li><a href="#novatemplate">NovaTemplate</a></li>
 <li><a href="#openstackdataplanenodelist">OpenStackDataPlaneNodeList</a></li>
 <li><a href="#openstackdataplanenodespec">OpenStackDataPlaneNodeSpec</a></li>
 </ul>
@@ -842,6 +857,51 @@
 <td>*corev1.SecretReference</td>
 <td>false</td>
 </tr>
+<tr>
+<td>nova</td>
+<td>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node. If it is specified both in OpenstackDataPlaneRole and the OpenstackDataPlaneNode for the same EDPM node then the configuration in OpenstackDataPlaneNode will be used and the configuration in the OpenstackDataPlaneRole will be ignored. If this is defined in neither then compute service(s) will not be deployed on the EDPM node.</td>
+<td>*<a href="#novatemplate">NovaTemplate</a></td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="novatemplate">NovaTemplate<a class="headerlink" href="#novatemplate" title="Permanent link">#</a></h4>
+<p>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cellName</td>
+<td>CellName is the name of nova cell the compute(s) should be connected to</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>novaInstance</td>
+<td>NovaInstance is the name of the Nova CR that represents the deployment the compute(s) belongs to. You can query the name of the Nova CRs in you system via <code>oc get Nova -o jsonpath='{.items[*].metadata.name}'</code></td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>customServiceConfig</td>
+<td>CustomServiceConfig - customize the nova-compute service config using this parameter to change service defaults, or overwrite rendered information using raw OpenStack config format. The content gets added to to /etc/nova/nova.conf.d directory as 02-nova-override.conf file.</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>deploy</td>
+<td>Deploy true means the compute service(s) are allowed to be changed on the EDPM node(s) if necessary. If set to false then only the pre-requisite data (e.g. config maps) will be generated but no actual modification on the compute node(s) itself will happen.</td>
+<td>*bool</td>
+<td>true</td>
+</tr>
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
@@ -974,7 +1034,7 @@
   <small>
     
       Last update:
-      2023-05-10
+      2023-04-24
     
   </small>
 </div>
