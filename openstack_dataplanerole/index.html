@@ -858,12 +858,6 @@
 <td>false</td>
 </tr>
 <tr>
-<td>services</td>
-<td>Services list</td>
-<td>*[]string</td>
-<td>true</td>
-</tr>
-<tr>
 <td>nova</td>
 <td>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node. If it is specified both in OpenstackDataPlaneRole and the OpenstackDataPlaneNode for the same EDPM node then the configuration in OpenstackDataPlaneNode will be used and the configuration in the OpenstackDataPlaneRole will be ignored. If this is defined in neither then compute service(s) will not be deployed on the EDPM node.</td>
 <td>*<a href="#novatemplate">NovaTemplate</a></td>
@@ -1025,6 +1019,12 @@
 <td>[]string</td>
 <td>true</td>
 </tr>
+<tr>
+<td>services</td>
+<td>Services list</td>
+<td>[]string</td>
+<td>true</td>
+</tr>
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
@@ -1034,7 +1034,7 @@
   <small>
     
       Last update:
-      2023-05-25
+      2023-06-08
     
   </small>
 </div>
