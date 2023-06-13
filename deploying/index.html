@@ -1,0 +1,1188 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenStack Data Plane Operator">
+      
+      
+        <meta name="author" content="OpenStack Team">
+      
+      
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/deploying/">
+      
+      
+        <link rel="prev" href="../inheritance/">
+      
+      
+        <link rel="next" href="../composable-services/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>Deploying a DataPlane - OpenStack Data Plane Operator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploying-a-dataplane" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenStack Data Plane Operator" class="md-header__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
+      
+  <img src="../images/openstack-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenStack Data Plane Operator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploying a DataPlane
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/openstack-k8s-operators/dataplane-operator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    openstack-k8s-operators/dataplane-operator
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenStack Data Plane Operator" class="md-nav__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
+      
+  <img src="../images/openstack-logo.png" alt="logo">
+
+    </a>
+    OpenStack Data Plane Operator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/openstack-k8s-operators/dataplane-operator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    openstack-k8s-operators/dataplane-operator
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Custom Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Custom Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openstack_dataplane/" class="md-nav__link">
+        OpenStackDataPlane
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openstack_dataplanenode/" class="md-nav__link">
+        OpenStackDataPlaneNode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openstack_dataplanerole/" class="md-nav__link">
+        OpenStackDataPlaneRole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openstack_dataplaneservice/" class="md-nav__link">
+        OpenStackDataPlaneService
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        Architecture
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        Design
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Deploying a DataPlane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Deploying a DataPlane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Deploying a DataPlane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Deploying a DataPlane
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#samples" class="md-nav__link">
+    Samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlplane" class="md-nav__link">
+    ControlPlane
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configured-namespace-openstack" class="md-nav__link">
+    Configured namespace (openstack)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review-the-available-fields-on-the-dataplane-crds" class="md-nav__link">
+    Review the available fields on the dataplane CRD's
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-a-dataplane-using-pre-provisioned-nodes" class="md-nav__link">
+    Deploying a dataplane using pre-provisioned nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying a dataplane using pre-provisioned nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-ssh-key-secret" class="md-nav__link">
+    Create SSH key secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-openstackdataplaneservices" class="md-nav__link">
+    Create OpenStackDataPlaneServices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-openstackdataplane" class="md-nav__link">
+    Create OpenStackDataPlane
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-dataplane" class="md-nav__link">
+    Deploy the dataplane.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-dataplane-conditions" class="md-nav__link">
+    Understanding dataplane conditions
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding dataplane conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#condition-progress" class="md-nav__link">
+    Condition Progress
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composable-services/" class="md-nav__link">
+        Composable services
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#samples" class="md-nav__link">
+    Samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlplane" class="md-nav__link">
+    ControlPlane
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configured-namespace-openstack" class="md-nav__link">
+    Configured namespace (openstack)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review-the-available-fields-on-the-dataplane-crds" class="md-nav__link">
+    Review the available fields on the dataplane CRD's
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-a-dataplane-using-pre-provisioned-nodes" class="md-nav__link">
+    Deploying a dataplane using pre-provisioned nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying a dataplane using pre-provisioned nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-ssh-key-secret" class="md-nav__link">
+    Create SSH key secret
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-openstackdataplaneservices" class="md-nav__link">
+    Create OpenStackDataPlaneServices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-openstackdataplane" class="md-nav__link">
+    Create OpenStackDataPlane
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-dataplane" class="md-nav__link">
+    Deploy the dataplane.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-dataplane-conditions" class="md-nav__link">
+    Understanding dataplane conditions
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding dataplane conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#condition-progress" class="md-nav__link">
+    Condition Progress
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="deploying-a-dataplane">Deploying a DataPlane<a class="headerlink" href="#deploying-a-dataplane" title="Permanent link">#</a></h1>
+<p>Deploying a dataplane consists of creating the custom resources (whether
+OpenStackDataPlane, OpenStackDataPlaneRole, or OpenStackDataPlaneNode) that
+define the layout of the dataplane.</p>
+<p>This documentation will cover using each resource individually, as well as
+using the OpenStackDataPlane resource to deploy everything in a single
+resource.</p>
+<h2 id="samples">Samples<a class="headerlink" href="#samples" title="Permanent link">#</a></h2>
+<p>The
+<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/config/samples">config/samples</a>
+directory contains many sample custom resources that illustrate different
+dataplane deployments. These can be used as a starting point and customized for
+a given deployment, or a resource can be entirely written from no sample.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<h3 id="controlplane">ControlPlane<a class="headerlink" href="#controlplane" title="Permanent link">#</a></h3>
+<p>A functional dataplane requires a functional controlplane deployed by
+<a href="https://github.com/openstack-k8s-operators/openstack-operator">openstack-operator</a>.
+This documentation will make use of resources within the controlplane to
+correctly customize the dataplane configuration. The docs here do not cover
+deploying a controlplane and assume that has already been completed separately.</p>
+<h3 id="configured-namespace-openstack">Configured namespace (openstack)<a class="headerlink" href="#configured-namespace-openstack" title="Permanent link">#</a></h3>
+<p>The <code>oc</code> commands shown in the documentation assume that the <code>oc</code> client has
+been configured to use the correct namespace for an OpenStack deployment. By
+default, the namespace is <code>openstack</code>.</p>
+<h3 id="review-the-available-fields-on-the-dataplane-crds">Review the available fields on the dataplane CRD's<a class="headerlink" href="#review-the-available-fields-on-the-dataplane-crds" title="Permanent link">#</a></h3>
+<p>Further documentation on each field available in the dataplane CRD's is
+available under the Custom Resources documentation section. This deployment
+section does not go into full detail about each available field.</p>
+<h2 id="deploying-a-dataplane-using-pre-provisioned-nodes">Deploying a dataplane using pre-provisioned nodes<a class="headerlink" href="#deploying-a-dataplane-using-pre-provisioned-nodes" title="Permanent link">#</a></h2>
+<p>This section documents using pre-provisioned nodes in the dataplane.
+Pre-provisioned nodes already have their OS (operating system) installed and
+are powered on and booted into the installed OS.</p>
+<h3 id="create-ssh-key-secret">Create SSH key secret<a class="headerlink" href="#create-ssh-key-secret" title="Permanent link">#</a></h3>
+<p>Pre-provisioned nodes must be pre-configured with an SSH public key in the
+<code>$HOME/.ssh/authorized_keys</code> file for a user that has password-less sudo
+privileges. Ansible will make use of this user and SSH key when it executes.</p>
+<p>The private key for the SSH keypair is created as a Secret in the cluster. Set
+the environment variables shown with the name of the secret and the path to the
+SSH private key. Run the shown command to create the Secret in the cluster.</p>
+<pre><code># Name of the secret that will be created in the cluster
+SECRET_NAME="dataplane-ansible-ssh-private-key-secret"
+# Path of the SSH private key file. Public key file should also exist at
+# the same path, but with a ".pub" extension.
+SSH_KEY_FILE="ansibleee-ssh-key-id_rsa"
+
+oc create secret generic ${SECRET_NAME} \
+--save-config \
+--dry-run=client \
+--from-file=authorized_keys=${SSH_KEY_FILE}.pub \
+--from-file=ssh-privatekey=${SSH_KEY_FILE} \
+--from-file=ssh-publickey=${SSH_KEY_FILE}.pub \
+-o yaml | \
+oc apply -f -
+</code></pre>
+<p>Verify the secret was created:</p>
+<pre><code>oc describe secret dataplane-ansible-ssh-private-key-secret
+</code></pre>
+<h3 id="create-openstackdataplaneservices">Create OpenStackDataPlaneServices<a class="headerlink" href="#create-openstackdataplaneservices" title="Permanent link">#</a></h3>
+<p>A dataplane is configured with a set of services that define with Ansible roles
+and task files are executed to complete the deployment. The dataplane-operator
+has a default list of services that are deployed by default (unless the
+<code>services</code> field is overridden). The services are provided within the
+<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/config/services">config/services</a>
+directory and must be created with <code>oc</code>. Specify the path to where
+dataplane-operator is checked out and create the services.</p>
+<pre><code>oc create -f dataplane-operator/config/services
+</code></pre>
+<p>Verify the services were created.</p>
+<pre><code>oc get openstackdataplaneservice
+</code></pre>
+<p>The output should be similar to:</p>
+<pre><code>NAME                AGE
+configure-network   6d7h
+configure-os        6d6h
+install-os          6d6h
+run-os              6d6h
+validate-network    6d6h
+</code></pre>
+<p>Each service uses the
+<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/#role"><code>role</code></a>
+field from the <code>OpenStackAnsibleEE</code> CRD provided
+by
+<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>
+to define the Ansible roles and task files that are executed as part of that
+service.</p>
+<p>For example, the list of roles for the <code>install-os</code> service can be seen by
+describing the resource.</p>
+<pre><code>oc describe openstackdataplaneservice install-os
+</code></pre>
+<p>Any role listed in the <code>osp.edpm</code> namespace is provided by the
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible">edpm-ansible</a>
+project. Within that project, the ansible variables that can be used to
+configure the role are documented.</p>
+<p>For example, in the describe output for the <code>install-os</code> service, the
+<code>osp.edpm.edpm_sshd</code> role is seen.</p>
+<pre><code>import_role:
+  Name:        osp.edpm.edpm_sshd
+  tasks_from:  install.yml
+Name:          Install edpm_sshd
+Tags:
+  edpm_sshd
+</code></pre>
+<p>The ansible variables that configure the
+behavior of the <code>osp.edpm.edpm_sshd</code> role are available at
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml">https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml</a>.</p>
+<h3 id="create-openstackdataplane">Create OpenStackDataPlane<a class="headerlink" href="#create-openstackdataplane" title="Permanent link">#</a></h3>
+<p>This document will cover writing the <code>YAML</code> document for an
+<code>OpenStackDataPlane</code> resource. Once the document is ready, it will be created
+with <code>oc</code> as the last step.</p>
+<p>Start the <code>YAML</code> document in an <code>openstack-edpm.yaml</code> file and give the
+dataplane a name.</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+</code></pre>
+<p>Begin writing the dataplane spec. Initially, a <code>deployStrategy</code> field will be
+added to the spec that contains <code>deploy: false</code>. This allows for creating
+the dataplane resources without triggering an Ansible execution immediately.</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+spec:
+  deployStrategy:
+      deploy: false
+</code></pre>
+<p>Add roles to the dataplane. This example uses a single role, but any number
+could be added. A single role called <code>dataplane-role</code> is added for this
+example. Under the role, a <code>preProvisioned</code> field is set to <code>True</code> since these
+nodes are preprovisioned. A <code>nodeTemplate</code> field is also started that contains
+the fields that will have their values inherited by each node in the role. See
+<a href="../inheritance/">Inheritance</a> for more details about how role and node
+inheritance works. Within <code>nodeTemplate</code>, the fields shown are documented
+inline in the example.</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+spec:
+  deployStrategy:
+    deploy: false
+  roles:
+    edpm-compute:
+      preProvisioned: true
+      nodeTemplate:
+
+        # User that has the SSH key for access
+        ansibleUser: rhel-user
+        # Secret name containing SSH key. Use the same secret name as
+        # ${SECRET_NAME} that was used to create the secret.
+        ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
+
+        # Defining the novaTemplate here means the nodes in this role are
+        # computes
+        nova: {}
+
+        # Ansible variables that configure how the roles from edpm-ansible
+        # customize the deployment.
+        ansibleVars:
+
+          # edpm_network_config
+          # Default nic config template for a EDPM compute node
+          # These vars are edpm_network_config role vars
+          edpm_network_config_template: templates/single_nic_vlans/single_nic_vlans.j2
+
+          # See config/samples/dataplane_v1beta1_openstackdataplane.yaml
+          # for the other most common ansible varialbes that need to be set.
+</code></pre>
+<p>The list of ansible variables that can be set under <code>ansibleVars</code> is extensive.
+To understand what variables are available for each service, see the
+documentation in the <a href="#create-openstackdataplaneservices">Create
+OpenStackDataPlaneServices</a> section.</p>
+<p>Some of the ansible variables will need to be set based on values from the
+controlplane that is already deployed. This set of ansible variables and the
+<code>oc</code> command that can be used to get their values are shown below.</p>
+<pre><code>export EDPM_OVN_METADATA_AGENT_TRANSPORT_URL=$(oc get secret rabbitmq-transport-url-neutron-neutron-transport -o json | jq -r .data.transport_url | base64 -d)
+export EDPM_OVN_METADATA_AGENT_SB_CONNECTION=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r .status.dbAddress)
+export EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST=$(oc get svc nova-metadata-internal -o json |jq -r '.status.loadBalancer.ingress[0].ip')
+export EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET=$(oc get secret osp-secret -o json | jq -r .data.MetadataSecret  | base64 -d)
+export EDPM_OVN_METADATA_AGENT_BIND_HOST=127.0.0.1
+export EDPM_OVN_DBS=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r '.status.networkAttachments."openstack/internalapi"[0]')
+
+echo "
+edpm_ovn_metadata_agent_DEFAULT_transport_url: ${EDPM_OVN_METADATA_AGENT_TRANSPORT_URL}
+edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ${EDPM_OVN_METADATA_AGENT_SB_CONNECTION}
+edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ${EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST}
+edpm_ovn_metadata_agent_metadata_agent_DEFAULT_metadata_proxy_shared_secret: ${EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET}
+edpm_ovn_metadata_agent_DEFAULT_bind_host: ${EDPM_OVN_METADATA_AGENT_BIND_HOST}
+edpm_ovn_dbs:
+- ${EDPM_OVN_DBS}
+"
+</code></pre>
+<p>Add the output to the <code>ansibleVars</code> field to configure the values on the
+role.</p>
+<p>Add nodes to the dataplane. Each node should have its <code>role</code> field set to the
+name of its role. Since we are using a single role in this example, that role
+name will be <code>edpm-compute</code>. Each node will also inherit values
+from the <code>nodeTemplate</code> field on its role into the <code>node</code> field on the node.
+However, certain fields will need to be overridden given that they are specific
+to a node. In this example, <code>ansibleVars</code> has the node specific variables.</p>
+<hr />
+<p><strong> NOTE </strong></p>
+<p>In the case of <code>ansibleVars</code>, the value is merged with that of the value from
+the role. This makes it so that the entire value of <code>ansibleVars</code> from the role
+does not need to be reproduced for each node just to set a few node specific
+values.</p>
+<hr />
+<p>With the nodes and the controlplane specific variables added, the full
+<code>openstack-datplane</code> <code>YAML</code> document looks like the following:</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+spec:
+  deployStrategy:
+    deploy: false
+  roles:
+    edpm-compute:
+      preProvisioned: true
+      nodeTemplate:
+
+        # User that has the SSH key for access
+        ansibleUser: rhel-user
+        # Secret name containing SSH key. Use the same secret name as
+        # ${SECRET_NAME} that was used to create the secret.
+        ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
+
+        # Defining the novaTemplate here means the nodes in this role are
+        # computes
+        nova: {}
+
+        # Ansible variables that configure how the roles from edpm-ansible
+        # customize the deployment.
+        ansibleVars:
+
+          # edpm_network_config
+          # Default nic config template for a EDPM compute node
+          # These vars are edpm_network_config role vars
+          edpm_network_config_template: templates/single_nic_vlans/single_nic_vlans.j2
+
+          # Variables set with values from the controlplane
+          edpm_ovn_metadata_agent_default_transport_url: rabbit://default_user@rabbitmq.openstack.svc:5672
+          edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: tcp:10.217.5.121:6642
+          edpm_ovn_metadata_agent_metadata_agent_default_nova_metadata_host: 127.0.0.1
+          edpm_ovn_metadata_agent_metadata_agent_default_metadata_proxy_shared_secret: 12345678
+          edpm_ovn_metadata_agent_default_bind_host: 127.0.0.1
+          edpm_ovn_dbs:
+          - 192.168.24.1
+
+          # See config/samples/dataplane_v1beta1_openstackdataplane.yaml
+          # for the other most common ansible varialbes that need to be set.
+
+  nodes:
+    edpm-compute-0:
+      role: edpm-compute
+      hostName: edpm-compute-0
+      ansibleHost: 192.168.122.100
+      node:
+        ansibleVars: |
+          ctlplane_ip: 192.168.122.100
+          internal_api_ip: 172.17.0.100
+          storage_ip: 172.18.0.100
+          tenant_ip: 172.19.0.100
+          fqdn_internal_api: edpm-compute-0.example.com
+    edpm-compute-1:
+      role: edpm-compute
+      hostName: edpm-compute-1
+      ansibleHost: 192.168.122.101
+      node:
+        ansibleVars: |
+          ctlplane_ip: 192.168.122.101
+          internal_api_ip: 172.17.0.101
+          storage_ip: 172.18.0.101
+          tenant_ip: 172.19.0.101
+          fqdn_internal_api: edpm-compute-1.example.com
+</code></pre>
+<p>Create the dataplane using the <code>oc</code> command.</p>
+<pre><code>oc create -f openstack-edpm.yaml
+</code></pre>
+<p>Verify that the dataplane, role, and nodes were created.</p>
+<pre><code>oc get openstackdataplane
+oc get openstackdataplanerole
+oc get openstackdataplanenode
+</code></pre>
+<p>The output should be similar to:</p>
+<pre><code>$ oc get openstackdataplane
+NAME             STATUS   MESSAGE
+openstack-edpm   False    Deployment not started
+$ oc get openstackdataplanerole
+NAME           STATUS   MESSAGE
+edpm-compute   False    Deployment not started
+$ oc get openstackdataplanenode
+NAME             STATUS   MESSAGE
+edpm-compute-0   False    Deployment not started
+edpm-compute-1   False    Deployment not started
+</code></pre>
+<h3 id="deploy-the-dataplane">Deploy the dataplane.<a class="headerlink" href="#deploy-the-dataplane" title="Permanent link">#</a></h3>
+<p>With the dataplane resources created, it can be seen from their status message
+that they have not yet been deployed. This means no ansible has been executed
+to configure any of the services on the nodes. They still need to be deployed.</p>
+<p>To deploy the <code>openstack-edpm</code> dataplane resource, the
+<code>spec.deployStrategy.deploy</code> field needs to be set to <code>True</code>. This will trigger
+the deployment of all the configured services across the nodes. The field can
+be set with the following command to start the deployment:</p>
+<pre><code>oc patch openstackdataplane openstack-edpm  -p='[{"op": "replace", "path": "/spec/deployStrategy/deploy", "value":true}]' --type json
+</code></pre>
+<p>The <code>oc patch</code> command sets the <code>deploy</code> field to <code>True</code>, which starts the
+deployment. <code>oc edit openstackdataplane openstack-edpm</code> could alternatively be
+used to edit the resource directly in an editor to set the field to <code>True</code>.</p>
+<p>With the deployment started, ansible will be executed to configure the nodes.
+When the deployment is complete, the status messages will change to indicate
+the deployment is ready.</p>
+<pre><code>$ oc get openstackdataplane
+NAME             STATUS   MESSAGE
+openstack-edpm   True    DataPlane Ready
+$ oc get openstackdataplanerole
+NAME           STATUS   MESSAGE
+edpm-compute   True    DataPlaneRole Ready
+$ oc get openstackdataplanenode
+NAME             STATUS   MESSAGE
+edpm-compute-0   True    DataPlaneNode Ready
+edpm-compute-1   True    DataPlaneNode Ready
+</code></pre>
+<h3 id="understanding-dataplane-conditions">Understanding dataplane conditions<a class="headerlink" href="#understanding-dataplane-conditions" title="Permanent link">#</a></h3>
+<p>Each dataplane resource has a series of conditions within their <code>status</code>
+subresource that indicate the overall state of the resource, including its
+deployment progress.</p>
+<p><code>OpenStackDataPlane</code> resource conditions:</p>
+<p>$ oc get openstackdataplane openstack-edpm -o json | jq .status.conditions[].type
+  "Ready"
+  "DeploymentReady"
+  "SetupReady"</p>
+<p><code>OpenStackDataPlaneRole</code> resource conditions:</p>
+<p>$ oc get openstackdataplanerole edpm-compute -o json | jq .status.conditions[].type
+  "Ready"
+  "DeploymentReady"
+  "RoleBaremetalProvisionReady"
+  "SetupReady"
+  "configure-network service ready"
+  "configure-os service ready"
+  "install-os service ready"
+  "run-os service ready"
+  "validate-network service ready"</p>
+<p><code>OpenStackDataPlaneNode</code> resource conditions:</p>
+<p>$ oc get openstackdataplanenode edpm-compute-0 -o json | jq .status.conditions[].type
+  "Ready"
+  "DeploymentReady"
+  "SetupReady"
+  "configure-network service ready"
+  "configure-os service ready"
+  "install-os service ready"
+  "run-os service ready"
+  "validate-network service ready"</p>
+<p>Each resource has a <code>Ready</code>, <code>DeploymentReady</code>, and <code>SetupReady</code> conditions.
+The role and node also have a condition for each service that is being
+deployed.</p>
+<h4 id="condition-progress">Condition Progress<a class="headerlink" href="#condition-progress" title="Permanent link">#</a></h4>
+<p>The <code>Ready</code> condition reflects the latest condition state that has changed.
+Until a deployment has been started and finished successfully, the <code>Ready</code>
+condition will be <code>False</code>. When the deployment succeeds, it will be set to
+<code>True</code>. A subsequent deployment that is started will set the condition back to
+<code>False</code> until the deployment succeeds when it will be set back to <code>True</code>.</p>
+<p><code>SetupReady</code> will be set to <code>True</code> once all setup related tasks for a resource
+are complete. Setup related tasks include verifying the SSH key secret and
+verifying other fields on the resource, as well as creating the Ansible
+inventory for each resource.</p>
+<p>Each service specific condition will be set to <code>True</code> as that service completes
+successfully. Looking at the service conditions will indicate which services
+have completed their deployment, or in failure cases, which services failed.</p>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      2023-06-07
+    
+  </small>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "search.share"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

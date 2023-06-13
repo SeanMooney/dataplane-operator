@@ -12,18 +12,20 @@
         <meta name="author" content="OpenStack Team">
       
       
-        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/contributing/">
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/composable-services/">
       
       
-        <link rel="prev" href="../composable-services/">
+        <link rel="prev" href="../deploying/">
       
+      
+        <link rel="next" href="../contributing/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
-        <title>Contributing - OpenStack Data Plane Operator</title>
+        <title>Composable services - OpenStack Data Plane Operator</title>
       
     
     
@@ -75,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing" class="md-skip">
+        <a href="#composable-services" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributing
+              Composable services
             
           </span>
         </div>
@@ -403,14 +405,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -419,7 +423,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Deploying a DataPlane
@@ -444,28 +448,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../composable-services/" class="md-nav__link">
-        Composable services
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
     
   
   
@@ -478,12 +460,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Contributing
+          Composable services
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Contributing
+        Composable services
       </a>
       
         
@@ -502,118 +484,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#dataplane-operator-provided-services" class="md-nav__link">
+    dataplane-operator provided services
   </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-on-the-cluster" class="md-nav__link">
-    Running on the cluster
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#uninstall-crds" class="md-nav__link">
-    Uninstall CRDs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#undeploy-controller" class="md-nav__link">
-    Undeploy controller
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-out" class="md-nav__link">
-    Test It Out
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modifying-the-api-definitions" class="md-nav__link">
-    Modifying the API definitions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
+  <a href="#interacting-with-the-openstackdataplaneservice-api" class="md-nav__link">
+    Interacting with the OpenStackDataPlaneService API
   </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-kuttl-tests" class="md-nav__link">
-    Running kuttl tests
-  </a>
-  
-    <nav class="md-nav" aria-label="Running kuttl tests">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-install_yamls" class="md-nav__link">
-    From install_yamls
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-dataplane-operator" class="md-nav__link">
-    From dataplane-operator
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#contributing-to-documentation" class="md-nav__link">
-    Contributing to documentation
+  <a href="#composing-services" class="md-nav__link">
+    Composing services
   </a>
   
-    <nav class="md-nav" aria-label="Contributing to documentation">
+    <nav class="md-nav" aria-label="Composing services">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rendering-documentation-locally" class="md-nav__link">
-    Rendering documentation locally
+  <a href="#developing-a-custom-service" class="md-nav__link">
+    Developing a custom service
+  </a>
+  
+    <nav class="md-nav" aria-label="Developing a custom service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-the-ansible-runner-image-used-by-a-service" class="md-nav__link">
+    Customizing the ansible-runner image used by a service
   </a>
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#create-or-edit-diagrams" class="md-nav__link">
-    Create or edit diagrams
+  <a href="#enabling-a-custom-service" class="md-nav__link">
+    Enabling a custom service
   </a>
   
 </li>
@@ -627,6 +541,28 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
     </li>
   
 
@@ -658,118 +594,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#dataplane-operator-provided-services" class="md-nav__link">
+    dataplane-operator provided services
   </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-on-the-cluster" class="md-nav__link">
-    Running on the cluster
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#uninstall-crds" class="md-nav__link">
-    Uninstall CRDs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#undeploy-controller" class="md-nav__link">
-    Undeploy controller
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-out" class="md-nav__link">
-    Test It Out
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modifying-the-api-definitions" class="md-nav__link">
-    Modifying the API definitions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
+  <a href="#interacting-with-the-openstackdataplaneservice-api" class="md-nav__link">
+    Interacting with the OpenStackDataPlaneService API
   </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-kuttl-tests" class="md-nav__link">
-    Running kuttl tests
-  </a>
-  
-    <nav class="md-nav" aria-label="Running kuttl tests">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-install_yamls" class="md-nav__link">
-    From install_yamls
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-dataplane-operator" class="md-nav__link">
-    From dataplane-operator
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#contributing-to-documentation" class="md-nav__link">
-    Contributing to documentation
+  <a href="#composing-services" class="md-nav__link">
+    Composing services
   </a>
   
-    <nav class="md-nav" aria-label="Contributing to documentation">
+    <nav class="md-nav" aria-label="Composing services">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rendering-documentation-locally" class="md-nav__link">
-    Rendering documentation locally
+  <a href="#developing-a-custom-service" class="md-nav__link">
+    Developing a custom service
+  </a>
+  
+    <nav class="md-nav" aria-label="Developing a custom service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-the-ansible-runner-image-used-by-a-service" class="md-nav__link">
+    Customizing the ansible-runner image used by a service
   </a>
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#create-or-edit-diagrams" class="md-nav__link">
-    Create or edit diagrams
+  <a href="#enabling-a-custom-service" class="md-nav__link">
+    Enabling a custom service
   </a>
   
 </li>
@@ -797,140 +665,167 @@
   
 
 
-<h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">#</a></h1>
-<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
-<p>You’ll need a Kubernetes cluster to run against. You can use
-<a href="https://sigs.k8s.io/kind">KIND</a> to get a local cluster for testing, or run
-against a remote cluster.  <strong>Note:</strong> Your controller will automatically use the
-current context in your kubeconfig file (i.e. whatever cluster <code>kubectl
-cluster-info</code> shows).</p>
-<h3 id="running-on-the-cluster">Running on the cluster<a class="headerlink" href="#running-on-the-cluster" title="Permanent link">#</a></h3>
-<ol>
-<li>Install Instances of Custom Resources:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>config/samples/
-</code></pre></div>
-<ol>
-<li>Build and push your image to the location specified by <code>IMG</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>docker-build<span class="w"> </span>docker-push<span class="w"> </span><span class="nv">IMG</span><span class="o">=</span>&lt;some-registry&gt;/dataplane-operator:tag
-</code></pre></div>
-<ol>
-<li>Deploy the controller to the cluster with the image specified by <code>IMG</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy<span class="w"> </span><span class="nv">IMG</span><span class="o">=</span>&lt;some-registry&gt;/dataplane-operator:tag
-</code></pre></div>
-<h3 id="uninstall-crds">Uninstall CRDs<a class="headerlink" href="#uninstall-crds" title="Permanent link">#</a></h3>
-<p>To delete the CRDs from the cluster:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>uninstall
-</code></pre></div>
-<h3 id="undeploy-controller">Undeploy controller<a class="headerlink" href="#undeploy-controller" title="Permanent link">#</a></h3>
-<p>UnDeploy the controller to the cluster:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>undeploy
-</code></pre></div>
-<h3 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">#</a></h3>
-<p>This project aims to follow the Kubernetes <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator pattern</a></p>
-<p>It uses <a href="https://kubernetes.io/docs/concepts/architecture/controller/">Controllers</a>
-which provide a reconcile function responsible for synchronizing resources
-until the desired state is reached on the cluster</p>
-<h3 id="test-it-out">Test It Out<a class="headerlink" href="#test-it-out" title="Permanent link">#</a></h3>
-<ol>
-<li>Install the CRDs into the cluster:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>install
-</code></pre></div>
-<ol>
-<li>Run your controller (this will run in the foreground, so switch to a new terminal if you want to leave it running):</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run
-</code></pre></div>
-<p><strong>NOTE:</strong> You can also run this in one step by running: <code>make install run</code></p>
-<h3 id="modifying-the-api-definitions">Modifying the API definitions<a class="headerlink" href="#modifying-the-api-definitions" title="Permanent link">#</a></h3>
-<p>If you are editing the API definitions, generate the manifests such as CRs or CRDs using:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>manifests
-</code></pre></div>
-<p><strong>NOTE:</strong> Run <code>make --help</code> for more information on all potential <code>make</code> targets</p>
-<p>More information can be found via the <a href="https://book.kubebuilder.io/introduction.html">Kubebuilder Documentation</a></p>
-<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">#</a></h2>
-<p>The tests can be run with the following command:
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span><span class="nb">test</span>
-</code></pre></div></p>
-<p>The <code>test</code> target runs the
-<a href="https://book.kubebuilder.io/reference/envtest.html">EnvTest</a> tests with
-<a href="https://onsi.github.io/ginkgo/">Ginkgo</a>. These tools will be installed by the
-<code>test</code> if needed.</p>
-<p><code>EnvTest</code> tests are under the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/tests/functional"><code>tests/functional</code></a>
-directory in dataplane-operator.</p>
-<h3 id="running-kuttl-tests">Running kuttl tests<a class="headerlink" href="#running-kuttl-tests" title="Permanent link">#</a></h3>
-<p>The kuttl tests require a running cluster with
-<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>
-running in the cluster.</p>
-<p>kuttl tests are under the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/tests/kuttl/tests">'tests/kuttl/tests'</a>
-in dataplane-operator.</p>
-<h4 id="from-install_yamls">From install_yamls<a class="headerlink" href="#from-install_yamls" title="Permanent link">#</a></h4>
-<p>The kuttl tests are run from the
-<a href="https://github.com/openstack-k8s-operators/install_yamls">install_yamls</a>
-repository by the CI jobs.</p>
-<p>Running from <code>install_yamls</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>install_yamls
-<span class="c1"># Set environment variables if needed to use a specific repo and branch of dataplane-operator</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">DATAPLANE_REPO</span><span class="o">=</span>https://github.com/openstack-k8s-operators/dataplane-operator.git
-<span class="nb">export</span><span class="w"> </span><span class="nv">DATAPLANE_BRANCH</span><span class="o">=</span>main
-make<span class="w"> </span>dataplane_kuttl
-</code></pre></div>
-<h4 id="from-dataplane-operator">From dataplane-operator<a class="headerlink" href="#from-dataplane-operator" title="Permanent link">#</a></h4>
-<p>The kuttl tests can also be run directly from the dataplane-operator checkout.
-When running from a dataplane-operator checkout, <code>kubectl-kuttl</code> must be
-installed. The <code>kubectl-kuttl</code> command can be installed from
-<a href="https://github.com/kudobuilder/kuttl/releases">kuttl releases</a>, or using the
-Makefile target <code>kuttl</code>:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl
-</code></pre></div>
-<p>Then, run the operator from a checkout:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run
-</code></pre></div>
-<p>Execute the kuttl tests:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test
-</code></pre></div>
-<p>Run a single test if desired:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test<span class="w"> </span><span class="nv">KUTTL_ARGS</span><span class="o">=</span><span class="s2">&quot;--test dataplane-deploy-no-nodes&quot;</span>
-</code></pre></div>
-<p>Skip the test resource delete, which will leave the test resources created in the
-cluster, and can be useful for debugging failed tests:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test<span class="w"> </span><span class="nv">KUTTL_ARGS</span><span class="o">=</span><span class="s2">&quot;--test dataplane-deploy-no-nodes --skip-delete&quot;</span>
-</code></pre></div>
-<h2 id="contributing-to-documentation">Contributing to documentation<a class="headerlink" href="#contributing-to-documentation" title="Permanent link">#</a></h2>
-<h3 id="rendering-documentation-locally">Rendering documentation locally<a class="headerlink" href="#rendering-documentation-locally" title="Permanent link">#</a></h3>
-<p>Install docs build requirements into virtualenv:</p>
-<div class="highlight"><pre><span></span><code>python3 -m venv local/docs-venv
-source local/docs-venv/bin/activate
-pip install -r docs/doc_requirements.txt
-</code></pre></div>
-<p>Serve docs site on localhost:</p>
-<div class="highlight"><pre><span></span><code>mkdocs serve
-</code></pre></div>
-<p>Click the link it outputs. As you save changes to files modified in your editor,
-the browser will automatically show the new content.</p>
-<h3 id="create-or-edit-diagrams">Create or edit diagrams<a class="headerlink" href="#create-or-edit-diagrams" title="Permanent link">#</a></h3>
-<p>Create a <code>puml</code> file inside <code>docs/diagrams/src</code></p>
-<div class="highlight"><pre><span></span><code>touch docs/diagrams/src/demo.puml
-</code></pre></div>
-<p>Check the PlantUML syntax here: <a href="https://plantuml.com/deployment-diagram">https://plantuml.com/deployment-diagram</a></p>
-<p>Serve docs site on localhost:</p>
-<div class="highlight"><pre><span></span><code>mkdocs serve
-</code></pre></div>
-<p>Add the yielded <code>svg</code> into the desired <code>.md</code> file
-<div class="highlight"><pre><span></span><code>![Diagram demo](diagrams/out/demo.svg &quot;Diagram demo&quot;)
-</code></pre></div></p>
+<h1 id="composable-services">Composable services<a class="headerlink" href="#composable-services" title="Permanent link">#</a></h1>
+<p>Composable services with dataplane-operator provide a way for users to
+customize services that are deployed on dataplane nodes. It is possible to
+"compose" a set of services such that the dataplane deployment can be
+customized in whichever ways are needed.</p>
+<p>Composing services can take different forms. The interfaces in
+dataplane-operator allow for:</p>
+<ul>
+<li>Enabling/disabling services</li>
+<li>Ordering services</li>
+<li>Developing custom services</li>
+</ul>
+<p>For the purposes of the interfaces in dataplane-operator, a service is an
+ansible execution that manages a software deployment (installation,
+configuration, execution, etc) on dataplane nodes. The ansible content that
+makes up each service is defined by the service itself. Each service is a
+resource instance of the
+<a href="../openstack_dataplaneservice/"><code>OpenStackDataPlaneService</code></a> CRD.</p>
+<h2 id="dataplane-operator-provided-services">dataplane-operator provided services<a class="headerlink" href="#dataplane-operator-provided-services" title="Permanent link">#</a></h2>
+<p>dataplane-operator provides a default list of services that will be deployed on
+dataplane nodes. The services list is set on the
+<a href="../openstack_dataplanerole/#openstackdataplanerolespec"><code>OpenStackDataPlaneRole</code></a> CRD.</p>
+<p>The default list of services as they will appear on the <code>services</code> field on an
+<code>OpenStackDataPlaneRole</code> spec is:</p>
+<pre><code>services:
+  - configure-network
+  - validate-network
+  - install-os
+  - configure-os
+  - run-os
+</code></pre>
+<p>If the <code>services</code> field is ommitted from the <code>OpenStackDataPlaneRole</code> spec,
+then the above list will be used.</p>
+<h2 id="interacting-with-the-openstackdataplaneservice-api">Interacting with the <code>OpenStackDataPlaneService</code> API<a class="headerlink" href="#interacting-with-the-openstackdataplaneservice-api" title="Permanent link">#</a></h2>
+<p>The list of services available to be used by the dataplane can be seen by
+getting the list of <code>OpenStackDataPlaneService</code> resources.</p>
+<pre><code>oc get openstackdataplaneservice
+</code></pre>
+<p>If no custom services have been defined, the default avaiable services are
+returned.</p>
+<pre><code>NAME                AGE
+configure-network   20h
+configure-os        8d
+install-os          8d
+repo-setup          8d
+run-os              8d
+validate-network    8d
+</code></pre>
+<p>A service can be examined in more detail by looking at the YAML representation
+of the resource.</p>
+<pre><code>oc get openstackdataplaneservice configure-network -o yaml
+</code></pre>
+<p>In the <code>spec</code> output of the <code>configure-network</code> service, the ansible content
+that is used by the service is shown. While the content is very similar to the
+exact ansible syntax that will be used when the service executes ansible, it
+may not always be proper ansible syntax. The API for defining the ansible
+content of a service matches that of the
+<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/">'OpenStackAnsibleEE'</a>
+CRD from
+<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansible-operator</a>.</p>
+<p>The 'role' field on <code>OpenStackDataPlaneService</code> is the same API as the <code>role</code>
+field on `OpenStackAnsibleEE'.</p>
+<p>The 'play' field on <code>OpenStackDataPlaneService</code> is free form string content
+that will be passed directly as playbook content when ansible executes.</p>
+<p>Either <code>role</code> or <code>play</code> can define ansible content for a service, but both can
+not be used in the same service.</p>
+<h2 id="composing-services">Composing services<a class="headerlink" href="#composing-services" title="Permanent link">#</a></h2>
+<p>This example will walk through developing and using a custom service.</p>
+<h3 id="developing-a-custom-service">Developing a custom service<a class="headerlink" href="#developing-a-custom-service" title="Permanent link">#</a></h3>
+<p>To create custom service, create a resource of kind
+<a href="../openstack_dataplaneservice/"><code>OpenStackDataPlaneService</code></a>. User either the
+'play' or 'role' field in spec to specify custom ansible content. These fields
+are fully documented in the spec of the
+<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/">'OpenStackAnsibleEE'</a>
+CRD from
+<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansible-operator</a>.</p>
+<p>This example shows using the <code>play</code> field. Create a <code>hello-world.yaml</code> file
+with the following contents:</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlaneService
+metadata:
+  name: hello-world
+spec:
+  label: dataplane-deployment-hello-world
+  openstackAnsibleEEImage: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+  play: |
+    hosts: all
+    tasks:
+      - name: Hello World!
+        shell: "echo Hello World!"
+        register: output
+      - name: Show output
+        debug:
+          msg: "{{ output.stdout }}"
+</code></pre>
+<p>Note that the <code>play</code> field is a string, and not YAML. However, it should be
+proper ansible playbook syntax when parsed as YAML.</p>
+<p>Create the service:</p>
+<pre><code>oc apply -f hello-world.yaml
+</code></pre>
+<h4 id="customizing-the-ansible-runner-image-used-by-a-service">Customizing the ansible-runner image used by a service<a class="headerlink" href="#customizing-the-ansible-runner-image-used-by-a-service" title="Permanent link">#</a></h4>
+<p>The <code>openstackAnsibleEEImage</code> field is the container image used by the
+ansible-runner execution environment to execute ansible. The default image is
+built with the content from
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible">edpm-ansible</a>.</p>
+<p>In some cases, it may be necessary to customize the image used by the
+ansible-runner execution environment in order to add additional ansible content
+that might be needed (such as ansible roles or modules).</p>
+<p>Write a <code>Containerfile</code> that adds the needed custom content to the default
+image:</p>
+<pre><code>FROM quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+
+COPY my_custom_role /usr/share/ansible/roles/my_custom_role
+</code></pre>
+<p>Build and push the image to a container registry:</p>
+<pre><code>podman build -t quay.io/example_user/my_custom_image:latest .
+podman push quay.io/example_user/my_custom_role:latest
+</code></pre>
+<p>In the <code>OpenStackDataPlaneService</code> YAML, specify the custom image for the
+<code>openstackAnsibleEEImage</code> field:</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlaneService
+metadata:
+  name: hello-world
+spec:
+  label: dataplane-deployment-hello-world
+  openstackAnsibleEEImage: quay.io/example_user/my_custom_role:latest
+  ...
+</code></pre>
+<h3 id="enabling-a-custom-service">Enabling a custom service<a class="headerlink" href="#enabling-a-custom-service" title="Permanent link">#</a></h3>
+<p>To add a custom service to be executed as part of an <code>OpenStackDataPlaneRole</code>
+deployment, add the service name to the <code>services</code> field list on the role. Add
+the service name in the order that it should be executed relative to the other
+services. This example shows adding the <code>hello-world</code> service as the first
+service to execute for the <code>edpm-compute</code> role.</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+spec:
+  roles:
+    edpm-compute:
+      services:
+        - hello-world
+        - configure-network
+        - validate-network
+        - install-os
+        - configure-os
+        - run-os
+</code></pre>
+<p>When customizing the services list, the default list of services must be
+reproduced and then customized if the intent is to still deploy those services.
+If just the <code>hello-world</code> service was listed in the list, then that is the only
+service that would be deployed.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-06-08
+      2023-06-12
     
   </small>
 </div>

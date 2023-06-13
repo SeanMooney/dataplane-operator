@@ -12,18 +12,20 @@
         <meta name="author" content="OpenStack Team">
       
       
-        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/contributing/">
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplaneservice/">
       
       
-        <link rel="prev" href="../composable-services/">
+        <link rel="prev" href="../openstack_dataplanerole/">
       
+      
+        <link rel="next" href="../architecture/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
-        <title>Contributing - OpenStack Data Plane Operator</title>
+        <title>OpenStackDataPlaneService - OpenStack Data Plane Operator</title>
       
     
     
@@ -75,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing" class="md-skip">
+        <a href="#custom-resources" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributing
+              OpenStackDataPlaneService
             
           </span>
         </div>
@@ -267,14 +269,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
       
       
       
@@ -283,7 +287,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Custom Resources
@@ -336,11 +340,131 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../openstack_dataplaneservice/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          OpenStackDataPlaneService
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         OpenStackDataPlaneService
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#custom-resources" class="md-nav__link">
+    Custom Resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-resources" class="md-nav__link">
+    Sub Resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Sub Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ansibleeespec" class="md-nav__link">
+    AnsibleEESpec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkconfigsection" class="md-nav__link">
+    NetworkConfigSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkssection" class="md-nav__link">
+    NetworksSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodesection" class="md-nav__link">
+    NodeSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#novatemplate" class="md-nav__link">
+    NovaTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservice" class="md-nav__link">
+    OpenStackDataPlaneService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicelist" class="md-nav__link">
+    OpenStackDataPlaneServiceList
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicespec" class="md-nav__link">
+    OpenStackDataPlaneServiceSpec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicestatus" class="md-nav__link">
+    OpenStackDataPlaneServiceStatus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -466,167 +590,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Contributing
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
         Contributing
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
-  </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-on-the-cluster" class="md-nav__link">
-    Running on the cluster
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#uninstall-crds" class="md-nav__link">
-    Uninstall CRDs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#undeploy-controller" class="md-nav__link">
-    Undeploy controller
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-out" class="md-nav__link">
-    Test It Out
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modifying-the-api-definitions" class="md-nav__link">
-    Modifying the API definitions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-kuttl-tests" class="md-nav__link">
-    Running kuttl tests
-  </a>
-  
-    <nav class="md-nav" aria-label="Running kuttl tests">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-install_yamls" class="md-nav__link">
-    From install_yamls
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from-dataplane-operator" class="md-nav__link">
-    From dataplane-operator
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing-to-documentation" class="md-nav__link">
-    Contributing to documentation
-  </a>
-  
-    <nav class="md-nav" aria-label="Contributing to documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rendering-documentation-locally" class="md-nav__link">
-    Rendering documentation locally
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-or-edit-diagrams" class="md-nav__link">
-    Create or edit diagrams
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -648,8 +616,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -658,118 +624,86 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#custom-resources" class="md-nav__link">
+    Custom Resources
   </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-on-the-cluster" class="md-nav__link">
-    Running on the cluster
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#uninstall-crds" class="md-nav__link">
-    Uninstall CRDs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#undeploy-controller" class="md-nav__link">
-    Undeploy controller
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    How it works
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-it-out" class="md-nav__link">
-    Test It Out
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modifying-the-api-definitions" class="md-nav__link">
-    Modifying the API definitions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
+  <a href="#sub-resources" class="md-nav__link">
+    Sub Resources
   </a>
   
-    <nav class="md-nav" aria-label="Testing">
+    <nav class="md-nav" aria-label="Sub Resources">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#running-kuttl-tests" class="md-nav__link">
-    Running kuttl tests
-  </a>
-  
-    <nav class="md-nav" aria-label="Running kuttl tests">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-install_yamls" class="md-nav__link">
-    From install_yamls
+  <a href="#ansibleeespec" class="md-nav__link">
+    AnsibleEESpec
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#from-dataplane-operator" class="md-nav__link">
-    From dataplane-operator
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing-to-documentation" class="md-nav__link">
-    Contributing to documentation
-  </a>
-  
-    <nav class="md-nav" aria-label="Contributing to documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rendering-documentation-locally" class="md-nav__link">
-    Rendering documentation locally
+  <a href="#deploystrategysection" class="md-nav__link">
+    DeployStrategySection
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-or-edit-diagrams" class="md-nav__link">
-    Create or edit diagrams
+  <a href="#networkconfigsection" class="md-nav__link">
+    NetworkConfigSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#networkssection" class="md-nav__link">
+    NetworksSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodesection" class="md-nav__link">
+    NodeSection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#novatemplate" class="md-nav__link">
+    NovaTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservice" class="md-nav__link">
+    OpenStackDataPlaneService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicelist" class="md-nav__link">
+    OpenStackDataPlaneServiceList
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicespec" class="md-nav__link">
+    OpenStackDataPlaneServiceSpec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openstackdataplaneservicestatus" class="md-nav__link">
+    OpenStackDataPlaneServiceStatus
   </a>
   
 </li>
@@ -797,133 +731,408 @@
   
 
 
-<h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">#</a></h1>
-<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
-<p>You’ll need a Kubernetes cluster to run against. You can use
-<a href="https://sigs.k8s.io/kind">KIND</a> to get a local cluster for testing, or run
-against a remote cluster.  <strong>Note:</strong> Your controller will automatically use the
-current context in your kubeconfig file (i.e. whatever cluster <code>kubectl
-cluster-info</code> shows).</p>
-<h3 id="running-on-the-cluster">Running on the cluster<a class="headerlink" href="#running-on-the-cluster" title="Permanent link">#</a></h3>
-<ol>
-<li>Install Instances of Custom Resources:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>config/samples/
-</code></pre></div>
-<ol>
-<li>Build and push your image to the location specified by <code>IMG</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>docker-build<span class="w"> </span>docker-push<span class="w"> </span><span class="nv">IMG</span><span class="o">=</span>&lt;some-registry&gt;/dataplane-operator:tag
-</code></pre></div>
-<ol>
-<li>Deploy the controller to the cluster with the image specified by <code>IMG</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy<span class="w"> </span><span class="nv">IMG</span><span class="o">=</span>&lt;some-registry&gt;/dataplane-operator:tag
-</code></pre></div>
-<h3 id="uninstall-crds">Uninstall CRDs<a class="headerlink" href="#uninstall-crds" title="Permanent link">#</a></h3>
-<p>To delete the CRDs from the cluster:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>uninstall
-</code></pre></div>
-<h3 id="undeploy-controller">Undeploy controller<a class="headerlink" href="#undeploy-controller" title="Permanent link">#</a></h3>
-<p>UnDeploy the controller to the cluster:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>undeploy
-</code></pre></div>
-<h3 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">#</a></h3>
-<p>This project aims to follow the Kubernetes <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator pattern</a></p>
-<p>It uses <a href="https://kubernetes.io/docs/concepts/architecture/controller/">Controllers</a>
-which provide a reconcile function responsible for synchronizing resources
-until the desired state is reached on the cluster</p>
-<h3 id="test-it-out">Test It Out<a class="headerlink" href="#test-it-out" title="Permanent link">#</a></h3>
-<ol>
-<li>Install the CRDs into the cluster:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>install
-</code></pre></div>
-<ol>
-<li>Run your controller (this will run in the foreground, so switch to a new terminal if you want to leave it running):</li>
-</ol>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run
-</code></pre></div>
-<p><strong>NOTE:</strong> You can also run this in one step by running: <code>make install run</code></p>
-<h3 id="modifying-the-api-definitions">Modifying the API definitions<a class="headerlink" href="#modifying-the-api-definitions" title="Permanent link">#</a></h3>
-<p>If you are editing the API definitions, generate the manifests such as CRs or CRDs using:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>manifests
-</code></pre></div>
-<p><strong>NOTE:</strong> Run <code>make --help</code> for more information on all potential <code>make</code> targets</p>
-<p>More information can be found via the <a href="https://book.kubebuilder.io/introduction.html">Kubebuilder Documentation</a></p>
-<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">#</a></h2>
-<p>The tests can be run with the following command:
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span><span class="nb">test</span>
-</code></pre></div></p>
-<p>The <code>test</code> target runs the
-<a href="https://book.kubebuilder.io/reference/envtest.html">EnvTest</a> tests with
-<a href="https://onsi.github.io/ginkgo/">Ginkgo</a>. These tools will be installed by the
-<code>test</code> if needed.</p>
-<p><code>EnvTest</code> tests are under the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/tests/functional"><code>tests/functional</code></a>
-directory in dataplane-operator.</p>
-<h3 id="running-kuttl-tests">Running kuttl tests<a class="headerlink" href="#running-kuttl-tests" title="Permanent link">#</a></h3>
-<p>The kuttl tests require a running cluster with
-<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>
-running in the cluster.</p>
-<p>kuttl tests are under the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/tests/kuttl/tests">'tests/kuttl/tests'</a>
-in dataplane-operator.</p>
-<h4 id="from-install_yamls">From install_yamls<a class="headerlink" href="#from-install_yamls" title="Permanent link">#</a></h4>
-<p>The kuttl tests are run from the
-<a href="https://github.com/openstack-k8s-operators/install_yamls">install_yamls</a>
-repository by the CI jobs.</p>
-<p>Running from <code>install_yamls</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>install_yamls
-<span class="c1"># Set environment variables if needed to use a specific repo and branch of dataplane-operator</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">DATAPLANE_REPO</span><span class="o">=</span>https://github.com/openstack-k8s-operators/dataplane-operator.git
-<span class="nb">export</span><span class="w"> </span><span class="nv">DATAPLANE_BRANCH</span><span class="o">=</span>main
-make<span class="w"> </span>dataplane_kuttl
-</code></pre></div>
-<h4 id="from-dataplane-operator">From dataplane-operator<a class="headerlink" href="#from-dataplane-operator" title="Permanent link">#</a></h4>
-<p>The kuttl tests can also be run directly from the dataplane-operator checkout.
-When running from a dataplane-operator checkout, <code>kubectl-kuttl</code> must be
-installed. The <code>kubectl-kuttl</code> command can be installed from
-<a href="https://github.com/kudobuilder/kuttl/releases">kuttl releases</a>, or using the
-Makefile target <code>kuttl</code>:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl
-</code></pre></div>
-<p>Then, run the operator from a checkout:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run
-</code></pre></div>
-<p>Execute the kuttl tests:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test
-</code></pre></div>
-<p>Run a single test if desired:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test<span class="w"> </span><span class="nv">KUTTL_ARGS</span><span class="o">=</span><span class="s2">&quot;--test dataplane-deploy-no-nodes&quot;</span>
-</code></pre></div>
-<p>Skip the test resource delete, which will leave the test resources created in the
-cluster, and can be useful for debugging failed tests:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>kuttl-test<span class="w"> </span><span class="nv">KUTTL_ARGS</span><span class="o">=</span><span class="s2">&quot;--test dataplane-deploy-no-nodes --skip-delete&quot;</span>
-</code></pre></div>
-<h2 id="contributing-to-documentation">Contributing to documentation<a class="headerlink" href="#contributing-to-documentation" title="Permanent link">#</a></h2>
-<h3 id="rendering-documentation-locally">Rendering documentation locally<a class="headerlink" href="#rendering-documentation-locally" title="Permanent link">#</a></h3>
-<p>Install docs build requirements into virtualenv:</p>
-<div class="highlight"><pre><span></span><code>python3 -m venv local/docs-venv
-source local/docs-venv/bin/activate
-pip install -r docs/doc_requirements.txt
-</code></pre></div>
-<p>Serve docs site on localhost:</p>
-<div class="highlight"><pre><span></span><code>mkdocs serve
-</code></pre></div>
-<p>Click the link it outputs. As you save changes to files modified in your editor,
-the browser will automatically show the new content.</p>
-<h3 id="create-or-edit-diagrams">Create or edit diagrams<a class="headerlink" href="#create-or-edit-diagrams" title="Permanent link">#</a></h3>
-<p>Create a <code>puml</code> file inside <code>docs/diagrams/src</code></p>
-<div class="highlight"><pre><span></span><code>touch docs/diagrams/src/demo.puml
-</code></pre></div>
-<p>Check the PlantUML syntax here: <a href="https://plantuml.com/deployment-diagram">https://plantuml.com/deployment-diagram</a></p>
-<p>Serve docs site on localhost:</p>
-<div class="highlight"><pre><span></span><code>mkdocs serve
-</code></pre></div>
-<p>Add the yielded <code>svg</code> into the desired <code>.md</code> file
-<div class="highlight"><pre><span></span><code>![Diagram demo](diagrams/out/demo.svg &quot;Diagram demo&quot;)
-</code></pre></div></p>
+  <h1>OpenStackDataPlaneService</h1>
+
+<h3 id="custom-resources">Custom Resources<a class="headerlink" href="#custom-resources" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="#openstackdataplaneservice">OpenStackDataPlaneService</a></li>
+</ul>
+<h3 id="sub-resources">Sub Resources<a class="headerlink" href="#sub-resources" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="#ansibleeespec">AnsibleEESpec</a></li>
+<li><a href="#deploystrategysection">DeployStrategySection</a></li>
+<li><a href="#networkconfigsection">NetworkConfigSection</a></li>
+<li><a href="#networkssection">NetworksSection</a></li>
+<li><a href="#nodesection">NodeSection</a></li>
+<li><a href="#novatemplate">NovaTemplate</a></li>
+<li><a href="#openstackdataplaneservicelist">OpenStackDataPlaneServiceList</a></li>
+<li><a href="#openstackdataplaneservicespec">OpenStackDataPlaneServiceSpec</a></li>
+<li><a href="#openstackdataplaneservicestatus">OpenStackDataPlaneServiceStatus</a></li>
+</ul>
+<h4 id="ansibleeespec">AnsibleEESpec<a class="headerlink" href="#ansibleeespec" title="Permanent link">#</a></h4>
+<p>AnsibleEESpec is a specification of the ansible EE attributes</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>networkAttachments</td>
+<td>NetworkAttachments is a list of NetworkAttachment resource names to pass to the ansibleee resource which allows to connect the ansibleee runner to the given network</td>
+<td>[]string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>openStackAnsibleEERunnerImage</td>
+<td>OpenStackAnsibleEERunnerImage image to use as the ansibleEE runner image</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>ansibleTags</td>
+<td>AnsibleTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleLimit</td>
+<td>AnsibleLimit for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleSkipTags</td>
+<td>AnsibleSkipTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>extraMounts</td>
+<td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
+<td>[]storage.VolMounts</td>
+<td>true</td>
+</tr>
+<tr>
+<td>env</td>
+<td>Env is a list containing the environment variables to pass to the pod</td>
+<td>[]corev1.EnvVar</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="deploystrategysection">DeployStrategySection<a class="headerlink" href="#deploystrategysection" title="Permanent link">#</a></h4>
+<p>DeployStrategySection for fields controlling the deployment</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deploy</td>
+<td>Deploy boolean to trigger ansible execution</td>
+<td>bool</td>
+<td>true</td>
+</tr>
+<tr>
+<td>ansibleTags</td>
+<td>AnsibleTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleLimit</td>
+<td>AnsibleLimit for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleSkipTags</td>
+<td>AnsibleSkipTags for ansible execution</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="networkconfigsection">NetworkConfigSection<a class="headerlink" href="#networkconfigsection" title="Permanent link">#</a></h4>
+<p>NetworkConfigSection is a specification of the Network configuration details</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td>Template - Contains a Ansible j2 nic config template to use when applying node network configuration</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="networkssection">NetworksSection<a class="headerlink" href="#networkssection" title="Permanent link">#</a></h4>
+<p>NetworksSection is a specification of the network attributes</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>network</td>
+<td>Network - Network name to configure</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>fixedIP</td>
+<td>FixedIP - Specific IP address to use for this network</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="nodesection">NodeSection<a class="headerlink" href="#nodesection" title="Permanent link">#</a></h4>
+<p>NodeSection is a specification of the node attributes</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>networkConfig</td>
+<td>NetworkConfig - Network configuration details. Contains os-net-config related properties.</td>
+<td><a href="#networkconfigsection">NetworkConfigSection</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>networks</td>
+<td>Networks - Instance networks</td>
+<td>[]<a href="#networkssection">NetworksSection</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>managementNetwork</td>
+<td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleUser</td>
+<td>AnsibleUser SSH user for Ansible connection</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansiblePort</td>
+<td>AnsiblePort SSH port for Ansible connection</td>
+<td>int</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleVars</td>
+<td>AnsibleVars for configuring ansible</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>ansibleSSHPrivateKeySecret</td>
+<td>AnsibleSSHPrivateKeySecret Private SSH Key secret containing private SSH key for connecting to node. Must be of the form: Secret.data.ssh-privatekey: <base64 encoded private key contents> https://kubernetes.io/docs/concepts/configuration/secret/#ssh-authentication-secrets</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>extraMounts</td>
+<td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
+<td>[]storage.VolMounts</td>
+<td>true</td>
+</tr>
+<tr>
+<td>userData</td>
+<td>UserData  node specific user-data</td>
+<td>*corev1.SecretReference</td>
+<td>false</td>
+</tr>
+<tr>
+<td>networkData</td>
+<td>NetworkData  node specific network-data</td>
+<td>*corev1.SecretReference</td>
+<td>false</td>
+</tr>
+<tr>
+<td>nova</td>
+<td>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node. If it is specified both in OpenstackDataPlaneRole and the OpenstackDataPlaneNode for the same EDPM node then the configuration in OpenstackDataPlaneNode will be used and the configuration in the OpenstackDataPlaneRole will be ignored. If this is defined in neither then compute service(s) will not be deployed on the EDPM node.</td>
+<td>*<a href="#novatemplate">NovaTemplate</a></td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="novatemplate">NovaTemplate<a class="headerlink" href="#novatemplate" title="Permanent link">#</a></h4>
+<p>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cellName</td>
+<td>CellName is the name of nova cell the compute(s) should be connected to</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>novaInstance</td>
+<td>NovaInstance is the name of the Nova CR that represents the deployment the compute(s) belongs to. You can query the name of the Nova CRs in you system via <code>oc get Nova -o jsonpath='{.items[*].metadata.name}'</code></td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>customServiceConfig</td>
+<td>CustomServiceConfig - customize the nova-compute service config using this parameter to change service defaults, or overwrite rendered information using raw OpenStack config format. The content gets added to to /etc/nova/nova.conf.d directory as 02-nova-override.conf file.</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>deploy</td>
+<td>Deploy true means the compute service(s) are allowed to be changed on the EDPM node(s) if necessary. If set to false then only the pre-requisite data (e.g. config maps) will be generated but no actual modification on the compute node(s) itself will happen.</td>
+<td>*bool</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplaneservice">OpenStackDataPlaneService<a class="headerlink" href="#openstackdataplaneservice" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneService is the Schema for the openstackdataplaneservices API</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metadata</td>
+<td></td>
+<td>metav1.ObjectMeta</td>
+<td>false</td>
+</tr>
+<tr>
+<td>spec</td>
+<td></td>
+<td><a href="#openstackdataplaneservicespec">OpenStackDataPlaneServiceSpec</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>status</td>
+<td></td>
+<td><a href="#openstackdataplaneservicestatus">OpenStackDataPlaneServiceStatus</a></td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplaneservicelist">OpenStackDataPlaneServiceList<a class="headerlink" href="#openstackdataplaneservicelist" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneServiceList contains a list of OpenStackDataPlaneService</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metadata</td>
+<td></td>
+<td>metav1.ListMeta</td>
+<td>false</td>
+</tr>
+<tr>
+<td>items</td>
+<td></td>
+<td>[]<a href="#openstackdataplaneservice">OpenStackDataPlaneService</a></td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplaneservicespec">OpenStackDataPlaneServiceSpec<a class="headerlink" href="#openstackdataplaneservicespec" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneServiceSpec defines the desired state of OpenStackDataPlaneService</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>Label to use for service</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>play</td>
+<td>Play is the playbook contents that ansible will run on execution. If both Play and Role are specified, Play takes precedence</td>
+<td>string</td>
+<td>false</td>
+</tr>
+<tr>
+<td>role</td>
+<td>Role is the description of an Ansible Role</td>
+<td>*ansibleeev1alpha1.Role</td>
+<td>false</td>
+</tr>
+<tr>
+<td>openStackAnsibleEERunnerImage</td>
+<td>OpenStackAnsibleEERunnerImage image to use as the ansibleEE runner image</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="openstackdataplaneservicestatus">OpenStackDataPlaneServiceStatus<a class="headerlink" href="#openstackdataplaneservicestatus" title="Permanent link">#</a></h4>
+<p>OpenStackDataPlaneServiceStatus defines the observed state of OpenStackDataPlaneService</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conditions</td>
+<td>Conditions</td>
+<td>condition.Conditions</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
 
   <hr>
 <div class="md-source-file">
