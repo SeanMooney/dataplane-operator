@@ -537,6 +537,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#network-isolation" class="md-nav__link">
+    Network Isolation
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Isolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-networking-with-edpm_network_config" class="md-nav__link">
+    Configuring networking with edpm_network_config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-attachment-definitions" class="md-nav__link">
+    Network attachment definitions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -647,6 +674,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#network-isolation" class="md-nav__link">
+    Network Isolation
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Isolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-networking-with-edpm_network_config" class="md-nav__link">
+    Configuring networking with edpm_network_config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-attachment-definitions" class="md-nav__link">
+    Network attachment definitions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -696,13 +750,59 @@ the registration commands.</p>
 <a href="https://access.redhat.com/documentation/en-us/red_hat_satellite/6.13/html-single/managing_hosts/index#Registering_Hosts_to_Server_managing-hosts">https://access.redhat.com/documentation/en-us/red_hat_satellite/6.13/html-single/managing_hosts/index#Registering_Hosts_to_Server_managing-hosts</a>.</p>
 <p>If not using Satellite version 6.13, then refer to the specific version of the
 documentation for the version of Satellite that is in use.</p>
+<h2 id="network-isolation">Network Isolation<a class="headerlink" href="#network-isolation" title="Permanent link">#</a></h2>
+<p>Network Isolation refers to the practice of separating network traffic by
+function, and configuring the networks on dataplane nodes. Nodes will need
+connectivity to various control plane services running on OCP. These services
+may be bound to different networks. Each of those networks needs to be
+configured as required on dataplane nodes.</p>
+<p>For further details on the network architecture of the control plane, see
+<a href="https://github.com/openstack-k8s-operators/docs/blob/main/networking.md">https://github.com/openstack-k8s-operators/docs/blob/main/networking.md</a>.</p>
+<h3 id="configuring-networking-with-edpm_network_config">Configuring networking with edpm_network_config<a class="headerlink" href="#configuring-networking-with-edpm_network_config" title="Permanent link">#</a></h3>
+<p>The
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible/tree/main/roles/edpm_network_config">edpm_network_config</a>
+ansible role is responsible for configuring networking on dataplane nodes.</p>
+<p>The <code>edpm_network_config_template</code> variable specifies the path to an ansible
+template that describes the networking configuration to be applied. The
+template itself also contains variables that can be used to customize the
+networking configuration for a specific node (IP addresses, interface names,
+routes, etc). Templates provided with the edpm_network_config role are at
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible/tree/main/roles/edpm_network_config/templates">https://github.com/openstack-k8s-operators/edpm-ansible/tree/main/roles/edpm_network_config/templates</a>.</p>
+<p>Custom templates can also be used, but they must be avaialable to ansible in
+the ansible-runner image used by the <code>configure-network</code> service. Use the
+<a href="../composable_services/#using-extramounts"><code>ExtraMounts</code></a> field to mount custom
+content into the ansible-runner image.</p>
+<p>The following is an example
+<a href="http://127.0.0.1:8000/dataplane-operator/openstack_dataplanerole/#nodesection"><code>ansibleVars</code></a>
+field that shows defining the variables that configure the
+<code>edpm_network_config</code> role.</p>
+<pre><code>ansibleVars:
+  edpm_network_config_template: templates/single_nic_vlans/single_nic_vlans.j2
+  ctlplane_ip: 192.168.122.100
+  internal_api_ip: 172.17.0.100
+  storage_ip: 172.18.0.100
+  tenant_ip: 172.19.0.100
+  fqdn_internal_api: edpm-compute-0.example.com
+</code></pre>
+<p>This configuration would be applied by the
+<a href="../composable_services/#dataplane-operator-provided-services"><code>configure-network</code></a> service when
+it's executed.</p>
+<h3 id="network-attachment-definitions">Network attachment definitions<a class="headerlink" href="#network-attachment-definitions" title="Permanent link">#</a></h3>
+<p>The
+<a href="https://github.com/openstack-k8s-operators/docs/blob/main/networking.md#network-attachment-definitions"><code>NetworkAttachmentDefinition</code></a> resource is used to describe how pods can be attached to different networks. Network attachment definitions can be specified on the <a href="../openstack_dataplanerole/"><code>OpenStackDataPlaneRole</code></a> and <a href="../openstack_dataplanenode/"><code>OpenStackDataPlaneNode</code></a> resources using the <code>NetworkAttachments</code> field.</p>
+<p>The network attachments are used to describe which networks will be connected
+to the pod that is running ansible-runner. They do not enable networks on the
+dataplane nodes themselves. For example, adding the <code>internalapi</code> network
+attachment to <code>NetworkAttachments</code> means the ansible-runner pod will be
+connected to the <code>internalapi</code> network. This can enable scenarios where ansible
+needs to connect to different networks.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-06-15
+      2023-06-16
     
   </small>
 </div>

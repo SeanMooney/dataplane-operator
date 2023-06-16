@@ -518,6 +518,26 @@
     Customizing the ansible-runner image used by a service
   </a>
   
+    <nav class="md-nav" aria-label="Customizing the ansible-runner image used by a service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-a-new-custom-ansible-runner-image" class="md-nav__link">
+    Building a new custom ansible-runner image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-extramounts" class="md-nav__link">
+    Using ExtraMounts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -655,6 +675,26 @@
   <a href="#customizing-the-ansible-runner-image-used-by-a-service" class="md-nav__link">
     Customizing the ansible-runner image used by a service
   </a>
+  
+    <nav class="md-nav" aria-label="Customizing the ansible-runner image used by a service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-a-new-custom-ansible-runner-image" class="md-nav__link">
+    Building a new custom ansible-runner image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-extramounts" class="md-nav__link">
+    Using ExtraMounts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -809,6 +849,7 @@ built with the content from
 <p>In some cases, it may be necessary to customize the image used by the
 ansible-runner execution environment in order to add additional ansible content
 that might be needed (such as ansible roles or modules).</p>
+<h5 id="building-a-new-custom-ansible-runner-image">Building a new custom ansible-runner image<a class="headerlink" href="#building-a-new-custom-ansible-runner-image" title="Permanent link">#</a></h5>
 <p>Write a <code>Containerfile</code> that adds the needed custom content to the default
 image:</p>
 <pre><code>FROM quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
@@ -830,6 +871,12 @@ spec:
   openstackAnsibleEEImage: quay.io/example_user/my_custom_role:latest
   ...
 </code></pre>
+<h5 id="using-extramounts">Using ExtraMounts<a class="headerlink" href="#using-extramounts" title="Permanent link">#</a></h5>
+<p>The <code>ExtraMounts</code> field in the
+<a href="https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplanerole/#nodesection"><code>NodeSection</code></a>
+field can be used to mount custom content into the ansible-runner image. In
+some cases, this is a simpler method to customize the image than having to
+build an entirely new image.</p>
 <h3 id="enabling-a-custom-service">Enabling a custom service<a class="headerlink" href="#enabling-a-custom-service" title="Permanent link">#</a></h3>
 <p>To add a custom service to be executed as part of an <code>OpenStackDataPlaneRole</code>
 deployment, add the service name to the <code>services</code> field list on the role. Add
@@ -861,7 +908,7 @@ service that would be deployed.</p>
   <small>
     
       Last update:
-      2023-06-14
+      2023-06-16
     
   </small>
 </div>
