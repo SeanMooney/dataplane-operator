@@ -21,7 +21,7 @@
         <link rel="next" href="../composable_services/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
@@ -526,15 +526,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-openstackdataplaneservices" class="md-nav__link">
-    Create OpenStackDataPlaneServices
+  <a href="#create-openstackdataplane" class="md-nav__link">
+    Create OpenStackDataPlane
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-openstackdataplane" class="md-nav__link">
-    Create OpenStackDataPlane
+  <a href="#understanding-openstackdataplaneservices" class="md-nav__link">
+    Understanding OpenStackDataPlaneServices
   </a>
   
 </li>
@@ -712,15 +712,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-openstackdataplaneservices" class="md-nav__link">
-    Create OpenStackDataPlaneServices
+  <a href="#create-openstackdataplane" class="md-nav__link">
+    Create OpenStackDataPlane
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-openstackdataplane" class="md-nav__link">
-    Create OpenStackDataPlane
+  <a href="#understanding-openstackdataplaneservices" class="md-nav__link">
+    Understanding OpenStackDataPlaneServices
   </a>
   
 </li>
@@ -832,54 +832,6 @@ oc apply -f -
 <p>Verify the secret was created:</p>
 <pre><code>oc describe secret dataplane-ansible-ssh-private-key-secret
 </code></pre>
-<h3 id="create-openstackdataplaneservices">Create OpenStackDataPlaneServices<a class="headerlink" href="#create-openstackdataplaneservices" title="Permanent link">#</a></h3>
-<p>A dataplane is configured with a set of services that define with Ansible roles
-and task files are executed to complete the deployment. The dataplane-operator
-has a default list of services that are deployed by default (unless the
-<code>services</code> field is overridden). The services are provided within the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/config/services">config/services</a>
-directory and must be created with <code>oc</code>. Specify the path to where
-dataplane-operator is checked out and create the services.</p>
-<pre><code>oc create -f dataplane-operator/config/services
-</code></pre>
-<p>Verify the services were created.</p>
-<pre><code>oc get openstackdataplaneservice
-</code></pre>
-<p>The output should be similar to:</p>
-<pre><code>NAME                AGE
-configure-network   6d7h
-configure-os        6d6h
-install-os          6d6h
-run-os              6d6h
-validate-network    6d6h
-</code></pre>
-<p>Each service uses the
-<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/#role"><code>role</code></a>
-field from the <code>OpenStackAnsibleEE</code> CRD provided
-by
-<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>
-to define the Ansible roles and task files that are executed as part of that
-service.</p>
-<p>For example, the list of roles for the <code>install-os</code> service can be seen by
-describing the resource.</p>
-<pre><code>oc describe openstackdataplaneservice install-os
-</code></pre>
-<p>Any role listed in the <code>osp.edpm</code> namespace is provided by the
-<a href="https://github.com/openstack-k8s-operators/edpm-ansible">edpm-ansible</a>
-project. Within that project, the ansible variables that can be used to
-configure the role are documented.</p>
-<p>For example, in the describe output for the <code>install-os</code> service, the
-<code>osp.edpm.edpm_sshd</code> role is seen.</p>
-<pre><code>import_role:
-  Name:        osp.edpm.edpm_sshd
-  tasks_from:  install.yml
-Name:          Install edpm_sshd
-Tags:
-  edpm_sshd
-</code></pre>
-<p>The ansible variables that configure the
-behavior of the <code>osp.edpm.edpm_sshd</code> role are available at
-<a href="https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml">https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml</a>.</p>
 <h3 id="create-openstackdataplane">Create OpenStackDataPlane<a class="headerlink" href="#create-openstackdataplane" title="Permanent link">#</a></h3>
 <p>This document will cover writing the <code>YAML</code> document for an
 <code>OpenStackDataPlane</code> resource. Once the document is ready, it will be created
@@ -1074,6 +1026,62 @@ NAME             STATUS   MESSAGE
 edpm-compute-0   False    Deployment not started
 edpm-compute-1   False    Deployment not started
 </code></pre>
+<h3 id="understanding-openstackdataplaneservices">Understanding OpenStackDataPlaneServices<a class="headerlink" href="#understanding-openstackdataplaneservices" title="Permanent link">#</a></h3>
+<p>A dataplane is configured with a set of services that define the Ansible roles
+and task files that are executed to complete the deployment. The
+dataplane-operator has a default list of services that are deployed by default
+(unless the <code>services</code> field is overridden). The default services are provided
+within the
+<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/config/services">config/services</a>
+directory.</p>
+<p>Each service is a custom resource of type
+<a href="../openstack_dataplaneservice/">OpenStackDataPlaneService</a>. The services will
+be created and updated automatically during OpenStackDataPlaneRole reconciliation.</p>
+<p>See <a href="../composable_services/">Composable Services</a> for further documentation
+about services and customizing services.</p>
+<p>Verify the services were created.</p>
+<pre><code>oc get openstackdataplaneservice
+</code></pre>
+<p>The output should be similar to:</p>
+<pre><code>NAME                AGE
+configure-network   6d7h
+configure-os        6d6h
+install-os          6d6h
+run-os              6d6h
+validate-network    6d6h
+</code></pre>
+<p>Each service uses the
+<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/#role"><code>role</code></a>
+field from the <code>OpenStackAnsibleEE</code> CRD provided
+by
+<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>
+to define the Ansible roles and task files that are executed as part of that
+service.</p>
+<p>For example, the list of roles for the <code>install-os</code> service can be seen by
+describing the resource.</p>
+<pre><code>oc describe openstackdataplaneservice install-os
+</code></pre>
+<p>Any role listed in the <code>osp.edpm</code> namespace is provided by the
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible">edpm-ansible</a>
+project. Within that project, the ansible variables that can be used to
+configure the role are documented.</p>
+<p>For example, in the describe output for the <code>install-os</code> service, the
+<code>osp.edpm.edpm_sshd</code> role is seen.</p>
+<pre><code>import_role:
+  Name:        osp.edpm.edpm_sshd
+  tasks_from:  install.yml
+Name:          Install edpm_sshd
+Tags:
+  edpm_sshd
+</code></pre>
+<p>The ansible variables that configure the
+behavior of the <code>osp.edpm.edpm_sshd</code> role are available at
+<a href="https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml">https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml</a>.</p>
+<hr />
+<p><strong> NOTE </strong></p>
+<p>If the default provided services are edited, those edits will be lost after any
+further role reconciliations.</p>
+<hr />
 <h3 id="deploy-the-dataplane">Deploy the dataplane.<a class="headerlink" href="#deploy-the-dataplane" title="Permanent link">#</a></h3>
 <p>With the dataplane resources created, it can be seen from their status message
 that they have not yet been deployed. This means no ansible has been executed
@@ -1153,7 +1161,7 @@ have completed their deployment, or in failure cases, which services failed.</p>
   <small>
     
       Last update:
-      2023-06-13
+      2023-06-14
     
   </small>
 </div>
@@ -1197,7 +1205,7 @@ have completed their deployment, or in failure cases, which services failed.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "search.share"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>
