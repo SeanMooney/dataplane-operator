@@ -41,6 +41,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://openstack-k8s-operators.github.io/dataplane-operator/interacting_with_ansible/</loc>
+         <lastmod>2023-06-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplane/</loc>
          <lastmod>2023-06-16</lastmod>
          <changefreq>daily</changefreq>

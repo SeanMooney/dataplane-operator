@@ -12,25 +12,27 @@
         <meta name="author" content="OpenStack Team">
       
       
-        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/">
+        <link rel="canonical" href="https://openstack-k8s-operators.github.io/dataplane-operator/interacting_with_ansible/">
       
       
+        <link rel="prev" href="../common_configurations/">
       
-        <link rel="next" href="openstack_dataplane/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+        <link rel="next" href="../contributing/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
-        <title>OpenStack Data Plane Operator</title>
+        <title>Interacting with Ansible - OpenStack Data Plane Operator</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ecc896b0.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -46,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -75,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dataplane-operator" class="md-skip">
+        <a href="#interacting-with-ansible" class="md-skip">
           Skip to content
         </a>
       
@@ -95,9 +97,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="OpenStack Data Plane Operator" class="md-header__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
+    <a href=".." title="OpenStack Data Plane Operator" class="md-header__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
       
-  <img src="images/openstack-logo.png" alt="logo">
+  <img src="../images/openstack-logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -113,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Interacting with Ansible
             
           </span>
         </div>
@@ -224,9 +226,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="OpenStack Data Plane Operator" class="md-nav__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
+    <a href=".." title="OpenStack Data Plane Operator" class="md-nav__button md-logo" aria-label="OpenStack Data Plane Operator" data-md-component="logo">
       
-  <img src="images/openstack-logo.png" alt="logo">
+  <img src="../images/openstack-logo.png" alt="logo">
 
     </a>
     OpenStack Data Plane Operator
@@ -252,52 +254,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         Home
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    License
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -337,7 +298,7 @@
   
   
     <li class="md-nav__item">
-      <a href="openstack_dataplane/" class="md-nav__link">
+      <a href="../openstack_dataplane/" class="md-nav__link">
         OpenStackDataPlane
       </a>
     </li>
@@ -351,7 +312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="openstack_dataplanenode/" class="md-nav__link">
+      <a href="../openstack_dataplanenode/" class="md-nav__link">
         OpenStackDataPlaneNode
       </a>
     </li>
@@ -365,7 +326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="openstack_dataplanerole/" class="md-nav__link">
+      <a href="../openstack_dataplanerole/" class="md-nav__link">
         OpenStackDataPlaneRole
       </a>
     </li>
@@ -379,7 +340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="openstack_dataplaneservice/" class="md-nav__link">
+      <a href="../openstack_dataplaneservice/" class="md-nav__link">
         OpenStackDataPlaneService
       </a>
     </li>
@@ -401,7 +362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         Architecture
       </a>
     </li>
@@ -416,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="design/" class="md-nav__link">
+      <a href="../design/" class="md-nav__link">
         Design
       </a>
     </li>
@@ -431,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="inheritance/" class="md-nav__link">
+      <a href="../inheritance/" class="md-nav__link">
         Inheritance
       </a>
     </li>
@@ -444,14 +405,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -460,7 +423,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Deploying a DataPlane
@@ -473,7 +436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="deploying/" class="md-nav__link">
+      <a href="../deploying/" class="md-nav__link">
         Deploying a DataPlane
       </a>
     </li>
@@ -487,7 +450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="composable_services/" class="md-nav__link">
+      <a href="../composable_services/" class="md-nav__link">
         Composable services
       </a>
     </li>
@@ -501,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="common_configurations/" class="md-nav__link">
+      <a href="../common_configurations/" class="md-nav__link">
         Common Configurations
       </a>
     </li>
@@ -513,11 +476,59 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="interacting_with_ansible/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Interacting with Ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Interacting with Ansible
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-and-inspecting-openstackansibleee-resources" class="md-nav__link">
+    Retrieving and inspecting OpenStackAnsibleEE resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-the-ansible-execution" class="md-nav__link">
+    Controlling the Ansible execution
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -537,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         Contributing
       </a>
     </li>
@@ -571,8 +582,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    License
+  <a href="#retrieving-and-inspecting-openstackansibleee-resources" class="md-nav__link">
+    Retrieving and inspecting OpenStackAnsibleEE resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-the-ansible-execution" class="md-nav__link">
+    Controlling the Ansible execution
   </a>
   
 </li>
@@ -595,39 +613,87 @@
   
 
 
-<h1 id="dataplane-operator">dataplane-operator<a class="headerlink" href="#dataplane-operator" title="Permanent link">#</a></h1>
-<p>The dataplane-operator automates the deployment of an OpenStack dataplane. A
-dataplane is a collection of nodes that will be used for hosting OpenStack
-workloads. The dataplane-operator prepares the nodes with enough operating
-system configuration so that they are ready for hosting other required
-OpenStack services and workloads.</p>
-<p>See <a href="docs/contributing.md">contributing</a> for notes for developers and
-contributors, running the operator, building the documentation, etc.</p>
-<p>See <a href="docs/design.md">design</a> for details about the dataplane design.</p>
-<p><a href="docs/deploying.md">Deploying a DataPlane</a> documents how to deploy a dataplane.</p>
-<p>The documentation source is kept within the dataplane-operator repo in the
-<a href="https://github.com/openstack-k8s-operators/dataplane-operator/tree/main/docs">docs</a> directory. The full
-generated documentation from that source is available at
-<a href="https://openstack-k8s-operators.github.io/dataplane-operator/">https://openstack-k8s-operators.github.io/dataplane-operator/</a>.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">#</a></h2>
-<p>Copyright 2023.</p>
-<p>Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+<h1 id="interacting-with-ansible">Interacting with Ansible<a class="headerlink" href="#interacting-with-ansible" title="Permanent link">#</a></h1>
+<p>When a dataplane service is executed during a role deployment, a corresponding
+<a href="https://openstack-k8s-operators.github.io/openstack-ansibleee-operator/openstack_ansibleee/">OpenStackAnsibleEE</a>
+resource is created. The OpenStackAnsibleEE resource is the associated ansible
+execution with the service.</p>
+<p>OpenStackAnsibleEE resources are reconciled by
+<a href="https://github.com/openstack-k8s-operators/openstack-ansibleee-operator">openstack-ansibleee-operator</a>.
+During reconciliation a
+<a href="https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/">Job</a>
+resource is created which in turn creates a
+<a href="https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/">Pod</a> resource. The pod is started with an <a href="https://docs.ansible.com/automation-controller/latest/html/userguide/execution_environments.html">Ansible Execution Environment</a> image, and runs <a href="https://ansible.readthedocs.io/projects/runner/en/stable/">ansible-runner</a>.</p>
+<h2 id="retrieving-and-inspecting-openstackansibleee-resources">Retrieving and inspecting OpenStackAnsibleEE resources<a class="headerlink" href="#retrieving-and-inspecting-openstackansibleee-resources" title="Permanent link">#</a></h2>
+<p>During (or after) a deployment the instances of OpenStackAnsibleEE can be
+retrieved from the API.</p>
+<pre><code>oc get openstackansibleee
 </code></pre>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
+<p>Sample output when the default list of services:</p>
+<pre><code>NAME                                                  NETWORKATTACHMENTS   STATUS   MESSAGE
+dataplane-deployment-configure-network-edpm-compute                        True     AnsibleExecutionJob complete
+dataplane-deployment-configure-os-edpm-compute                             True     AnsibleExecutionJob complete
+dataplane-deployment-install-os-edpm-compute                               True     AnsibleExecutionJob complete
+dataplane-deployment-run-os-edpm-compute                                   True     AnsibleExecutionJob complete
+dataplane-deployment-validate-network-edpm-compute                         True     AnsibleExecutionJob complete
+</code></pre>
+<p>Querying for jobs, shows the corresponding job for each OpenStackAnsibleEE resource:</p>
+<pre><code>oc get jobs
+</code></pre>
+<p>Sample output:</p>
+<pre><code>NAME                                                  COMPLETIONS   DURATION   AGE
+dataplane-deployment-configure-network-edpm-compute   1/1           8s         2m51s
+dataplane-deployment-configure-os-edpm-compute        1/1           8s         2m27s
+dataplane-deployment-install-os-edpm-compute          1/1           8s         2m35s
+dataplane-deployment-run-os-edpm-compute              1/1           8s         2m19s
+dataplane-deployment-validate-network-edpm-compute    1/1           8s         2m43s
+</code></pre>
+<p>Using the job name, the corresponding pod can be retrieved:</p>
+<pre><code>oc get pods | grep dataplane-deployment-configure-network-edpm-compute
+</code></pre>
+<p>Sample output:</p>
+<pre><code>dataplane-deployment-configure-network-edpm-compute-2hshp   0/1     Completed            0                5m45s
+</code></pre>
+<p>Using the job name, the ansible logs can be retrieved:</p>
+<pre><code>oc logs job.batch/dataplane-deployment-configure-network-edpm-compute
+</code></pre>
+<h2 id="controlling-the-ansible-execution">Controlling the Ansible execution<a class="headerlink" href="#controlling-the-ansible-execution" title="Permanent link">#</a></h2>
+<p>The deployStrategy field on OpenStackDataPlane, OpenStackDataPlaneRole, and
+OpenStackDataPlaneNode has support for specifying the ansible <a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html#selecting-or-skipping-tags-when-you-run-a-playbook">tags,
+skip-tags</a>,
+and
+<a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html#patterns-and-ad-hoc-commands">limit</a></p>
+<p>The fields in deployStrategy that correspond to these options are:</p>
+<pre><code>ansibleTags
+ansibleSkipTags
+ansibleLimit
+</code></pre>
+<p>The syntax for these fields match the syntax that ansible accepts on the
+command line for <code>ansible-playbook</code> and <code>ansible-runner</code> for each of these
+fields.</p>
+<p>Example usage of these fields:</p>
+<pre><code>apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlane
+metadata:
+  name: openstack-edpm
+spec:
+  deployStrategy:
+      deploy: false
+      ansibleTags: containers
+      ansibleSkipTags: packages
+      ansibleLimit: compute1*,compute2*
+</code></pre>
+<p>The above example translates to an ansible command with the following
+arguments:</p>
+<pre><code>--tags containers --skip-tags packages --limit compute1*,compute2*
+</code></pre>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      2023-01-26
+      2023-06-15
     
   </small>
 </div>
@@ -668,10 +734,10 @@ limitations under the License.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["search.suggest", "search.highlight", "search.share"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "search.share"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.a51614de.min.js"></script>
+      <script src="../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>

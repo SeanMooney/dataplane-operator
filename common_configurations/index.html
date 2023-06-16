@@ -18,7 +18,7 @@
         <link rel="prev" href="../composable_services/">
       
       
-        <link rel="next" href="../contributing/">
+        <link rel="next" href="../interacting_with_ansible/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
@@ -506,11 +506,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-edpm_boostrap_command-for-system-registration" class="md-nav__link">
-    Using edpm_boostrap_command for system registration
+  <a href="#using-edpm_bootstrap_command-for-system-registration" class="md-nav__link">
+    Using edpm_bootstrap_command for system registration
   </a>
   
-    <nav class="md-nav" aria-label="Using edpm_boostrap_command for system registration">
+    <nav class="md-nav" aria-label="Using edpm_bootstrap_command for system registration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -541,6 +541,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacting_with_ansible/" class="md-nav__link">
+        Interacting with Ansible
+      </a>
     </li>
   
 
@@ -602,11 +616,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-edpm_boostrap_command-for-system-registration" class="md-nav__link">
-    Using edpm_boostrap_command for system registration
+  <a href="#using-edpm_bootstrap_command-for-system-registration" class="md-nav__link">
+    Using edpm_bootstrap_command for system registration
   </a>
   
-    <nav class="md-nav" aria-label="Using edpm_boostrap_command for system registration">
+    <nav class="md-nav" aria-label="Using edpm_bootstrap_command for system registration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -661,16 +675,16 @@ within each role in the
 <a href="https://github.com/openstack-k8s-operators/edpm-ansible/tree/main/roles">edpm-ansible</a>
 repository.</p>
 <h2 id="initial-bootstrap-command">Initial bootstrap command<a class="headerlink" href="#initial-bootstrap-command" title="Permanent link">#</a></h2>
-<p><strong>Variable</strong>: <code>edpm_boostrap_command</code><br />
+<p><strong>Variable</strong>: <code>edpm_bootstrap_command</code><br />
 <strong>Type</strong>: <code>string</code><br />
 <strong>Role</strong>: <a href="https://github.com/openstack-k8s-operators/edpm-ansible/tree/main/roles/edpm_bootstrap">edpm_bootstrap</a></p>
-<p>The <code>edpm_boostrap_command</code> variable can be used to pass a shell command(s) that
+<p>The <code>edpm_bootstrap_command</code> variable can be used to pass a shell command(s) that
 will be executed as early as possible in the deployment as part of the
 <code>configure-network</code> service. If the <code>services</code> list is customized with services
 that execute prior to <code>configure-network</code> then the command(s) specified by
 <code>edpm_bootstrap_command</code> would run after the custom services.</p>
-<h3 id="using-edpm_boostrap_command-for-system-registration">Using <code>edpm_boostrap_command</code> for system registration<a class="headerlink" href="#using-edpm_boostrap_command-for-system-registration" title="Permanent link">#</a></h3>
-<p><code>edpm_boostrap_command</code> can be used to perform system registration in order to
+<h3 id="using-edpm_bootstrap_command-for-system-registration">Using <code>edpm_bootstrap_command</code> for system registration<a class="headerlink" href="#using-edpm_bootstrap_command-for-system-registration" title="Permanent link">#</a></h3>
+<p><code>edpm_bootstrap_command</code> can be used to perform system registration in order to
 enable needed package repositories. Choose a registration method (either Portal
 or Satellite) and refer to the provided links below for instructions to create
 the registration commands.</p>
@@ -688,7 +702,7 @@ documentation for the version of Satellite that is in use.</p>
   <small>
     
       Last update:
-      2023-06-13
+      2023-06-15
     
   </small>
 </div>
