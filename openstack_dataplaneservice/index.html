@@ -408,13 +408,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#networkssection" class="md-nav__link">
-    NetworksSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#nodesection" class="md-nav__link">
     NodeSection
   </a>
@@ -688,13 +681,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#networkssection" class="md-nav__link">
-    NetworksSection
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#nodesection" class="md-nav__link">
     NodeSection
   </a>
@@ -770,7 +756,6 @@
 <li><a href="#ansibleeespec">AnsibleEESpec</a></li>
 <li><a href="#deploystrategysection">DeployStrategySection</a></li>
 <li><a href="#networkconfigsection">NetworkConfigSection</a></li>
-<li><a href="#networkssection">NetworksSection</a></li>
 <li><a href="#nodesection">NodeSection</a></li>
 <li><a href="#novatemplate">NovaTemplate</a></li>
 <li><a href="#openstackdataplaneservicelist">OpenStackDataPlaneServiceList</a></li>
@@ -889,34 +874,7 @@
 <td>template</td>
 <td>Template - Contains a Ansible j2 nic config template to use when applying node network configuration</td>
 <td>string</td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#custom-resources">Back to Custom Resources</a></p>
-<h4 id="networkssection">NetworksSection<a class="headerlink" href="#networkssection" title="Permanent link">#</a></h4>
-<p>NetworksSection is a specification of the network attributes</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-<th>Scheme</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>network</td>
-<td>Network - Network name to configure</td>
-<td>string</td>
-<td>false</td>
-</tr>
-<tr>
-<td>fixedIP</td>
-<td>FixedIP - Specific IP address to use for this network</td>
-<td>string</td>
-<td>false</td>
+<td>true</td>
 </tr>
 </tbody>
 </table>
@@ -937,25 +895,25 @@
 <td>networkConfig</td>
 <td>NetworkConfig - Network configuration details. Contains os-net-config related properties.</td>
 <td><a href="#networkconfigsection">NetworkConfigSection</a></td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr>
 <td>networks</td>
 <td>Networks - Instance networks</td>
-<td>[]<a href="#networkssection">NetworksSection</a></td>
+<td>[]infranetworkv1.IPSetNetwork</td>
 <td>false</td>
 </tr>
 <tr>
 <td>managementNetwork</td>
 <td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr>
 <td>ansibleUser</td>
 <td>AnsibleUser SSH user for Ansible connection</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 </tr>
 <tr>
 <td>ansiblePort</td>
@@ -1167,7 +1125,7 @@
   <small>
     
       Last update:
-      2023-06-08
+      2023-06-11
     
   </small>
 </div>
