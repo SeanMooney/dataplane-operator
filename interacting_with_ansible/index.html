@@ -630,39 +630,32 @@ retrieved from the API.</p>
 <pre><code>oc get openstackansibleee
 </code></pre>
 <p>Sample output when the default list of services:</p>
-<pre><code>NAME                                                  NETWORKATTACHMENTS   STATUS   MESSAGE
-dataplane-deployment-configure-network-edpm-compute                        True     AnsibleExecutionJob complete
-dataplane-deployment-configure-os-edpm-compute                             True     AnsibleExecutionJob complete
-dataplane-deployment-install-os-edpm-compute                               True     AnsibleExecutionJob complete
-dataplane-deployment-run-os-edpm-compute                                   True     AnsibleExecutionJob complete
-dataplane-deployment-validate-network-edpm-compute                         True     AnsibleExecutionJob complete
-</code></pre>
+<p>NAME                                                  NETWORKATTACHMENTS   STATUS   MESSAGE
+ dataplane-deployment-configure-network-edpm-compute                        True     AnsibleExecutionJob complete
+ dataplane-deployment-configure-os-edpm-compute                             True     AnsibleExecutionJob complete
+ dataplane-deployment-install-os-edpm-compute                               True     AnsibleExecutionJob complete
+ dataplane-deployment-run-os-edpm-compute                                   True     AnsibleExecutionJob complete
+ dataplane-deployment-validate-network-edpm-compute                         True     AnsibleExecutionJob complete</p>
 <p>Querying for pods with the OpenStackAnsibleEE label</p>
-<pre><code>oc get pods -l app=openstackansibleee
-</code></pre>
+<p>oc get pods -l app=openstackansibleee</p>
 <p>Sample output:</p>
-<pre><code>dataplane-deployment-configure-network-edpm-compute-j6r4l   0/1     Completed           0          3m36s
-dataplane-deployment-validate-network-edpm-compute-6g7n9    0/1     Pending             0          0s
-dataplane-deployment-validate-network-edpm-compute-6g7n9    0/1     ContainerCreating   0          11s
-dataplane-deployment-validate-network-edpm-compute-6g7n9    1/1     Running             0          13s
-</code></pre>
+<p>dataplane-deployment-configure-network-edpm-compute-j6r4l   0/1     Completed           0          3m36s
+ dataplane-deployment-validate-network-edpm-compute-6g7n9    0/1     Pending             0          0s
+ dataplane-deployment-validate-network-edpm-compute-6g7n9    0/1     ContainerCreating   0          11s
+ dataplane-deployment-validate-network-edpm-compute-6g7n9    1/1     Running             0          13s</p>
 <p>Querying for jobs, shows the corresponding job for each OpenStackAnsibleEE resource:</p>
-<pre><code>oc get jobs -l app=openstackansibleee
-</code></pre>
+<p>oc get jobs -l app=openstackansibleee</p>
 <p>Sample output:</p>
-<pre><code>NAME                                                  COMPLETIONS   DURATION   AGE
-dataplane-deployment-configure-network-edpm-compute   1/1           8s         2m51s
-dataplane-deployment-configure-os-edpm-compute        1/1           8s         2m27s
-dataplane-deployment-install-os-edpm-compute          1/1           8s         2m35s
-dataplane-deployment-run-os-edpm-compute              1/1           8s         2m19s
-dataplane-deployment-validate-network-edpm-compute    1/1           8s         2m43s
-</code></pre>
+<p>NAME                                                  COMPLETIONS   DURATION   AGE
+ dataplane-deployment-configure-network-edpm-compute   1/1           8s         2m51s
+ dataplane-deployment-configure-os-edpm-compute        1/1           8s         2m27s
+ dataplane-deployment-install-os-edpm-compute          1/1           8s         2m35s
+ dataplane-deployment-run-os-edpm-compute              1/1           8s         2m19s
+ dataplane-deployment-validate-network-edpm-compute    1/1           8s         2m43s</p>
 <p>Using the job name, the corresponding pod can be retrieved:</p>
-<pre><code>oc get pods | grep dataplane-deployment-configure-network-edpm-compute
-</code></pre>
+<p>oc get pods | grep dataplane-deployment-configure-network-edpm-compute</p>
 <p>Sample output:</p>
-<pre><code>dataplane-deployment-configure-network-edpm-compute-2hshp   0/1     Completed            0                5m45s
-</code></pre>
+<p>dataplane-deployment-configure-network-edpm-compute-2hshp   0/1     Completed            0                5m45s</p>
 <p>Using the job name, the ansible logs can be retrieved:</p>
 <pre><code>oc logs job.batch/dataplane-deployment-configure-network-edpm-compute
 </code></pre>
@@ -702,7 +695,7 @@ arguments:</p>
   <small>
     
       Last update:
-      2023-06-22
+      2023-07-04
     
   </small>
 </div>

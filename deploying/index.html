@@ -541,7 +541,7 @@
         
           <li class="md-nav__item">
   <a href="#deploy-the-dataplane" class="md-nav__link">
-    Deploy the dataplane.
+    Deploy the dataplane
   </a>
   
 </li>
@@ -741,7 +741,7 @@
         
           <li class="md-nav__item">
   <a href="#deploy-the-dataplane" class="md-nav__link">
-    Deploy the dataplane.
+    Deploy the dataplane
   </a>
   
 </li>
@@ -919,23 +919,21 @@ documented at <a href="../common_configurations/">Common Configurations</a>.</p>
 <p>Some of the ansible variables will need to be set based on values from the
 controlplane that is already deployed. This set of ansible variables and the
 <code>oc</code> command that can be used to get their values are shown below.</p>
-<pre><code>export EDPM_OVN_METADATA_AGENT_TRANSPORT_URL=$(oc get secret rabbitmq-transport-url-neutron-neutron-transport -o json | jq -r .data.transport_url | base64 -d)
-export EDPM_OVN_METADATA_AGENT_SB_CONNECTION=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r .status.dbAddress)
-export EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST=$(oc get svc nova-metadata-internal -o json |jq -r '.status.loadBalancer.ingress[0].ip')
-export EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET=$(oc get secret osp-secret -o json | jq -r .data.MetadataSecret  | base64 -d)
-export EDPM_OVN_METADATA_AGENT_BIND_HOST=127.0.0.1
-export EDPM_OVN_DBS=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r '.status.networkAttachments."openstack/internalapi"[0]')
-
-echo "
-edpm_ovn_metadata_agent_DEFAULT_transport_url: ${EDPM_OVN_METADATA_AGENT_TRANSPORT_URL}
-edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ${EDPM_OVN_METADATA_AGENT_SB_CONNECTION}
-edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ${EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST}
-edpm_ovn_metadata_agent_metadata_agent_DEFAULT_metadata_proxy_shared_secret: ${EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET}
-edpm_ovn_metadata_agent_DEFAULT_bind_host: ${EDPM_OVN_METADATA_AGENT_BIND_HOST}
-edpm_ovn_dbs:
-- ${EDPM_OVN_DBS}
-"
-</code></pre>
+<p>export EDPM_OVN_METADATA_AGENT_TRANSPORT_URL=$(oc get secret rabbitmq-transport-url-neutron-neutron-transport -o json | jq -r .data.transport_url | base64 -d)
+ export EDPM_OVN_METADATA_AGENT_SB_CONNECTION=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r .status.dbAddress)
+ export EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST=$(oc get svc nova-metadata-internal -o json |jq -r '.status.loadBalancer.ingress[0].ip')
+ export EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET=$(oc get secret osp-secret -o json | jq -r .data.MetadataSecret  | base64 -d)
+ export EDPM_OVN_METADATA_AGENT_BIND_HOST=127.0.0.1
+ export EDPM_OVN_DBS=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r '.status.networkAttachments."openstack/internalapi"[0]')</p>
+<p>echo "
+ edpm_ovn_metadata_agent_DEFAULT_transport_url: ${EDPM_OVN_METADATA_AGENT_TRANSPORT_URL}
+ edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ${EDPM_OVN_METADATA_AGENT_SB_CONNECTION}
+ edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ${EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST}
+ edpm_ovn_metadata_agent_metadata_agent_DEFAULT_metadata_proxy_shared_secret: ${EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET}
+ edpm_ovn_metadata_agent_DEFAULT_bind_host: ${EDPM_OVN_METADATA_AGENT_BIND_HOST}
+ edpm_ovn_dbs:
+ - ${EDPM_OVN_DBS}
+ "</p>
 <p>Add the output to the <code>ansibleVars</code> field to configure the values on the
 role.</p>
 <p>Add nodes to the dataplane. Each node should have its <code>role</code> field set to the
@@ -945,7 +943,7 @@ from the <code>nodeTemplate</code> field on its role into the <code>node</code> 
 However, certain fields will need to be overridden given that they are specific
 to a node. In this example, <code>ansibleVars</code> has the node specific variables.</p>
 <hr />
-<p><strong> NOTE </strong></p>
+<p><strong>NOTE</strong></p>
 <p>In the case of <code>ansibleVars</code>, the value is merged with that of the value from
 the role. This makes it so that the entire value of <code>ansibleVars</code> from the role
 does not need to be reproduced for each node just to set a few node specific
@@ -1029,17 +1027,16 @@ oc get openstackdataplanerole
 oc get openstackdataplanenode
 </code></pre>
 <p>The output should be similar to:</p>
-<pre><code>$ oc get openstackdataplane
-NAME             STATUS   MESSAGE
-openstack-edpm   False    Deployment not started
-$ oc get openstackdataplanerole
-NAME           STATUS   MESSAGE
-edpm-compute   False    Deployment not started
-$ oc get openstackdataplanenode
-NAME             STATUS   MESSAGE
-edpm-compute-0   False    Deployment not started
-edpm-compute-1   False    Deployment not started
-</code></pre>
+<p>$ oc get openstackdataplane
+ NAME             STATUS   MESSAGE
+ openstack-edpm   False    Deployment not started
+ $ oc get openstackdataplanerole
+ NAME           STATUS   MESSAGE
+ edpm-compute   False    Deployment not started
+ $ oc get openstackdataplanenode
+ NAME             STATUS   MESSAGE
+ edpm-compute-0   False    Deployment not started
+ edpm-compute-1   False    Deployment not started</p>
 <h3 id="understanding-openstackdataplaneservices">Understanding OpenStackDataPlaneServices<a class="headerlink" href="#understanding-openstackdataplaneservices" title="Permanent link">#</a></h3>
 <p>A dataplane is configured with a set of services that define the Ansible roles
 and task files that are executed to complete the deployment. The
@@ -1081,22 +1078,21 @@ project. Within that project, the ansible variables that can be used to
 configure the role are documented.</p>
 <p>For example, in the describe output for the <code>install-os</code> service, the
 <code>osp.edpm.edpm_sshd</code> role is seen.</p>
-<pre><code>import_role:
-  Name:        osp.edpm.edpm_sshd
-  tasks_from:  install.yml
-Name:          Install edpm_sshd
-Tags:
-  edpm_sshd
-</code></pre>
+<p>import_role:
+   Name:        osp.edpm.edpm_sshd
+   tasks_from:  install.yml
+ Name:          Install edpm_sshd
+ Tags:
+   edpm_sshd</p>
 <p>The ansible variables that configure the
 behavior of the <code>osp.edpm.edpm_sshd</code> role are available at
 <a href="https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml">https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml</a>.</p>
 <hr />
-<p><strong> NOTE </strong></p>
+<p><strong>NOTE</strong></p>
 <p>If the default provided services are edited, those edits will be lost after any
 further role reconciliations.</p>
 <hr />
-<h3 id="deploy-the-dataplane">Deploy the dataplane.<a class="headerlink" href="#deploy-the-dataplane" title="Permanent link">#</a></h3>
+<h3 id="deploy-the-dataplane">Deploy the dataplane<a class="headerlink" href="#deploy-the-dataplane" title="Permanent link">#</a></h3>
 <p>With the dataplane resources created, it can be seen from their status message
 that they have not yet been deployed. This means no ansible has been executed
 to configure any of the services on the nodes. They still need to be deployed.</p>
@@ -1112,17 +1108,16 @@ used to edit the resource directly in an editor to set the field to <code>True</
 <p>With the deployment started, ansible will be executed to configure the nodes.
 When the deployment is complete, the status messages will change to indicate
 the deployment is ready.</p>
-<pre><code>$ oc get openstackdataplane
-NAME             STATUS   MESSAGE
-openstack-edpm   True    DataPlane Ready
-$ oc get openstackdataplanerole
-NAME           STATUS   MESSAGE
-edpm-compute   True    DataPlaneRole Ready
-$ oc get openstackdataplanenode
-NAME             STATUS   MESSAGE
-edpm-compute-0   True    DataPlaneNode Ready
-edpm-compute-1   True    DataPlaneNode Ready
-</code></pre>
+<p>$ oc get openstackdataplane
+ NAME             STATUS   MESSAGE
+ openstack-edpm   True    DataPlane Ready
+ $ oc get openstackdataplanerole
+ NAME           STATUS   MESSAGE
+ edpm-compute   True    DataPlaneRole Ready
+ $ oc get openstackdataplanenode
+ NAME             STATUS   MESSAGE
+ edpm-compute-0   True    DataPlaneNode Ready
+ edpm-compute-1   True    DataPlaneNode Ready</p>
 <h3 id="understanding-dataplane-conditions">Understanding dataplane conditions<a class="headerlink" href="#understanding-dataplane-conditions" title="Permanent link">#</a></h3>
 <p>Each dataplane resource has a series of conditions within their <code>status</code>
 subresource that indicate the overall state of the resource, including its
@@ -1175,7 +1170,7 @@ have completed their deployment, or in failure cases, which services failed.</p>
   <small>
     
       Last update:
-      2023-06-14
+      2023-07-04
     
   </small>
 </div>
