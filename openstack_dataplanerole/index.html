@@ -763,7 +763,7 @@
 <td>networkAttachments</td>
 <td>NetworkAttachments is a list of NetworkAttachment resource names to pass to the ansibleee resource which allows to connect the ansibleee runner to the given network</td>
 <td>[]string</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>openStackAnsibleEERunnerImage</td>
@@ -793,7 +793,7 @@
 <td>extraMounts</td>
 <td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
 <td>[]storage.VolMounts</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>env</td>
@@ -892,13 +892,13 @@
 <td>managementNetwork</td>
 <td>ManagementNetwork - Name of network to use for management (SSH/Ansible)</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>ansibleUser</td>
 <td>AnsibleUser SSH user for Ansible connection</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>ansiblePort</td>
@@ -922,7 +922,7 @@
 <td>extraMounts</td>
 <td>ExtraMounts containing files which can be mounted into an Ansible Execution Pod</td>
 <td>[]storage.VolMounts</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>userData</td>
@@ -940,7 +940,7 @@
 <td>nova</td>
 <td>NovaTemplate specifies the parameters for the compute service deployment on the EDPM node. If it is specified both in OpenstackDataPlaneRole and the OpenstackDataPlaneNode for the same EDPM node then the configuration in OpenstackDataPlaneNode will be used and the configuration in the OpenstackDataPlaneRole will be ignored. If this is defined in neither then compute service(s) will not be deployed on the EDPM node.</td>
 <td>*<a href="#novatemplate">NovaTemplate</a></td>
-<td>true</td>
+<td>false</td>
 </tr>
 </tbody>
 </table>
@@ -973,7 +973,7 @@
 <td>customServiceConfig</td>
 <td>CustomServiceConfig - customize the nova-compute service config using this parameter to change service defaults, or overwrite rendered information using raw OpenStack config format. The content gets added to to /etc/nova/nova.conf.d directory as 02-nova-override.conf file.</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>deploy</td>
@@ -1096,7 +1096,7 @@
 <td>networkAttachments</td>
 <td>NetworkAttachments is a list of NetworkAttachment resource names to pass to the ansibleee resource which allows to connect the ansibleee runner to the given network</td>
 <td>[]string</td>
-<td>true</td>
+<td>false</td>
 </tr>
 <tr>
 <td>services</td>
@@ -1113,7 +1113,7 @@
   <small>
     
       Last update:
-      2023-06-30
+      2023-07-02
     
   </small>
 </div>
