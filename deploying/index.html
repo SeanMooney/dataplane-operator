@@ -919,21 +919,23 @@ documented at <a href="../common_configurations/">Common Configurations</a>.</p>
 <p>Some of the ansible variables will need to be set based on values from the
 controlplane that is already deployed. This set of ansible variables and the
 <code>oc</code> command that can be used to get their values are shown below.</p>
-<p>export EDPM_OVN_METADATA_AGENT_TRANSPORT_URL=$(oc get secret rabbitmq-transport-url-neutron-neutron-transport -o json | jq -r .data.transport_url | base64 -d)
- export EDPM_OVN_METADATA_AGENT_SB_CONNECTION=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r .status.dbAddress)
- export EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST=$(oc get svc nova-metadata-internal -o json |jq -r '.status.loadBalancer.ingress[0].ip')
- export EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET=$(oc get secret osp-secret -o json | jq -r .data.MetadataSecret  | base64 -d)
- export EDPM_OVN_METADATA_AGENT_BIND_HOST=127.0.0.1
- export EDPM_OVN_DBS=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r '.status.networkAttachments."openstack/internalapi"[0]')</p>
-<p>echo "
- edpm_ovn_metadata_agent_DEFAULT_transport_url: ${EDPM_OVN_METADATA_AGENT_TRANSPORT_URL}
- edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ${EDPM_OVN_METADATA_AGENT_SB_CONNECTION}
- edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ${EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST}
- edpm_ovn_metadata_agent_metadata_agent_DEFAULT_metadata_proxy_shared_secret: ${EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET}
- edpm_ovn_metadata_agent_DEFAULT_bind_host: ${EDPM_OVN_METADATA_AGENT_BIND_HOST}
- edpm_ovn_dbs:
- - ${EDPM_OVN_DBS}
- "</p>
+<div class="highlight"><pre><span></span><code><span class="go">export EDPM_OVN_METADATA_AGENT_TRANSPORT_URL=$(oc get secret rabbitmq-transport-url-neutron-neutron-transport -o json | jq -r .data.transport_url | base64 -d)</span>
+<span class="go">export EDPM_OVN_METADATA_AGENT_SB_CONNECTION=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r .status.dbAddress)</span>
+<span class="go">export EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST=$(oc get svc nova-metadata-internal -o json |jq -r &#39;.status.loadBalancer.ingress[0].ip&#39;)</span>
+<span class="go">export EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET=$(oc get secret osp-secret -o json | jq -r .data.MetadataSecret  | base64 -d)</span>
+<span class="go">export EDPM_OVN_METADATA_AGENT_BIND_HOST=127.0.0.1</span>
+<span class="go">export EDPM_OVN_DBS=$(oc get ovndbcluster ovndbcluster-sb -o json | jq -r &#39;.status.networkAttachments.&quot;openstack/internalapi&quot;[0]&#39;)</span>
+
+<span class="go">echo &quot;</span>
+<span class="go">edpm_ovn_metadata_agent_DEFAULT_transport_url: ${EDPM_OVN_METADATA_AGENT_TRANSPORT_URL}</span>
+<span class="go">edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ${EDPM_OVN_METADATA_AGENT_SB_CONNECTION}</span>
+<span class="go">edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ${EDPM_OVN_METADATA_AGENT_NOVA_METADATA_HOST}</span>
+<span class="go">edpm_ovn_metadata_agent_metadata_agent_DEFAULT_metadata_proxy_shared_secret: ${EDPM_OVN_METADATA_AGENT_PROXY_SHARED_SECRET}</span>
+<span class="go">edpm_ovn_metadata_agent_DEFAULT_bind_host: ${EDPM_OVN_METADATA_AGENT_BIND_HOST}</span>
+<span class="go">edpm_ovn_dbs:</span>
+<span class="go">- ${EDPM_OVN_DBS}</span>
+<span class="go">&quot;</span>
+</code></pre></div>
 <p>Add the output to the <code>ansibleVars</code> field to configure the values on the
 role.</p>
 <p>Add nodes to the dataplane. Each node should have its <code>role</code> field set to the
@@ -1027,16 +1029,17 @@ oc get openstackdataplanerole
 oc get openstackdataplanenode
 </code></pre>
 <p>The output should be similar to:</p>
-<p>$ oc get openstackdataplane
- NAME             STATUS   MESSAGE
- openstack-edpm   False    Deployment not started
- $ oc get openstackdataplanerole
- NAME           STATUS   MESSAGE
- edpm-compute   False    Deployment not started
- $ oc get openstackdataplanenode
- NAME             STATUS   MESSAGE
- edpm-compute-0   False    Deployment not started
- edpm-compute-1   False    Deployment not started</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplane
+<span class="go">NAME             STATUS   MESSAGE</span>
+<span class="go">openstack-edpm   False    Deployment not started</span>
+<span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanerole
+<span class="go">NAME           STATUS   MESSAGE</span>
+<span class="go">edpm-compute   False    Deployment not started</span>
+<span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanenode
+<span class="go">NAME             STATUS   MESSAGE</span>
+<span class="go">edpm-compute-0   False    Deployment not started</span>
+<span class="go">edpm-compute-1   False    Deployment not started</span>
+</code></pre></div>
 <h3 id="understanding-openstackdataplaneservices">Understanding OpenStackDataPlaneServices<a class="headerlink" href="#understanding-openstackdataplaneservices" title="Permanent link">#</a></h3>
 <p>A dataplane is configured with a set of services that define the Ansible roles
 and task files that are executed to complete the deployment. The
@@ -1078,12 +1081,13 @@ project. Within that project, the ansible variables that can be used to
 configure the role are documented.</p>
 <p>For example, in the describe output for the <code>install-os</code> service, the
 <code>osp.edpm.edpm_sshd</code> role is seen.</p>
-<p>import_role:
-   Name:        osp.edpm.edpm_sshd
-   tasks_from:  install.yml
- Name:          Install edpm_sshd
- Tags:
-   edpm_sshd</p>
+<div class="highlight"><pre><span></span><code><span class="go">import_role:</span>
+<span class="go">  Name:        osp.edpm.edpm_sshd</span>
+<span class="go">  tasks_from:  install.yml</span>
+<span class="go">Name:          Install edpm_sshd</span>
+<span class="go">Tags:</span>
+<span class="go">  edpm_sshd</span>
+</code></pre></div>
 <p>The ansible variables that configure the
 behavior of the <code>osp.edpm.edpm_sshd</code> role are available at
 <a href="https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml">https://github.com/openstack-k8s-operators/edpm-ansible/blob/main/roles/edpm_sshd/tasks/main.yml</a>.</p>
@@ -1108,46 +1112,50 @@ used to edit the resource directly in an editor to set the field to <code>True</
 <p>With the deployment started, ansible will be executed to configure the nodes.
 When the deployment is complete, the status messages will change to indicate
 the deployment is ready.</p>
-<p>$ oc get openstackdataplane
- NAME             STATUS   MESSAGE
- openstack-edpm   True    DataPlane Ready
- $ oc get openstackdataplanerole
- NAME           STATUS   MESSAGE
- edpm-compute   True    DataPlaneRole Ready
- $ oc get openstackdataplanenode
- NAME             STATUS   MESSAGE
- edpm-compute-0   True    DataPlaneNode Ready
- edpm-compute-1   True    DataPlaneNode Ready</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplane
+<span class="go">NAME             STATUS   MESSAGE</span>
+<span class="go">openstack-edpm   True    DataPlane Ready</span>
+<span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanerole
+<span class="go">NAME           STATUS   MESSAGE</span>
+<span class="go">edpm-compute   True    DataPlaneRole Ready</span>
+<span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanenode
+<span class="go">NAME             STATUS   MESSAGE</span>
+<span class="go">edpm-compute-0   True    DataPlaneNode Ready</span>
+<span class="go">edpm-compute-1   True    DataPlaneNode Ready</span>
+</code></pre></div>
 <h3 id="understanding-dataplane-conditions">Understanding dataplane conditions<a class="headerlink" href="#understanding-dataplane-conditions" title="Permanent link">#</a></h3>
 <p>Each dataplane resource has a series of conditions within their <code>status</code>
 subresource that indicate the overall state of the resource, including its
 deployment progress.</p>
 <p><code>OpenStackDataPlane</code> resource conditions:</p>
-<p>$ oc get openstackdataplane openstack-edpm -o json | jq .status.conditions[].type
-  "Ready"
-  "DeploymentReady"
-  "SetupReady"</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplane<span class="w"> </span>openstack-edpm<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.status.conditions<span class="o">[]</span>.type
+<span class="go">&quot;Ready&quot;</span>
+<span class="go">&quot;DeploymentReady&quot;</span>
+<span class="go">&quot;SetupReady&quot;</span>
+</code></pre></div>
 <p><code>OpenStackDataPlaneRole</code> resource conditions:</p>
-<p>$ oc get openstackdataplanerole edpm-compute -o json | jq .status.conditions[].type
-  "Ready"
-  "DeploymentReady"
-  "RoleBaremetalProvisionReady"
-  "SetupReady"
-  "configure-network service ready"
-  "configure-os service ready"
-  "install-os service ready"
-  "run-os service ready"
-  "validate-network service ready"</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanerole<span class="w"> </span>edpm-compute<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.status.conditions<span class="o">[]</span>.type
+<span class="go">&quot;Ready&quot;</span>
+<span class="go">&quot;DeploymentReady&quot;</span>
+<span class="go">&quot;RoleBaremetalProvisionReady&quot;</span>
+<span class="go">&quot;SetupReady&quot;</span>
+<span class="go">&quot;configure-network service ready&quot;</span>
+<span class="go">&quot;configure-os service ready&quot;</span>
+<span class="go">&quot;install-os service ready&quot;</span>
+<span class="go">&quot;run-os service ready&quot;</span>
+<span class="go">&quot;validate-network service ready&quot;</span>
+</code></pre></div>
 <p><code>OpenStackDataPlaneNode</code> resource conditions:</p>
-<p>$ oc get openstackdataplanenode edpm-compute-0 -o json | jq .status.conditions[].type
-  "Ready"
-  "DeploymentReady"
-  "SetupReady"
-  "configure-network service ready"
-  "configure-os service ready"
-  "install-os service ready"
-  "run-os service ready"
-  "validate-network service ready"</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>openstackdataplanenode<span class="w"> </span>edpm-compute-0<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.status.conditions<span class="o">[]</span>.type
+<span class="go">&quot;Ready&quot;</span>
+<span class="go">&quot;DeploymentReady&quot;</span>
+<span class="go">&quot;SetupReady&quot;</span>
+<span class="go">&quot;configure-network service ready&quot;</span>
+<span class="go">&quot;configure-os service ready&quot;</span>
+<span class="go">&quot;install-os service ready&quot;</span>
+<span class="go">&quot;run-os service ready&quot;</span>
+<span class="go">&quot;validate-network service ready&quot;</span>
+</code></pre></div>
 <p>Each resource has a <code>Ready</code>, <code>DeploymentReady</code>, and <code>SetupReady</code> conditions.
 The role and node also have a condition for each service that is being
 deployed.</p>
@@ -1170,7 +1178,7 @@ have completed their deployment, or in failure cases, which services failed.</p>
   <small>
     
       Last update:
-      2023-07-04
+      2023-07-06
     
   </small>
 </div>
