@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/architecture/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/common_configurations/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/composable_services/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/contributing/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/deploying/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/design/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/inheritance/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/interacting_with_ansible/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplane/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplanenode/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplanerole/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://openstack-k8s-operators.github.io/dataplane-operator/openstack_dataplaneservice/</loc>
-         <lastmod>2023-07-26</lastmod>
+         <lastmod>2023-07-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
