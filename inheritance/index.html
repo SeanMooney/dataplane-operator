@@ -661,11 +661,11 @@ would not be any merging and the node would not also have <code>{"bar":
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">edpm-compute</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">nodeTemplate</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ansibleVars</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">      </span><span class="no">neutron_public_interface_name: eth0</span>
-<span class="w">      </span><span class="no">edpm_chrony_ntp_servers:</span>
-<span class="w">        </span><span class="no">- clock.redhat.com</span>
-<span class="w">        </span><span class="no">- clock2.redhat.com</span>
+<span class="w">    </span><span class="nt">ansibleVars</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">neutron_public_interface_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eth0</span>
+<span class="w">      </span><span class="nt">edpm_chrony_ntp_servers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clock.redhat.com</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clock2.redhat.com</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenStackDataPlaneNode</span>
@@ -674,8 +674,8 @@ would not be any merging and the node would not also have <code>{"bar":
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">edpm-compute</span>
 <span class="w">  </span><span class="nt">node</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">ansibleVars</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">      </span><span class="no">tenant_ip: 192.168.24.100</span>
+<span class="w">    </span><span class="nt">ansibleVars</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tenant_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.24.100</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>The <code>ConfigMap</code> containing the inventory would have the following
@@ -720,7 +720,7 @@ not reflect all of the nodes within the role.</p>
   <small>
     
       Last update:
-      2023-07-04
+      2023-07-27
     
   </small>
 </div>
