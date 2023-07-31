@@ -21,7 +21,7 @@
         <link rel="next" href="../architecture/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.0, mkdocs-material-9.1.20">
+      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
@@ -422,6 +422,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#kubeservice" class="md-nav__link">
+    KubeService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplaneservice" class="md-nav__link">
     OpenStackDataPlaneService
   </a>
@@ -695,6 +702,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#kubeservice" class="md-nav__link">
+    KubeService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#openstackdataplaneservice" class="md-nav__link">
     OpenStackDataPlaneService
   </a>
@@ -758,6 +772,7 @@
 <li><a href="#networkconfigsection">NetworkConfigSection</a></li>
 <li><a href="#nodesection">NodeSection</a></li>
 <li><a href="#novatemplate">NovaTemplate</a></li>
+<li><a href="#kubeservice">KubeService</a></li>
 <li><a href="#openstackdataplaneservicelist">OpenStackDataPlaneServiceList</a></li>
 <li><a href="#openstackdataplaneservicespec">OpenStackDataPlaneServiceSpec</a></li>
 <li><a href="#openstackdataplaneservicestatus">OpenStackDataPlaneServiceStatus</a></li>
@@ -1005,6 +1020,39 @@
 </tbody>
 </table>
 <p><a href="#custom-resources">Back to Custom Resources</a></p>
+<h4 id="kubeservice">KubeService<a class="headerlink" href="#kubeservice" title="Permanent link">#</a></h4>
+<p>KubeService represents a Kubernetes Service. It is called like this to avoid the extreme overloading of the Service term in this context</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Scheme</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Name of the Service will have in kubernetes</td>
+<td>string</td>
+<td>true</td>
+</tr>
+<tr>
+<td>port</td>
+<td>Port is the port of the service</td>
+<td>int</td>
+<td>true</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>Protocol is the protocol used to connect to the endpoint</td>
+<td>string</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#custom-resources">Back to Custom Resources</a></p>
 <h4 id="openstackdataplaneservice">OpenStackDataPlaneService<a class="headerlink" href="#openstackdataplaneservice" title="Permanent link">#</a></h4>
 <p>OpenStackDataPlaneService is the Schema for the openstackdataplaneservices API</p>
 <table>
@@ -1084,6 +1132,12 @@
 <td>false</td>
 </tr>
 <tr>
+<td>services</td>
+<td>Services to create to expose possible external services in computes</td>
+<td>[]<a href="#kubeservice">KubeService</a></td>
+<td>false</td>
+</tr>
+<tr>
 <td>play</td>
 <td>Play is the playbook contents that ansible will run on execution. If both Play and Role are specified, Play takes precedence</td>
 <td>string</td>
@@ -1131,7 +1185,7 @@
   <small>
     
       Last update:
-      2023-07-10
+      2023-07-26
     
   </small>
 </div>
