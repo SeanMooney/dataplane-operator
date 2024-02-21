@@ -40,10 +40,12 @@ import (
 
 	dataplanev1 "github.com/openstack-k8s-operators/dataplane-operator/api/v1beta1"
 	"github.com/openstack-k8s-operators/dataplane-operator/controllers"
-	aee "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1alpha1"
+	infrav1 "github.com/openstack-k8s-operators/infra-operator/apis/network/v1beta1"
+	aee "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1beta1"
+	baremetalv1 "github.com/openstack-k8s-operators/openstack-baremetal-operator/api/v1beta1"
 
+	. "github.com/openstack-k8s-operators/lib-common/modules/common/test/helpers"
 	test "github.com/openstack-k8s-operators/lib-common/modules/test"
-	. "github.com/openstack-k8s-operators/lib-common/modules/test/helpers"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -64,7 +66,7 @@ const (
 	SecretName           = "test-secret"
 	MessageBusSecretName = "rabbitmq-secret"
 	ContainerImage       = "test://nova"
-	timeout              = 10 * time.Second
+	timeout              = 40 * time.Second
 	// have maximum 100 retries before the timeout hits
 	interval = timeout / 100
 )
@@ -85,12 +87,27 @@ var _ = BeforeSuite(func() {
 	aeeCRDs, err := test.GetCRDDirFromModule(
 		"github.com/openstack-k8s-operators/openstack-ansibleee-operator/api", gomod, "bases")
 	Expect(err).ShouldNot(HaveOccurred())
+	baremetalCRDs, err := test.GetCRDDirFromModule(
+		"github.com/openstack-k8s-operators/openstack-baremetal-operator/api", gomod, "bases")
+	Expect(err).ShouldNot(HaveOccurred())
+	infraCRDs, err := test.GetCRDDirFromModule(
+		"github.com/openstack-k8s-operators/infra-operator/apis", gomod, "bases")
+	Expect(err).ShouldNot(HaveOccurred())
 
 	By("bootstrapping test environment")
 	testEnv = &envtest.Environment{
 		CRDDirectoryPaths: []string{
 			filepath.Join("..", "..", "config", "crd", "bases"),
 			aeeCRDs,
+			baremetalCRDs,
+			infraCRDs,
+		},
+		WebhookInstallOptions: envtest.WebhookInstallOptions{
+			Paths: []string{filepath.Join("..", "..", "config", "webhook")},
+			// NOTE(gibi): if localhost is resolved to ::1 (ipv6) then starting
+			// the webhook fails as it try to parse the address as ipv4 and
+			// failing on the colons in ::1
+			LocalServingHost: "127.0.0.1",
 		},
 		ErrorIfCRDPathMissing: true,
 	}
@@ -114,6 +131,10 @@ var _ = BeforeSuite(func() {
 	Expect(err).NotTo(HaveOccurred())
 	err = appsv1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
+	err = baremetalv1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
+	err = infrav1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
 	//+kubebuilder:scaffold:scheme
 
 	logger = ctrl.Log.WithName("---Test---")
@@ -125,38 +146,38 @@ var _ = BeforeSuite(func() {
 	Expect(th).NotTo(BeNil())
 
 	// Start the controller-manager if goroutine
+	webhookInstallOptions := &testEnv.WebhookInstallOptions
 	k8sManager, err := ctrl.NewManager(cfg, ctrl.Options{
 		Scheme: scheme.Scheme,
 		// NOTE(gibi): disable metrics reporting in test to allow
 		// parallel test execution. Otherwise each instance would like to
 		// bind to the same port
 		MetricsBindAddress: "0",
+		Host:               webhookInstallOptions.LocalServingHost,
+		Port:               webhookInstallOptions.LocalServingPort,
+		CertDir:            webhookInstallOptions.LocalServingCertDir,
+		LeaderElection:     false,
 	})
 	Expect(err).ToNot(HaveOccurred())
 
+	err = (&dataplanev1.OpenStackDataPlaneNodeSet{}).SetupWebhookWithManager(k8sManager)
+	Expect(err).NotTo(HaveOccurred())
+
 	kclient, err := kubernetes.NewForConfig(cfg)
 	Expect(err).ToNot(HaveOccurred(), "failed to create kclient")
-	err = (&controllers.OpenStackDataPlaneReconciler{
+	err = (&controllers.OpenStackDataPlaneNodeSetReconciler{
 		Client:  k8sManager.GetClient(),
 		Scheme:  k8sManager.GetScheme(),
 		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("Dataplane"),
+		Log:     ctrl.Log.WithName("controllers").WithName("DataplaneNodeSet"),
 	}).SetupWithManager(k8sManager)
 	Expect(err).ToNot(HaveOccurred())
 
-	err = (&controllers.OpenStackDataPlaneNodeReconciler{
+	err = (&controllers.OpenStackDataPlaneDeploymentReconciler{
 		Client:  k8sManager.GetClient(),
 		Scheme:  k8sManager.GetScheme(),
 		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("DataplaneNode"),
-	}).SetupWithManager(k8sManager)
-	Expect(err).ToNot(HaveOccurred())
-
-	err = (&controllers.OpenStackDataPlaneRoleReconciler{
-		Client:  k8sManager.GetClient(),
-		Scheme:  k8sManager.GetScheme(),
-		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("DataplaneRole"),
+		Log:     ctrl.Log.WithName("controllers").WithName("DataplaneDeployment"),
 	}).SetupWithManager(k8sManager)
 	Expect(err).ToNot(HaveOccurred())
 

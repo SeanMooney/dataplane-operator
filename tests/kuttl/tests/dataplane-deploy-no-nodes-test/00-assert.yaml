@@ -1,71 +1,40 @@
----
 apiVersion: dataplane.openstack.org/v1beta1
-kind: OpenStackDataPlane
+kind: OpenStackDataPlaneNodeSet
 metadata:
-  name: openstack-edpm-no-nodes
-  namespace: openstack
-spec:
-  deployStrategy:
-    deploy: false
-  roles:
-    edpm-compute-no-nodes:
-      nodeTemplate:
-        ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
-      services:
-        - configure-network
-        - validate-network
-        - install-os
-        - configure-os
-        - run-os
-        - ovn
-        - libvirt
-        - nova
-status:
-  conditions:
-  - message: Deployment not started
-    reason: NotRequested
-    severity: Info
-    status: "False"
-    type: Ready
-  - message: Deployment not started
-    reason: NotRequested
-    severity: Info
-    status: "False"
-    type: DeploymentReady
-  - message: Setup complete
-    reason: Ready
-    status: "True"
-    type: SetupReady
----
-apiVersion: dataplane.openstack.org/v1beta1
-kind: OpenStackDataPlaneRole
-metadata:
-  labels:
-    openstackdataplane: openstack-edpm-no-nodes
   name: edpm-compute-no-nodes
   namespace: openstack
-  ownerReferences:
-  - apiVersion: dataplane.openstack.org/v1beta1
-    blockOwnerDeletion: true
-    controller: true
-    kind: OpenStackDataPlane
-    name: openstack-edpm-no-nodes
 spec:
-  dataPlane: openstack-edpm-no-nodes
-  deployStrategy:
-    deploy: false
+  preProvisioned: true
+  services:
+  - download-cache
+  - bootstrap
+  - configure-network
+  - validate-network
+  - install-os
+  - configure-os
+  - run-os
+  - install-certs
+  - ovn
+  - neutron-metadata
+  - neutron-ovn
+  - neutron-sriov
+  - neutron-dhcp
+  - libvirt
+  - nova
+  env:
+  - name: ANSIBLE_FORCE_COLOR
+    value: "True"
+  nodes: {}
   nodeTemplate:
     ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
 status:
   conditions:
   - message: Deployment not started
-    reason: NotRequested
-    severity: Info
+    reason: Requested
     status: "False"
     type: Ready
   - message: Deployment not started
-    reason: NotRequested
-    severity: Info
+    reason: Requested
     status: "False"
     type: DeploymentReady
   - message: Input data complete
@@ -76,4 +45,3 @@ status:
     reason: Ready
     status: "True"
     type: SetupReady
----

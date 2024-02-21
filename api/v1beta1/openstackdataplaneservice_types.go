@@ -19,6 +19,7 @@ package v1beta1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	infranetworkv1 "github.com/openstack-k8s-operators/infra-operator/apis/network/v1beta1"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/condition"
 )
 
@@ -36,20 +37,41 @@ type KubeService struct {
 	// Protocol is the protocol used to connect to the endpoint
 	// +kubebuilder:default=http
 	Protocol string `json:"protocol,omitempty"`
+
+	// Network is the network that will be used to connect to the endpoint
+	// +kubebuilder:default=ctlplane
+	Network infranetworkv1.NetNameStr `json:"network,omitempty"`
+}
+
+// OpenstackDataPlaneServiceCert defines the property of a TLS cert issued for
+// a dataplane service
+type OpenstackDataPlaneServiceCert struct {
+	// Contents of the certificate
+	// This is a list of strings for properties that are needed in the cert
+	// +kubebuilder:validation:Required
+	Contents []string `json:"contents"`
+
+	// Networks to include in SNI for the cert
+	// +kubebuilder:validation:Optional
+	Networks []infranetworkv1.NetNameStr `json:"networks,omitempty"`
+
+	// Issuer to issue the cert
+	// +kubebuilder:validation:Optional
+	Issuer string `json:"issuer,omitempty"`
 }
 
 // OpenStackDataPlaneServiceSpec defines the desired state of OpenStackDataPlaneService
 type OpenStackDataPlaneServiceSpec struct {
-	// Label to use for service
+	// Label to use for service.
+	// Must follow DNS952 subdomain conventions.
+	// Since we are using it to generate the pod name,
+	// we need to keep it short.
 	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Pattern="[a-z]([-a-z0-9]*[a-z0-9])"
+	// +kubebuilder:validation:MaxLength=53
 	Label string `json:"label,omitempty"`
 
-	// Services to create to expose possible external services in computes
-	// +kubebuilder:validation:Optional
-	Services []KubeService `json:"services,omitempty"`
-
 	// Play is an inline playbook contents that ansible will run on execution.
-	// If both Play and Roles are specified, Play takes precedence
 	Play string `json:"play,omitempty"`
 
 	// Playbook is a path to the playbook that ansible will run on this execution
@@ -66,6 +88,20 @@ type OpenStackDataPlaneServiceSpec struct {
 	// OpenStackAnsibleEERunnerImage image to use as the ansibleEE runner image
 	// +kubebuilder:validation:Optional
 	OpenStackAnsibleEERunnerImage string `json:"openStackAnsibleEERunnerImage,omitempty" yaml:"openStackAnsibleEERunnerImage,omitempty"`
+
+	// TLSCert tls certs to be generated
+	// +kubebuilder:validation:Optional
+	TLSCert *OpenstackDataPlaneServiceCert `json:"tlsCert,omitempty" yaml:"tlsCert,omitempty"`
+
+	// CACerts - Secret containing the CA certificate chain
+	// +kubebuilder:validation:Optional
+	CACerts string `json:"caCerts,omitempty" yaml:"caCerts,omitempty"`
+
+	// AddCertMounts - Whether to add cert mounts
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default=false
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:booleanSwitch"}
+	AddCertMounts bool `json:"addCertMounts" yaml:"addCertMounts"`
 }
 
 // OpenStackDataPlaneServiceStatus defines the observed state of OpenStackDataPlaneService
@@ -77,7 +113,7 @@ type OpenStackDataPlaneServiceStatus struct {
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-// +kubebuilder:resource:shortName=osdpservice;osdpservices
+// +kubebuilder:resource:shortName=osdps;osdpservice;osdpservices
 //+operator-sdk:csv:customresourcedefinitions:displayName="OpenStack Data Plane Service"
 
 // OpenStackDataPlaneService is the Schema for the openstackdataplaneservices API

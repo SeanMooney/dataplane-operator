@@ -4,8 +4,5 @@
     github-check:
       jobs:
         - dataplane-operator-docs-preview
-        - dataplane-operator-content-provider
-        - dataplane-operator-crc-podified-edpm-baremetal: &content_provider
-            dependencies:
-              - dataplane-operator-content-provider
-        - dataplane-operator-crc-podified-edpm-deployment: *content_provider
+    templates:
+      - podified-multinode-edpm-baremetal-pipeline

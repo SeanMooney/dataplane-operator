@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.10.0
+    controller-gen.kubebuilder.io/version: v0.11.1
   creationTimestamp: null
   name: openstackdataplaneservices.dataplane.openstack.org
 spec:
@@ -13,6 +13,7 @@ spec:
     listKind: OpenStackDataPlaneServiceList
     plural: openstackdataplaneservices
     shortNames:
+    - osdps
     - osdpservice
     - osdpservices
     singular: openstackdataplaneservice
@@ -30,11 +31,18 @@ spec:
             type: object
           spec:
             properties:
+              addCertMounts:
+                default: false
+                type: boolean
+              caCerts:
+                type: string
               configMaps:
                 items:
                   type: string
                 type: array
               label:
+                maxLength: 53
+                pattern: '[a-z]([-a-z0-9]*[a-z0-9])'
                 type: string
               openStackAnsibleEERunnerImage:
                 type: string
@@ -46,21 +54,22 @@ spec:
                 items:
                   type: string
                 type: array
-              services:
-                items:
-                  properties:
-                    name:
+              tlsCert:
+                properties:
+                  contents:
+                    items:
                       type: string
-                    port:
-                      type: integer
-                    protocol:
-                      default: http
+                    type: array
+                  issuer:
+                    type: string
+                  networks:
+                    items:
+                      pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-_]*[a-zA-Z0-9]$
                       type: string
-                  required:
-                  - name
-                  - port
-                  type: object
-                type: array
+                    type: array
+                required:
+                - contents
+                type: object
             type: object
           status:
             properties:

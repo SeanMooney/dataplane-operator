@@ -18,33 +18,45 @@ package deployment
 
 const (
 
-	// CtlPlaneNetwork - default CtlPlane Network Name in NetConfig
-	CtlPlaneNetwork = "CtlPlane"
+	// CtlPlaneNetwork - default ctlplane Network Name in NetConfig
+	CtlPlaneNetwork = "ctlplane"
 
 	// ValidateNetworkLabel for ValidateNetwork OpenStackAnsibleEE
-	ValidateNetworkLabel = "dataplane-deployment-validate-network"
+	ValidateNetworkLabel = "validate-network"
 
 	// InstallOSLabel for InstallOS OpenStackAnsibleEE
-	InstallOSLabel = "dataplane-deployment-install-os"
+	InstallOSLabel = "install-os"
 
 	// ConfigureOSLabel for ConfigureOS OpenStackAnsibleEE
-	ConfigureOSLabel = "dataplane-deployment-configure-os"
+	ConfigureOSLabel = "configure-os"
 
 	// RunOSLabel for RunOS OpenStackAnsibleEE
-	RunOSLabel = "dataplane-deployment-run-os"
+	RunOSLabel = "run-os"
 
 	// InstallOpenStackLabel for InstallOpenStack OpenStackAnsibleEE
-	InstallOpenStackLabel = "dataplane-deployment-install-openstack"
+	InstallOpenStackLabel = "install-openstack"
 
 	// ConfigureOpenStackLabel for ConfigureOpenStack OpenStackAnsibleEE
-	ConfigureOpenStackLabel = "dataplane-deployment-configure-openstack"
+	ConfigureOpenStackLabel = "configure-openstack"
 
 	// RunOpenStackLabel for RunOpenStack OpenStackAnsibleEE
-	RunOpenStackLabel = "dataplane-deployment-run-openstack"
+	RunOpenStackLabel = "run-openstack"
 
 	// NicConfigTemplateFile is the custom nic config file we use when user provided network config templates are provided.
 	NicConfigTemplateFile = "/runner/network/nic-config-template"
 
 	// ConfigPaths base path for volume mounts in OpenStackAnsibleEE pod
 	ConfigPaths = "/var/lib/openstack/configs"
+
+	// CertPaths base path for cert volume mount in OpenStackAnsibleEE pod
+	CertPaths = "/var/lib/openstack/certs"
+
+	// CACertPaths base path for CA cert volume mount in OpenStackAnsibleEE pod
+	CACertPaths = "/var/lib/openstack/cacerts"
+
+	// DNSNamesStr value for setting dns values in a cert
+	DNSNamesStr = "dnsnames"
+
+	// IPValuesStr value for setting ip addresses in a cert
+	IPValuesStr = "ips"
 )

@@ -32,7 +32,7 @@ import (
 	"github.com/openstack-k8s-operators/lib-common/modules/common/helper"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/util"
 	"github.com/openstack-k8s-operators/lib-common/modules/storage"
-	ansibleeev1 "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1alpha1"
+	ansibleeev1 "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1beta1"
 )
 
 // AnsibleExecution creates a OpenStackAnsiblEE CR
@@ -40,29 +40,32 @@ func AnsibleExecution(
 	ctx context.Context,
 	helper *helper.Helper,
 	obj client.Object,
-	label string,
+	service *dataplanev1.OpenStackDataPlaneService,
 	sshKeySecret string,
-	inventoryConfigMap string,
-	play string,
-	playbook string,
-	aeeSpec dataplanev1.AnsibleEESpec,
+	inventorySecret string,
+	aeeSpec *dataplanev1.AnsibleEESpec,
 ) error {
-
 	var err error
 	var cmdLineArguments strings.Builder
 
-	ansibleEE, err := GetAnsibleExecution(ctx, helper, obj, label)
+	ansibleEE, err := GetAnsibleExecution(ctx, helper, obj, service.Spec.Label)
 	if err != nil && !k8serrors.IsNotFound(err) {
 		return err
 	}
 	if ansibleEE == nil {
-		executionName := fmt.Sprintf("%s-%s", label, obj.GetName())
+		var executionName string
+		if len(service.Spec.Label) > 0 {
+			executionName = fmt.Sprintf("%s-%s", service.Spec.Label, obj.GetName())
+		} else {
+			executionName = obj.GetName()
+		}
 		ansibleEE = &ansibleeev1.OpenStackAnsibleEE{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      executionName,
 				Namespace: obj.GetNamespace(),
 				Labels: map[string]string{
-					label: string(obj.GetUID()),
+					service.Spec.Label: string(obj.GetUID()),
+					"osdpd":            obj.GetName(),
 				},
 			},
 		}
@@ -89,11 +92,11 @@ func AnsibleExecution(
 			ansibleEE.Spec.CmdLine = strings.TrimSpace(cmdLineArguments.String())
 		}
 
-		if len(play) > 0 {
-			ansibleEE.Spec.Play = play
+		if len(service.Spec.Play) > 0 {
+			ansibleEE.Spec.Play = service.Spec.Play
 		}
-		if len(playbook) > 0 {
-			ansibleEE.Spec.Playbook = playbook
+		if len(service.Spec.Playbook) > 0 {
+			ansibleEE.Spec.Playbook = service.Spec.Playbook
 		}
 
 		ansibleEEMounts := storage.VolMounts{}
@@ -120,18 +123,12 @@ func AnsibleExecution(
 		inventoryVolume := corev1.Volume{
 			Name: "inventory",
 			VolumeSource: corev1.VolumeSource{
-				ConfigMap: &corev1.ConfigMapVolumeSource{
-					LocalObjectReference: corev1.LocalObjectReference{
-						Name: inventoryConfigMap,
-					},
+				Secret: &corev1.SecretVolumeSource{
+					SecretName: inventorySecret,
 					Items: []corev1.KeyToPath{
 						{
 							Key:  "inventory",
 							Path: "inventory",
-						},
-						{
-							Key:  "network",
-							Path: "network",
 						},
 					},
 				},
@@ -142,17 +139,11 @@ func AnsibleExecution(
 			MountPath: "/runner/inventory/hosts",
 			SubPath:   "inventory",
 		}
-		networkConfigMount := corev1.VolumeMount{
-			Name:      "inventory",
-			MountPath: "/runner/network/nic-config-template",
-			SubPath:   "network",
-		}
 
 		ansibleEEMounts.Volumes = append(ansibleEEMounts.Volumes, sshKeyVolume)
 		ansibleEEMounts.Volumes = append(ansibleEEMounts.Volumes, inventoryVolume)
 		ansibleEEMounts.Mounts = append(ansibleEEMounts.Mounts, sshKeyMount)
 		ansibleEEMounts.Mounts = append(ansibleEEMounts.Mounts, inventoryMount)
-		ansibleEEMounts.Mounts = append(ansibleEEMounts.Mounts, networkConfigMount)
 
 		ansibleEE.Spec.ExtraMounts = append(aeeSpec.ExtraMounts, []storage.VolMounts{ansibleEEMounts}...)
 		ansibleEE.Spec.Env = aeeSpec.Env
@@ -163,7 +154,6 @@ func AnsibleExecution(
 		}
 
 		return nil
-
 	})
 
 	if err != nil {
@@ -178,7 +168,6 @@ func AnsibleExecution(
 // label where <label>=<node UID>
 // If none is found, return nil
 func GetAnsibleExecution(ctx context.Context, helper *helper.Helper, obj client.Object, label string) (*ansibleeev1.OpenStackAnsibleEE, error) {
-
 	var err error
 	ansibleEEs := &ansibleeev1.OpenStackAnsibleEEList{}
 
@@ -203,9 +192,8 @@ func GetAnsibleExecution(ctx context.Context, helper *helper.Helper, obj client.
 	} else if len(ansibleEEs.Items) == 1 {
 		ansibleEE = &ansibleEEs.Items[0]
 	} else {
-		return nil, fmt.Errorf("Multiple OpenStackAnsibleEE's found with label %s=%s", label, obj.GetUID())
+		return nil, fmt.Errorf("multiple OpenStackAnsibleEE's found with label %s=%s", label, obj.GetUID())
 	}
 
 	return ansibleEE, nil
-
 }

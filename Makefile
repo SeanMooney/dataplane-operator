@@ -46,10 +46,15 @@ ifeq ($(USE_IMAGE_DIGESTS), true)
 	BUNDLE_GEN_FLAGS += --use-image-digests
 endif
 
+# Set the Operator SDK version to use. By default, what is installed on the system is used.
+# This is useful for CI or a project to utilize a specific version of the operator-sdk toolkit.
+OPERATOR_SDK_VERSION ?= v1.31.0
+
 # Image URL to use all building/pushing image targets
-IMG ?= $(IMAGE_TAG_BASE):latest
+DEFAULT_IMG ?= quay.io/openstack-k8s-operators/dataplane-operator:latest
+IMG ?= $(DEFAULT_IMG)
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
-ENVTEST_K8S_VERSION = 1.26
+ENVTEST_K8S_VERSION = 1.27
 
 CRDDESC_OVERRIDE ?= :maxDescLen=0
 
@@ -68,8 +73,36 @@ GOPROXY:=https://proxy.golang.org,direct
 SHELL = /usr/bin/env bash -o pipefail
 .SHELLFLAGS = -ec
 
+# Extra vars which will be passed to the Docker-build
+DOCKER_BUILD_ARGS ?=
+
 .PHONY: all
 all: build
+
+##@ Docs
+
+.PHONY: docs-dependencies
+docs-dependencies: .bundle
+
+.PHONY: .bundle
+.bundle:
+	if ! type bundle; then \
+		echo "Bundler not found. On Linux run 'sudo dnf install /usr/bin/bundle' to install it."; \
+		exit 1; \
+	fi
+
+	bundle config set --local path 'local/bundle'; bundle install
+
+.PHONY: docs
+docs: manifests docs-dependencies crd-to-markdown ## Build docs
+	$(CRD_MARKDOWN) -f api/v1beta1/common.go -f api/v1beta1/openstackdataplaneservice_types.go -f api/v1beta1/openstackdataplanenodeset_types.go -f api/v1beta1/openstackdataplanedeployment_types.go -n OpenStackDataPlaneService -n OpenStackDataPlaneNodeSet -n OpenStackDataPlaneDeployment > docs/assemblies/custom_resources.md
+	bundle exec kramdoc --auto-ids docs/assemblies/custom_resources.md && rm docs/assemblies/custom_resources.md
+	sed -i "s/=== Custom/== Custom/g" docs/assemblies/custom_resources.adoc
+	cd docs; $(MAKE) html
+
+.PHONY: docs-clean
+docs-clean:
+	rm -r docs_build
 
 ##@ General
 
@@ -91,13 +124,9 @@ help: ## Display this help.
 ##@ Development
 
 .PHONY: manifests
-manifests: gowork controller-gen crd-to-markdown ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
+manifests: gowork controller-gen ## Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects.
 	$(CONTROLLER_GEN) rbac:roleName=manager-role crd$(CRDDESC_OVERRIDE) webhook paths="./..." output:crd:artifacts:config=config/crd/bases && \
 	rm -f api/bases/* && cp -a config/crd/bases api/
-	$(CRD_MARKDOWN) -f api/v1beta1/common.go -f api/v1beta1/openstackdataplane_types.go -n OpenStackDataPlane > docs/openstack_dataplane.md
-	$(CRD_MARKDOWN) -f api/v1beta1/common.go -f api/v1beta1/openstackdataplanenode_types.go -n OpenStackDataPlaneNode > docs/openstack_dataplanenode.md
-	$(CRD_MARKDOWN) -f api/v1beta1/common.go -f api/v1beta1/openstackdataplanerole_types.go -n OpenStackDataPlaneRole > docs/openstack_dataplanerole.md
-	$(CRD_MARKDOWN) -f api/v1beta1/common.go -f api/v1beta1/openstackdataplaneservice_types.go -n OpenStackDataPlaneService > docs/openstack_dataplaneservice.md
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
@@ -119,6 +148,9 @@ PROC_CMD = --procs ${PROCS}
 test: manifests generate fmt vet envtest ginkgo ## Run tests.
 	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" $(GINKGO) --trace --cover --coverpkg=../../pkg/...,../../controllers,../../api/v1beta1 --coverprofile cover.out --covermode=atomic ${PROC_CMD} $(GINKGO_ARGS) ./tests/...
 
+.PHONY: test-all
+test-all: test golint golangci golangci-lint ## Run all tests.
+
 ##@ Build
 
 .PHONY: build
@@ -126,13 +158,15 @@ build: manifests generate fmt vet ## Build manager binary.
 	go build -o bin/manager main.go
 
 .PHONY: run
+run: export METRICS_PORT?=8080
+run: export HEALTH_PORT?=8081
 run: export ENABLE_WEBHOOKS?=false
 run: manifests generate fmt vet webhook-cleanup ## Run a controller from your host.
-	go run ./main.go
+	go run ./main.go -metrics-bind-address ":$(METRICS_PORT)" -health-probe-bind-address ":$(HEALTH_PORT)"
 
 .PHONY: docker-build
 docker-build: test ## Build docker image with the manager.
-	podman build -t ${IMG} .
+	podman build -t ${IMG} . ${DOCKER_BUILD_ARGS}
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
@@ -195,7 +229,7 @@ KUTTL ?= $(LOCALBIN)/kubectl-kuttl
 
 ## Tool Versions
 KUSTOMIZE_VERSION ?= v3.8.7
-CONTROLLER_TOOLS_VERSION ?= v0.10.0
+CONTROLLER_TOOLS_VERSION ?= v0.11.1
 CRD_MARKDOWN_VERSION ?= v0.0.3
 KUTTL_VERSION ?= 0.15.0
 
@@ -243,12 +277,29 @@ $(KUTTL): $(LOCALBIN)
 	test -s $(LOCALBIN)/kubectl-kuttl || curl -L -o $(LOCALBIN)/kubectl-kuttl https://github.com/kudobuilder/kuttl/releases/download/v$(KUTTL_VERSION)/kubectl-kuttl_$(KUTTL_VERSION)_linux_x86_64
 	chmod +x $(LOCALBIN)/kubectl-kuttl
 
+.PHONY: operator-sdk
+OPERATOR_SDK ?= $(LOCALBIN)/operator-sdk
+operator-sdk: ## Download operator-sdk locally if necessary.
+ifeq (,$(wildcard $(OPERATOR_SDK)))
+ifeq (, $(shell which operator-sdk 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p $(dir $(OPERATOR_SDK)) ;\
+	OS=$(shell go env GOOS) && ARCH=$(shell go env GOARCH) && \
+	curl -sSLo $(OPERATOR_SDK) https://github.com/operator-framework/operator-sdk/releases/download/$(OPERATOR_SDK_VERSION)/operator-sdk_$${OS}_$${ARCH} ;\
+	chmod +x $(OPERATOR_SDK) ;\
+	}
+else
+OPERATOR_SDK = $(shell which operator-sdk)
+endif
+endif
+
 .PHONY: bundle
-bundle: manifests kustomize ## Generate bundle manifests and metadata, then validate generated files.
-	operator-sdk generate kustomize manifests -q
+bundle: manifests kustomize operator-sdk ## Generate bundle manifests and metadata, then validate generated files.
+	$(OPERATOR_SDK) generate kustomize manifests -q
 	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
-	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle $(BUNDLE_GEN_FLAGS)
-	operator-sdk bundle validate ./bundle
+	$(KUSTOMIZE) build config/manifests | $(OPERATOR_SDK) generate bundle $(BUNDLE_GEN_FLAGS)
+	$(OPERATOR_SDK) bundle validate ./bundle
 
 .PHONY: bundle-build
 bundle-build: ## Build the bundle image.
@@ -267,7 +318,7 @@ ifeq (,$(shell which opm 2>/dev/null))
 	set -e ;\
 	mkdir -p $(dir $(OPM)) ;\
 	OS=$(shell go env GOOS) && ARCH=$(shell go env GOARCH) && \
-	curl -sSLo $(OPM) https://github.com/operator-framework/operator-registry/releases/download/v1.26.1/$${OS}-$${ARCH}-opm ;\
+	curl -sSLo $(OPM) https://github.com/operator-framework/operator-registry/releases/download/v1.29.0/$${OS}-$${ARCH}-opm ;\
 	chmod +x $(OPM) ;\
 	}
 else
@@ -375,18 +426,12 @@ operator-lint: gowork ## Runs operator-lint
 # $ make webhook-cleanup
 SKIP_CERT ?=false
 .PHONY: run-with-webhook
+run-with-webhook: export METRICS_PORT?=8080
+run-with-webhook: export HEALTH_PORT?=8081
 run-with-webhook: manifests generate fmt vet ## Run a controller from your host.
 	/bin/bash hack/configure_local_webhook.sh
-	go run ./main.go
+	go run ./main.go -metrics-bind-address ":$(METRICS_PORT)" -health-probe-bind-address ":$(HEALTH_PORT)"
 
 .PHONY: webhook-cleanup
 webhook-cleanup:
 	/bin/bash hack/clean_local_webhook.sh
-
-.PHONY: docs
-docs: ## Build docs and preview it
-	python -m venv _venv
-	_venv/bin/pip install -r ./docs/doc_requirements.txt
-	mkdir -p ${HOME}/zuul-output/logs/docs # Directory to preview docs on CI log server
-	_venv/bin/mkdocs build -d ${HOME}/zuul-output/logs/docs --clean
-	rm -rf _venv

@@ -26,7 +26,6 @@ import (
 	yaml "gopkg.in/yaml.v3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	dataplanev1 "github.com/openstack-k8s-operators/dataplane-operator/api/v1beta1"
@@ -43,23 +42,22 @@ type ServiceYAML struct {
 }
 
 // DeployService service deployment
-func DeployService(ctx context.Context, helper *helper.Helper, obj client.Object, sshKeySecret string, inventoryConfigMap string, aeeSpec dataplanev1.AnsibleEESpec, foundService dataplanev1.OpenStackDataPlaneService) error {
+func (d *Deployer) DeployService(foundService dataplanev1.OpenStackDataPlaneService) error {
+	err := dataplaneutil.AnsibleExecution(
+		d.Ctx,
+		d.Helper,
+		d.Deployment,
+		&foundService,
+		d.NodeSet.Spec.NodeTemplate.AnsibleSSHPrivateKeySecret,
+		d.InventorySecret,
+		d.AeeSpec)
 
-	err := dataplaneutil.AnsibleExecution(ctx, helper, obj, foundService.Spec.Label, sshKeySecret, inventoryConfigMap, foundService.Spec.Play, foundService.Spec.Playbook, aeeSpec)
 	if err != nil {
-		helper.GetLogger().Error(err, fmt.Sprintf("Unable to execute Ansible for %s", foundService.Name))
+		d.Helper.GetLogger().Error(err, fmt.Sprintf("Unable to execute Ansible for %s", foundService.Name))
 		return err
 	}
 
 	return nil
-
-}
-
-// GetServices returns the list of services for the node's role
-// Note that these are not inherited from NodeTemplate.
-func GetServices(instance *dataplanev1.OpenStackDataPlaneNode,
-	instanceRole *dataplanev1.OpenStackDataPlaneRole) []string {
-	return instanceRole.Spec.Services
 }
 
 // GetService return service
@@ -73,7 +71,7 @@ func GetService(ctx context.Context, helper *helper.Helper, service string) (dat
 }
 
 // EnsureServices - ensure the OpenStackDataPlaneServices exist
-func EnsureServices(ctx context.Context, helper *helper.Helper, instance *dataplanev1.OpenStackDataPlaneRole) error {
+func EnsureServices(ctx context.Context, helper *helper.Helper, instance *dataplanev1.OpenStackDataPlaneNodeSet) error {
 	servicesPath, found := os.LookupEnv("OPERATOR_SERVICES")
 	if !found {
 		servicesPath = "config/services"
@@ -148,7 +146,7 @@ func EnsureServices(ctx context.Context, helper *helper.Helper, instance *datapl
 			return nil
 		})
 		if err != nil {
-			return fmt.Errorf("Error ensuring service: %w", err)
+			return fmt.Errorf("error ensuring service: %w", err)
 		}
 
 	}

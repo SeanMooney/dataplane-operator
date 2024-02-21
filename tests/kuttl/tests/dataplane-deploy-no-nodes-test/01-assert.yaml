@@ -1,48 +1,34 @@
----
 apiVersion: dataplane.openstack.org/v1beta1
-kind: OpenStackDataPlane
+kind: OpenStackDataPlaneNodeSet
 metadata:
-  name: openstack-edpm-no-nodes
-  namespace: openstack
-spec:
-  deployStrategy:
-    deploy: true
-status:
-  conditions:
-  - message: DataPlane ready
-    reason: Ready
-    status: "True"
-    type: Ready
-  - message: Deployment completed
-    reason: Ready
-    status: "True"
-    type: DeploymentReady
-  - message: Setup complete
-    reason: Ready
-    status: "True"
-    type: SetupReady
-  deployed: true
----
-apiVersion: dataplane.openstack.org/v1beta1
-kind: OpenStackDataPlaneRole
-metadata:
-  labels:
-    openstackdataplane: openstack-edpm-no-nodes
   name: edpm-compute-no-nodes
   namespace: openstack
-  ownerReferences:
-  - apiVersion: dataplane.openstack.org/v1beta1
-    blockOwnerDeletion: true
-    controller: true
-    kind: OpenStackDataPlane
-    name: openstack-edpm-no-nodes
 spec:
-  dataPlane: openstack-edpm-no-nodes
-  deployStrategy:
-    deploy: true
+  services:
+  - download-cache
+  - bootstrap
+  - configure-network
+  - validate-network
+  - install-os
+  - configure-os
+  - run-os
+  - install-certs
+  - ovn
+  - neutron-metadata
+  - neutron-ovn
+  - neutron-sriov
+  - neutron-dhcp
+  - libvirt
+  - nova
+  env:
+  - name: ANSIBLE_FORCE_COLOR
+    value: "True"
+  nodes: {}
+  nodeTemplate:
+    ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
 status:
   conditions:
-  - message: DataPlaneRole ready
+  - message: NodeSet Ready
     reason: Ready
     status: "True"
     type: Ready
@@ -58,50 +44,27 @@ status:
     reason: Ready
     status: "True"
     type: SetupReady
-  - message: configure-network service ready
-    reason: Ready
-    status: "True"
-    type: configure-network service ready
-  - message: configure-os service ready
-    reason: Ready
-    status: "True"
-    type: configure-os service ready
-  - message: install-os service ready
-    reason: Ready
-    status: "True"
-    type: install-os service ready
-  - message: libvirt service ready
-    reason: Ready
-    status: "True"
-    type: libvirt service ready
-  - message: nova service ready
-    reason: Ready
-    status: "True"
-    type: nova service ready
-  - message: ovn service ready
-    reason: Ready
-    status: "True"
-    type: ovn service ready
-  - message: run-os service ready
-    reason: Ready
-    status: "True"
-    type: run-os service ready
-  - message: validate-network service ready
-    reason: Ready
-    status: "True"
-    type: validate-network service ready
-  deployed: true
+  configMapHashes:
+    ovncontroller-config: n647h6fh674h55fh56ch5bh68bh5fdh8dh59ch58dhdch59ch646h568h675h99h66bh59bhcch5b4h589h674h568hbch84h554h95h6dhc4hbh699q
+  secretHashes:
+    neutron-dhcp-agent-neutron-config: n68h676h98h689hd4h575h5dbh694h6fh688h57h665h5c5h56dh5ddh65bh5d7h5cdh644hb8h8fh5d9h5b9h555h9ch56dh5fh6chd4h5c5h5c5h68q
+    neutron-ovn-agent-neutron-config: n5f4h89hb8h645h55bh657h9fh5d9h5c6h595h9dh667h5f4hfhffh7fh685h56ch57fh679h5ddh5ddh95h696hbch5c7h669h84h54dh685hfh85q
+    neutron-ovn-metadata-agent-neutron-config: n68dh585h666h5c4h568hf7h65fh695h649hb9h657h5f6h548h679h77h5b4h664h8h5b8h654h5hf5h674h664h545h74h58ch57ch8ch56h54fh5ddq
+    neutron-sriov-agent-neutron-config: n685h567h697h5bch8ch5cfh87h698h658h684h8h99h5dch5c5h699h79hb5h87h66dh664h546h586h7bh56fh5d6h5d4h566h56bh87h678h696h56cq
+    nova-cell1-compute-config: n89hd6h5h545h644h58h556hd9h5c5h598hd4h7bh5f9h5bdh649hb5h99h686h677h8ch575h665h574h587h5b6h5ddh8fh687h9bh657h675h97q
+    nova-metadata-neutron-config: n7fh696h674h5b9h68dh77h677h5c5hd9h5dbh89h646h696h65ch64bh86hd8h56h78h558h5h5c7h87h86h5bh5bch78h6ch5cbh54fh56fhfdq
+    nova-migration-ssh-key: n64dh97h54dhffh65fh577h59bh664hbch54dhcbh547hdbhdch655hd9h675h5d4h67dh5ch67bh64h5fdh5c8h5cdh66bh5f5h58dhcbh9bh66bhd4q
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-configure-network-edpm-compute-no-nodes
+  name: download-cache-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -113,9 +76,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -123,15 +83,113 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.download_cache
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  name: bootstrap-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
       name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.bootstrap
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  name: configure-network-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
+      name: inventory
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.configure_network
@@ -148,16 +206,16 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-validate-network-edpm-compute-no-nodes
+  name: validate-network-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -169,9 +227,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -179,15 +234,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.validate_network
@@ -204,16 +256,16 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-install-os-edpm-compute-no-nodes
+  name: install-os-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -225,9 +277,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -235,15 +284,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.install_os
@@ -260,17 +306,17 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
   generation: 1
-  name: dataplane-deployment-configure-os-edpm-compute-no-nodes
+  name: configure-os-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -282,9 +328,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -292,15 +335,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.configure_os
@@ -317,16 +357,16 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-run-os-edpm-compute-no-nodes
+  name: run-os-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -338,9 +378,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -348,15 +385,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.run_os
@@ -373,17 +407,16 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  generation: 1
-  name: dataplane-deployment-ovn-edpm-compute-no-nodes
+  name: install-certs-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
@@ -395,9 +428,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -405,15 +435,74 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.install_certs
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  generation: 1
+  name: ovn-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/ovn/ovsdb-config
+      name: ovncontroller-config-0
+      subPath: ovsdb-config
+    volumes:
+    - configMap:
+        items:
+        - key: ovsdb-config
+          path: ovsdb-config
+        name: ovncontroller-config
+      name: ovncontroller-config-0
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
       name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   restartPolicy: Never
   playbook: osp.edpm.ovn
@@ -430,20 +519,296 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-libvirt-edpm-compute-no-nodes
+  generation: 1
+  name: neutron-metadata-edpm-compute-no-nodes
   namespace: openstack
   ownerReferences:
   - apiVersion: dataplane.openstack.org/v1beta1
     blockOwnerDeletion: true
     controller: true
-    kind: OpenStackDataPlaneRole
+    kind: OpenStackDataPlaneDeployment
     name: edpm-compute-no-nodes
 spec:
   backoffLimit: 6
-  debug: false
+  extraMounts:
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/neutron-metadata/10-neutron-metadata.conf
+      name: neutron-ovn-metadata-agent-neutron-config-0
+      subPath: 10-neutron-metadata.conf
+    volumes:
+    - secret:
+        items:
+        - key: 10-neutron-metadata.conf
+          path: 10-neutron-metadata.conf
+        secretName: neutron-ovn-metadata-agent-neutron-config
+      name: neutron-ovn-metadata-agent-neutron-config-0
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/neutron-metadata/05-nova-metadata.conf
+      name: nova-metadata-neutron-config-0
+      subPath: 05-nova-metadata.conf
+    - mountPath: /var/lib/openstack/configs/neutron-metadata/httpd.conf
+      name: nova-metadata-neutron-config-1
+      subPath: httpd.conf
+    - mountPath: /var/lib/openstack/configs/neutron-metadata/nova-metadata-config.json
+      name: nova-metadata-neutron-config-2
+      subPath: nova-metadata-config.json
+    volumes:
+    - secret:
+        items:
+        - key: 05-nova-metadata.conf
+          path: 05-nova-metadata.conf
+        secretName: nova-metadata-neutron-config
+      name: nova-metadata-neutron-config-0
+    - name: nova-metadata-neutron-config-1
+      secret:
+        items:
+        - key: httpd.conf
+          path: httpd.conf
+        secretName: nova-metadata-neutron-config
+    - name: nova-metadata-neutron-config-2
+      secret:
+        items:
+        - key: nova-metadata-config.json
+          path: nova-metadata-config.json
+        secretName: nova-metadata-neutron-config
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
+      name: inventory
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.neutron_metadata
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  generation: 1
+  name: neutron-ovn-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/neutron-ovn/10-neutron-ovn.conf
+      name: neutron-ovn-agent-neutron-config-0
+      subPath: 10-neutron-ovn.conf
+    volumes:
+    - secret:
+        items:
+        - key: 10-neutron-ovn.conf
+          path: 10-neutron-ovn.conf
+        secretName: neutron-ovn-agent-neutron-config
+      name: neutron-ovn-agent-neutron-config-0
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
+      name: inventory
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.neutron_ovn
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  generation: 1
+  name: neutron-sriov-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/neutron-sriov/10-neutron-sriov.conf
+      name: neutron-sriov-agent-neutron-config-0
+      subPath: 10-neutron-sriov.conf
+    volumes:
+    - secret:
+        items:
+        - key: 10-neutron-sriov.conf
+          path: 10-neutron-sriov.conf
+        secretName: neutron-sriov-agent-neutron-config
+      name: neutron-sriov-agent-neutron-config-0
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
+      name: inventory
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.neutron_sriov
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  generation: 1
+  name: neutron-dhcp-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
+  extraMounts:
+  - mounts:
+    - mountPath: /var/lib/openstack/configs/neutron-dhcp/10-neutron-dhcp.conf
+      name: neutron-dhcp-agent-neutron-config-0
+      subPath: 10-neutron-dhcp.conf
+    volumes:
+    - secret:
+        items:
+        - key: 10-neutron-dhcp.conf
+          path: 10-neutron-dhcp.conf
+        secretName: neutron-dhcp-agent-neutron-config
+      name: neutron-dhcp-agent-neutron-config-0
+  - mounts:
+    - mountPath: /runner/env/ssh_key
+      name: ssh-key
+      subPath: ssh_key
+    - mountPath: /runner/inventory/hosts
+      name: inventory
+      subPath: inventory
+    volumes:
+    - name: ssh-key
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh_key
+        secretName: dataplane-ansible-ssh-private-key-secret
+    - name: inventory
+      secret:
+        items:
+        - key: inventory
+          path: inventory
+        secretName: dataplanenodeset-edpm-compute-no-nodes
+  name: openstackansibleee
+  restartPolicy: Never
+  playbook: osp.edpm.neutron_dhcp
+  uid: 1001
+status:
+  JobStatus: Succeeded
+  conditions:
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: Ready
+  - message: AnsibleExecutionJob complete
+    reason: Ready
+    status: "True"
+    type: AnsibleExecutionJobReady
+---
+apiVersion: ansibleee.openstack.org/v1beta1
+kind: OpenStackAnsibleEE
+metadata:
+  name: libvirt-edpm-compute-no-nodes
+  namespace: openstack
+  ownerReferences:
+  - apiVersion: dataplane.openstack.org/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: OpenStackDataPlaneDeployment
+    name: edpm-compute-no-nodes
+spec:
+  backoffLimit: 6
   envConfigMapName: openstack-aee-default-env
   extraMounts:
   - mounts:
@@ -453,9 +818,6 @@ spec:
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -463,15 +825,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   preserveJobs: true
   restartPolicy: Never
@@ -489,14 +848,13 @@ status:
     status: "True"
     type: AnsibleExecutionJobReady
 ---
-apiVersion: ansibleee.openstack.org/v1alpha1
+apiVersion: ansibleee.openstack.org/v1beta1
 kind: OpenStackAnsibleEE
 metadata:
-  name: dataplane-deployment-nova-edpm-compute-no-nodes
+  name: nova-edpm-compute-no-nodes
   namespace: openstack
 spec:
   backoffLimit: 6
-  debug: false
   envConfigMapName: openstack-aee-default-env
   extraMounts:
   - mounts:
@@ -520,15 +878,32 @@ spec:
           path: nova-blank.conf
         secretName: nova-cell1-compute-config
   - mounts:
+    - mountPath: /var/lib/openstack/configs/nova/ssh-privatekey
+      name: nova-migration-ssh-key-0
+      subPath: ssh-privatekey
+    - mountPath: /var/lib/openstack/configs/nova/ssh-publickey
+      name: nova-migration-ssh-key-1
+      subPath: ssh-publickey
+    volumes:
+    - name: nova-migration-ssh-key-0
+      secret:
+        items:
+        - key: ssh-privatekey
+          path: ssh-privatekey
+        secretName: nova-migration-ssh-key
+    - name: nova-migration-ssh-key-1
+      secret:
+        items:
+        - key: ssh-publickey
+          path: ssh-publickey
+        secretName: nova-migration-ssh-key
+  - mounts:
     - mountPath: /runner/env/ssh_key
       name: ssh-key
       subPath: ssh_key
     - mountPath: /runner/inventory/hosts
       name: inventory
       subPath: inventory
-    - mountPath: /runner/network/nic-config-template
-      name: inventory
-      subPath: network
     volumes:
     - name: ssh-key
       secret:
@@ -536,15 +911,12 @@ spec:
         - key: ssh-privatekey
           path: ssh_key
         secretName: dataplane-ansible-ssh-private-key-secret
-    - configMap:
+    - name: inventory
+      secret:
         items:
         - key: inventory
           path: inventory
-        - key: network
-          path: network
-        name: dataplanerole-edpm-compute-no-nodes
-      name: inventory
-  image: quay.io/openstack-k8s-operators/openstack-ansibleee-runner:latest
+        secretName: dataplanenodeset-edpm-compute-no-nodes
   name: openstackansibleee
   preserveJobs: true
   restartPolicy: Never

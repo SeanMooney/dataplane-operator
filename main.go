@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	"crypto/tls"
 	"flag"
 	"os"
 	"strconv"
@@ -36,10 +37,12 @@ import (
 
 	networkv1 "github.com/k8snetworkplumbingwg/network-attachment-definition-client/pkg/apis/k8s.cni.cncf.io/v1"
 	infranetworkv1 "github.com/openstack-k8s-operators/infra-operator/apis/network/v1beta1"
-	ansibleeev1 "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1alpha1"
+	ansibleeev1 "github.com/openstack-k8s-operators/openstack-ansibleee-operator/api/v1beta1"
 	baremetalv1 "github.com/openstack-k8s-operators/openstack-baremetal-operator/api/v1beta1"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 
+	certmgrv1 "github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1"
+	certmgrmetav1 "github.com/cert-manager/cert-manager/pkg/apis/meta/v1"
 	dataplanev1 "github.com/openstack-k8s-operators/dataplane-operator/api/v1beta1"
 	"github.com/openstack-k8s-operators/dataplane-operator/controllers"
 	//+kubebuilder:scaffold:imports
@@ -58,6 +61,8 @@ func init() {
 	utilruntime.Must(networkv1.AddToScheme(scheme))
 	utilruntime.Must(baremetalv1.AddToScheme(scheme))
 	utilruntime.Must(infranetworkv1.AddToScheme(scheme))
+	utilruntime.Must(certmgrv1.AddToScheme(scheme))
+	utilruntime.Must(certmgrmetav1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -65,6 +70,8 @@ func main() {
 	var metricsAddr string
 	var enableLeaderElection bool
 	var probeAddr string
+	var enableHTTP2 bool
+	flag.BoolVar(&enableHTTP2, "enable-http2", enableHTTP2, "If HTTP/2 should be enabled for the metrics and webhook servers.")
 	flag.StringVar(&metricsAddr, "metrics-bind-address", ":8080", "The address the metric endpoint binds to.")
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
@@ -81,6 +88,13 @@ func main() {
 	flag.Parse()
 
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
+
+	disableHTTP2 := func(c *tls.Config) {
+		if enableHTTP2 {
+			return
+		}
+		c.NextProtos = []string{"http/1.1"}
+	}
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
@@ -117,43 +131,40 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.OpenStackDataPlaneReconciler{
+	controllers.SetupAnsibleImageDefaults()
+	if err = (&controllers.OpenStackDataPlaneNodeSetReconciler{
 		Client:  mgr.GetClient(),
 		Scheme:  mgr.GetScheme(),
 		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("OpenStackDataPlane"),
+		Log:     ctrl.Log.WithName("controllers").WithName("OpenStackDataPlaneNodeSet"),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "OpenStackDataPlane")
+		setupLog.Error(err, "unable to create controller", "controller", "OpenStackDataPlaneNodeSet")
 		os.Exit(1)
 	}
-	if err = (&controllers.OpenStackDataPlaneRoleReconciler{
-		Client:  mgr.GetClient(),
-		Scheme:  mgr.GetScheme(),
-		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("OpenStackDataPlaneRole"),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "OpenStackDataPlaneRole")
-		os.Exit(1)
-	}
-	if err = (&controllers.OpenStackDataPlaneNodeReconciler{
-		Client:  mgr.GetClient(),
-		Scheme:  mgr.GetScheme(),
-		Kclient: kclient,
-		Log:     ctrl.Log.WithName("controllers").WithName("OpenStackDataPlaneNode"),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "OpenStackDataPlaneNode")
-		os.Exit(1)
-	}
+	controllers.SetupAnsibleImageDefaults()
 
 	checker := healthz.Ping
 	if strings.ToLower(os.Getenv("ENABLE_WEBHOOKS")) != "false" {
-		if err = (&dataplanev1.OpenStackDataPlane{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "OpenStackDataPlane")
+		// overriding the default values
+		srv := mgr.GetWebhookServer()
+		srv.TLSOpts = []func(config *tls.Config){disableHTTP2}
+
+		if err = (&dataplanev1.OpenStackDataPlaneNodeSet{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "OpenStackDataPlaneNodeSet")
 			os.Exit(1)
 		}
 		checker = mgr.GetWebhookServer().StartedChecker()
 	}
 
+	if err = (&controllers.OpenStackDataPlaneDeploymentReconciler{
+		Client:  mgr.GetClient(),
+		Scheme:  mgr.GetScheme(),
+		Kclient: kclient,
+		Log:     ctrl.Log.WithName("controllers").WithName("OpenStackDataPlaneDeployment"),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "OpenStackDataPlaneDeployment")
+		os.Exit(1)
+	}
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", checker); err != nil {

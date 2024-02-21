@@ -1,0 +1,9 @@
+apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlaneService
+metadata:
+  name: ovn-bgp-agent
+spec:
+  label: ovn-bgp-agent
+  playbook: osp.edpm.ovn_bgp_agent
+  secrets:
+  - neutron-ovn-agent-neutron-config

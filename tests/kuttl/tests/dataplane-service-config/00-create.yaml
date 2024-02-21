@@ -27,12 +27,19 @@ data:
     baz: blippy
     zed: zod
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kuttl-service-cm-2
+binaryData:
+  30-kuttl-service.conf: Cg==
+---
 apiVersion: dataplane.openstack.org/v1beta1
 kind: OpenStackDataPlaneService
 metadata:
   name: kuttl-service
 spec:
-  label: dataplane-deployment-kuttl-service
+  label: kuttl-service
   play: |
     - hosts: localhost
       gather_facts: no
@@ -44,22 +51,27 @@ spec:
   configMaps:
     - kuttl-service-cm-0
     - kuttl-service-cm-1
+    - kuttl-service-cm-2
 ---
 apiVersion: dataplane.openstack.org/v1beta1
-kind: OpenStackDataPlane
+kind: OpenStackDataPlaneNodeSet
 metadata:
-  name: openstack-edpm-no-nodes
+  name: edpm-compute-no-nodes
 spec:
-  deployStrategy:
-      deploy: true
-  roles:
-    edpm-compute-no-nodes:
-      services:
-        - kuttl-service
-      nodeTemplate:
-        ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
-        ansibleVars:
-          edpm_ovn_metadata_agent_metadata_agent_DEFAULT_nova_metadata_host: ""
-          edpm_ovn_metadata_agent_DEFAULT_transport_url: ""
-          edpm_ovn_metadata_agent_metadata_agent_ovn_ovn_sb_connection: ""
-          edpm_ovn_dbs: ""
+  preProvisioned: true
+  env:
+    - name: ANSIBLE_FORCE_COLOR
+      value: "True"
+  nodes: {}
+  nodeTemplate:
+    ansibleSSHPrivateKeySecret: dataplane-ansible-ssh-private-key-secret
+  services:
+    - kuttl-service
+---
+apiVersion: dataplane.openstack.org/v1beta1
+kind: OpenStackDataPlaneDeployment
+metadata:
+  name: edpm-compute-no-nodes
+spec:
+  nodeSets:
+    - edpm-compute-no-nodes
